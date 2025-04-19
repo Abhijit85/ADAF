@@ -5,7 +5,7 @@ AMAF (Adaptive Multi-Agent Framework) is a modular pipeline for personalized and
 
 
 ## Pipeline Diagram
-
+![Alt text](RelatE..png)
 
 
 
