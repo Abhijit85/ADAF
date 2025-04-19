@@ -2,6 +2,14 @@
 
 AMAF (Adaptive Multi-Agent Framework) is a modular pipeline for personalized and context-aware table summarization using large language models.
 
+
+
+## Pipeline Diagram
+
+
+
+
+
 ## 🔧 Installation
 ```bash
 git clone https://github.com/Abhijit85/amaf-summarization.git
