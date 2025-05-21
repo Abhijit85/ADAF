@@ -1,15 +1,28 @@
-# TabuSynth agent implementation
-from transformers import TapasTokenizer, TapasForQuestionAnswering
-import pandas as pd
+import openai, os
+from typing import Dict, Any
+from .base import Agent, InputData
 
-tokenizer = TapasTokenizer.from_pretrained("google/tapas-large-finetuned-wtq")
-model = TapasForQuestionAnswering.from_pretrained("google/tapas-large-finetuned-wtq")
+class TabuSynthAgent(Agent):
+    """Extracts key facts from the table."""
+    def __init__(self):
+        super().__init__("TabuSynth")
 
-data = {'Product': ['A', 'B'], 'Q4 Profit': ['$100K', '$200K']}
-table = pd.DataFrame.from_dict(data)
-queries = ["What is the Q4 Profit of Product B?"]
-
-inputs = tokenizer(table=table, queries=queries, return_tensors="pt")
-outputs = model(**inputs)
-logits = outputs.logits
-answer_coordinates, _ = tokenizer.convert_logits_to_predictions(inputs, logits)
+    def run(self, data: InputData, logs: Dict[str, Any]) -> str:
+        table = data.table
+        headers = table.get("header", [])
+        rows = table.get("rows", [])
+        # Format table as markdown
+        md = " | ".join(map(str, headers)) + "\n" + " | ".join(["---"]*len(headers)) + "\n"
+        for r in rows:
+            md += " | ".join(map(str, r)) + "\n"
+        prompt = (
+            f"You are a financial analyst. Here is a table:\n\n{md}\n\n"
+            "List 3‑5 concise factual insights about this data."
+        )
+        response = openai.ChatCompletion.create(
+            model="gpt-4", temperature=0,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        facts = response.choices[0].message.content.strip()
+        logs[self.name] = {"facts": facts}
+        return facts
