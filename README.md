@@ -8,6 +8,33 @@ AMAF (Adaptive Multi-Agent Framework) is a modular pipeline for personalized and
 ![Alt text](Pipeline-ADAF.png)
 
 
+## 📁 Project Structure
+
+```
+amaf_project/
+├── amaf/                 # Python package
+│   ├── __init__.py
+│   ├── core.py           # Common dataclasses / utils
+│   └── agents/
+│       ├── __init__.py
+│       ├── base.py           # Agent ABC + CoT helpers
+│       ├── tabu_synth.py     # Tabular reasoning agent
+│       ├── contextron.py     # Contextual text agent
+│       ├── visura.py         # Visual cue agent
+│       ├── datamorph.py      # Adaptive orchestrator
+│       ├── summa_craft.py    # Personalised summariser
+│       # Optional dynamic helpers (invoked by DataMorph)
+│       ├── trend_analyser.py
+│       └── topk_filter.py
+│
+├── run_amaf.py           # CLI entry‑point
+├── examples/
+│   └── sample_finqa.json # Example input
+└── requirements.txt
+```
+## 🔄 Pipeline Flow
+![Pipeline Flow](diagrams/ADAF_SIngle_Flow.png)
+```
 
 
 ## 🔧 Installation

@@ -1,0 +1,21 @@
+# Minimal MCP protocol for AMAF
+# - Evaluates Jinja2 expressions under `when:`
+# - `input` refers to InputData fields
+steps:
+  # --- Table facts always required
+  - agent: TabuSynth
+
+  # Include contextual analysis if any context text is supplied
+  - agent: Contextron
+    when: "{{ input.context|length > 0 }}"
+
+  # Interpret visuals only if cues available
+  - agent: Visura
+    when: "{{ input.image_cues|length > 0 }}"
+
+  # Optional extra analysis for professional users
+  - agent: TrendAnalyser
+    when: "{{ input.user_profile == 'analyst' }}"
+
+  # Compose personalised summary (always last)
+  - agent: SummaCraft
