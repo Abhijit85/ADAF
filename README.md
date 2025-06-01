@@ -38,10 +38,11 @@ amaf_project/
 
 
 ## 🔧 Installation
+
 ```bash
-git clone https://github.com/Abhijit85/amaf-summarization.git
-cd amaf-summarization
 pip install -r requirements.txt
+export OPENAI_API_KEY="sk-..."  # your key
+python run_amaf.py examples/sample_finqa.json
 ```
 
 ## 🧠 Agent Descriptions
@@ -57,3 +58,7 @@ python agents/summa_craft.py --input data/sample_table.csv --profile "retail inv
 
 ## 🧪 Fine-Tuning
 Use `notebooks/5_Finetune_Summarizer_Finance.ipynb` to fine-tune a FLAN-T5 or Mistral model using LoRA on financial summarization data.
+
+This repository contains a modular Python implementation of the AMAF pipeline
+for personalized, context‑aware table summarization using GPT‑4.
+
