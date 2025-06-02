@@ -1,18 +1,25 @@
-from datasets import load_dataset
 from pathlib import Path
 import json
 import tqdm
 
+out_dir = Path('examples/tatqa')
+out_dir.mkdir(parents=True, exist_ok=True)
 
-out_dir = Path('examples/tatqa'); out_dir.mkdir(parents=True, exist_ok=True)
-ds = load_dataset('next-tat/TAT-QA', 'v1.1', split='dev')
+# Load the local TAT-QA dev split
+in_path = Path('data/TATQA/tatqa_dataset_dev.json')
+with in_path.open() as f:
+    ds = json.load(f)
 
 for ex in tqdm.tqdm(ds, desc='convert'):
     amaf = {
-        'table':   ex['table'],                       # header + rows unchanged
-        'context': ' '.join(ex.get('paragraphs', [])),# merge paragraph list
+        'table': ex['table'],
+        'context': ' '.join(ex.get('paragraphs', [])),
         'image_cues': '',
-        'user_profile': 'general'
+        'user_profile': 'general',
     }
-    (out_dir / f"{ex['id']}.json").write_text(json.dumps(amaf, indent=2))
+    uid = ex.get('id') or ex.get('table', {}).get('uid')
+    if not uid:
+        raise KeyError('No id or table uid found in example')
+    (out_dir / f"{uid}.json").write_text(json.dumps(amaf, indent=2))
+
 print('✅', len(ds), 'files written to', out_dir)
