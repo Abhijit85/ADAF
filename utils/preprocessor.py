@@ -1,14 +1,18 @@
-# Preprocessing utilities
-from transformers import AutoTokenizer
 from datasets import load_dataset
+from pathlib import Path
+import json
+import tqdm
 
-tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-large")
 
-def preprocess(example):
-    prompt = f"Summarize table with context: {example['context']}. Table: {example['table']}. Profile: {example['user_profile']}"
-    inputs = tokenizer(prompt, truncation=True, padding="max_length", max_length=512)
-    outputs = tokenizer(example['summary'], truncation=True, padding="max_length", max_length=128)
-    return {"input_ids": inputs['input_ids'], "labels": outputs['input_ids']}
+out_dir = Path('examples/tatqa'); out_dir.mkdir(parents=True, exist_ok=True)
+ds = load_dataset('next-tat/TAT-QA', 'v1.1', split='dev')
 
-dataset = load_dataset("your/finance_dataset")
-tokenized = dataset.map(preprocess)
+for ex in tqdm.tqdm(ds, desc='convert'):
+    amaf = {
+        'table':   ex['table'],                       # header + rows unchanged
+        'context': ' '.join(ex.get('paragraphs', [])),# merge paragraph list
+        'image_cues': '',
+        'user_profile': 'general'
+    }
+    (out_dir / f"{ex['id']}.json").write_text(json.dumps(amaf, indent=2))
+print('✅', len(ds), 'files written to', out_dir)
