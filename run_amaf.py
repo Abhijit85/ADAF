@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 CLI: run AMAF via an MCP controller.
-Usage:  python run_amaf_mcp.py <input.json>  [-p protocols/basic.yaml]
+Usage:  python run_amaf.py <input.json>  [-p basic.yaml]
 """
 from amaf.agents import (
     TabuSynthAgent,
