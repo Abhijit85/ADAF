@@ -1,3 +1,6 @@
+from ..core import InputData, AgentOutput
+from .base import Agent
+
 class TabuSynthAgent(Agent):
     def __init__(self):
         super().__init__("TabuSynth")

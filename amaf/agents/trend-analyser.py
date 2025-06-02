@@ -1,3 +1,6 @@
+from ..core import InputData, AgentOutput
+from .base import Agent
+
 class TrendAnalyserAgent(Agent):
     def __init__(self): super().__init__("TrendAnalyser")
     def run(self, data, logs):

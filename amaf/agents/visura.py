@@ -1,3 +1,6 @@
+from .base import Agent
+from ..core import InputData, AgentOutput
+
 class VisuraAgent(Agent):
     def __init__(self):
         super().__init__("Visura")
