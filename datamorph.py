@@ -1,3 +1,7 @@
+from amaf.agents.base import Agent
+from amaf.core import AgentOutput
+
+
 class DataMorphAgent(Agent):
     def __init__(self, agents):
         super().__init__("DataMorph")
