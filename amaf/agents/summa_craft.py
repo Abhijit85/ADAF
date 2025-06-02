@@ -17,6 +17,6 @@ class SummaCraftAgent(Agent):
             "analyst": "Assume finance expertise; focus on implications and metrics…",
         }[data.user_profile]
 
-        prompt = f"{template}\n\nSOURCE NOTES:\n{bundle}\n\nFinal summary:""
+        prompt = f"{template}\n\nSOURCE NOTES:\n{bundle}\n\nFinal summary:"
         summary = self._chat(prompt, temperature=.2)
         return AgentOutput(cot="(omitted)", result=summary.strip())

@@ -1,5 +1,6 @@
 # amaf/agents/__init__.py
-from .base import Agent, InputData, AgentOutput
+from .base import Agent
+from ..core import InputData, AgentOutput
 from .tabu_synth import TabuSynthAgent
 from .contextron import ContextronAgent
 from .visura import VisuraAgent

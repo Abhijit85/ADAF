@@ -2,7 +2,8 @@ from pathlib import Path
 import yaml
 import jinja2
 from typing import Dict
-from .base import Agent, InputData, AgentOutput   # Please make sure AgentOutput is imported
+from .base import Agent
+from ..core import InputData, AgentOutput
 
 
 class MCPController(Agent):
