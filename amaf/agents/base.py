@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Any
 from ..core import InputData, AgentOutput
-import openai, os
+import openai
+import os
+
 
 class Agent(ABC):
     name: str
@@ -19,4 +21,6 @@ class Agent(ABC):
         return resp.choices[0].message.content.strip()
 
     @abstractmethod
-    def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:...
+    def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
+        pass
+    

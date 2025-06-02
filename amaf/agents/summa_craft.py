@@ -1,3 +1,6 @@
+from ..core import AgentOutput
+from .base import Agent
+
 class SummaCraftAgent(Agent):
     def __init__(self): super().__init__("SummaCraft")
 
