@@ -12,7 +12,6 @@ class TabuSynthAgent(Agent):
     def __init__(self) -> None:
         super().__init__("TabuSynth")
 
-    # ------------------------------------------------------------------ #
     def _deduce_header_rows(self, tbl: Dict[str, Any]) -> tuple[list, list]:
         """Return (header, rows) regardless of schema."""
         # Case 1 – native {header:…, rows:…}
@@ -29,7 +28,6 @@ class TabuSynthAgent(Agent):
 
         return arr[0], arr[1:]  # first row = header, rest = body
 
-    # ------------------------------------------------------------------ #
     def _markdown(self, header, rows) -> str:
         if not header and not rows:
             return "(empty table)"
@@ -42,7 +40,6 @@ class TabuSynthAgent(Agent):
         )
         return md
 
-    # ------------------------------------------------------------------ #
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
         header, rows = self._deduce_header_rows(data.table)
         md_table = self._markdown(header, rows)
