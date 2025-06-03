@@ -11,9 +11,15 @@ with in_path.open() as f:
     ds = json.load(f)
 
 for ex in tqdm.tqdm(ds, desc='convert'):
+    # paragraphs in the JSON file are a list of dicts with a "text" field.
+    # join them into one context string.
+    context_parts = [
+        p.get('text', '') if isinstance(p, dict) else str(p)
+        for p in ex.get('paragraphs', [])
+    ]
     amaf = {
         'table': ex['table'],
-        'context': ' '.join(ex.get('paragraphs', [])),
+        'context': ' '.join(context_parts),
         'image_cues': '',
         'user_profile': 'general',
     }

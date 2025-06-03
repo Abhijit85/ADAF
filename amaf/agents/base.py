@@ -10,10 +10,13 @@ class Agent(ABC):
 
     def __init__(self, name: str):
         self.name = name
-        self.model = os.getenv("AMAF_MODEL", "gpt-4")  # override via env
+        # override default model via env or fallback to valid default
+        default_model = "gpt-3.5-turbo"
+        self.model = os.getenv("AMAF_MODEL", default_model)
+    # ensure the OPENAI_API_KEY is set in the environment
 
     def _chat(self, prompt: str, temperature: float = .0) -> str:
-        resp = openai.ChatCompletion.create(
+        resp = openai.chat.completions.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
