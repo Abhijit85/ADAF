@@ -6,21 +6,31 @@
 # This script is useful for evaluating the performance of a model on the TAT-QA dataset
 # in terms of how well it captures the answers in its summaries.
 
-from datasets import load_dataset
+import json
 from pathlib import Path
 import re
 
-ds = load_dataset('next-tat/TAT-QA', 'v1.1', split='dev')
+# Load the local TAT-QA development split
+ds_path = Path('data/TATQA/tatqa_dataset_dev.json')
+
+with ds_path.open() as f:
+    ds = json.load(f)
 log_dir = Path('out/tatqa_logs')
 
 total = hits = 0
 for ex in ds:
-    summ_path = log_dir / f"{ex['id']}_out.txt"
+    uid = ex.get('id') or ex.get('table', {}).get('uid')
+    if not uid:
+        continue
+    summ_path = log_dir / f"{uid}_out.txt"
     if not summ_path.exists():
         continue
     summary = summ_path.read_text().split('=== FINAL SUMMARY ===')[-1].lower()
-    for qa in ex['qa_pairs']:
-        ans = str(qa['answer']).lower().strip()
+    for qa in ex.get('questions', []):
+        ans = qa.get('answer')
+        if isinstance(ans, list):
+            ans = ' '.join(str(a) for a in ans)
+        ans = str(ans).lower().strip()
         total += 1
         if ans and re.search(re.escape(ans), summary):
             hits += 1
