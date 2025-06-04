@@ -1,20 +1,23 @@
-# amaf/agents/tabu_synth.py  – robust to TAT-QA schema
+# amaf/agents/tabu_synth.py
+
+from __future__ import annotations
 
 import json
-import re
 import logging
-from typing import Dict, Any, List
+import re
+from typing import Any, Dict, List
 
 from ..core import AgentOutput, InputData
 from .base import Agent
 
 
 class TabuSynthAgent(Agent):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("TabuSynth")
 
-    # ── schema-agnostic header/rows ------------------------------------
-    def _deduce_header_rows(self, tbl: Dict[str, Any]) -> tuple[list, list]:
+    # ── schema‑agnostic header/rows ------------------------------------------
+    @staticmethod
+    def _deduce_header_rows(tbl: Dict[str, Any]) -> tuple[List[str], List[List[str]]]:
         hdr, rows = tbl.get("header"), tbl.get("rows")
         if hdr is not None and rows is not None:
             return hdr, rows
@@ -22,47 +25,63 @@ class TabuSynthAgent(Agent):
         arr = [r for r in arr if any(str(c).strip() for c in r)]
         return (arr[0], arr[1:]) if arr else ([], [])
 
-    # ── markdown builder ----------------------------------------------
-    def _markdown(self, header, rows) -> str:
+    # ── markdown builder -----------------------------------------------------
+    @staticmethod
+    def _markdown(header: List[str], rows: List[List[str]]) -> str:
         if not header and not rows:
             return "(empty table)"
         if not header:
             header = ["" for _ in rows[0]]
         return (
             " | ".join(map(str, header)) + "\n"
-            " | ".join(["---"] * len(header)) + "\n"
+            + " | ".join(["---"] * len(header)) + "\n"
             + "\n".join(" | ".join(map(str, r)) for r in rows)
         )
 
-    # ── main run -------------------------------------------------------
-    def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
+    # ── main run -------------------------------------------------------------
+    def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:  # noqa: D401
+        """Analyse the table and output structured forensic insights."""
         header, rows = self._deduce_header_rows(data.table)
         md_table = self._markdown(header, rows)
 
         prompt = (
-            "You are a forensic accountant auditing table.\n"
-            "RULES\n"
-            "• Use ONLY numbers that appear verbatim in the table.\n"
-            "• No invented columns (GDP, population, etc.).\n\n"
-            f"TABLE (Markdown):\n{md_table}\n\n"
-            "TASK\n"
-            "1. Think step-by-step about relevant quantitative facts.\n"
-            "2. Select **6-10** insights; each bullet must quote the exact "
-            "numbers and units.\n"
-            "3. Return VALID JSON ONLY with keys `reasoning` and `bullets`.\n"
+            "You are a senior forensic accountant specialising in fraud detection.\n"
+            "Your job is to review a financial table and surface the most material "
+            "quantitative findings.\n\n"
+            "### RULES\n"
+            "1. **Use ONLY numbers that appear verbatim in the table.** No invented\n"
+            "   columns such as GDP, population, etc.\n"
+            "2. **Tag each finding** with one of the following brackets: [TREND],\n"
+            "   [RATIO], [ANOMALY], [OUTLIER]. Pick the most relevant tag.\n"
+            "3. **Quote numbers exactly** (including units) and, when helpful, show\n"
+            "   calculations using Δ (difference) or → (before→after) notation.\n"
+            "4. Provide **6–10 concise bullets** that stand on their own.\n"
+            "5. Return **VALID JSON ONLY** with keys `reasoning` and `bullets`.\n"
             "   Example:\n"
-            '{ "reasoning": "...", "bullets": ["- cash ↓0.2 (16.0→15.8)", "..."] }'
+            "   { \"reasoning\": \"...\",\n"
+            "     \"bullets\": [\"- [TREND] cash ↓0.2 (16.0→15.8)\", ...] }\n"
+            "6. Do NOT wrap the JSON in markdown fences.\n"
+            "7. You may use an INTERNAL scratchpad between \"#####\" markers to\n"
+            "   think step‑by‑step; this part will be removed automatically.\n\n"
+            "TABLE (Markdown):\n" + md_table + "\n\n"
+            "##### INTERNAL SCRATCHPAD (think here, will be hidden)\n"
+            "#####\n\n"
+            "Now output the final JSON object:\n"
         )
 
-        raw = self._chat(prompt, temperature=0).strip()
-        json_txt = re.sub(r"^```json\s*|\s*```$", "", raw, flags=re.DOTALL)
+        # Temperature slightly above zero for richer insights but still stable.
+        raw = self._chat(prompt, temperature=0.2).strip()
+
+        # Remove scratchpad if model kept delimiters but echoed them.
+        raw = re.sub(r"#####.*?#####", "", raw, flags=re.DOTALL)
+        json_txt = re.sub(r"^```json\s*|^```\s*|```$", "", raw, flags=re.DOTALL)
 
         try:
             obj = json.loads(json_txt)
             reasoning = obj.get("reasoning", "").strip()
             bullets = "\n".join(obj.get("bullets", [])).strip()
         except json.JSONDecodeError:
-            logging.warning("TabuSynth: JSON parse failed")
+            logging.warning("TabuSynth: JSON parse failed; returning raw text")
             reasoning, bullets = "", json_txt.strip()
 
         out = AgentOutput(cot=reasoning, result=bullets)
