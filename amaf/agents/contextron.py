@@ -1,43 +1,64 @@
-from typing import Dict, Any
+# amaf/agents/contextron.py
+
+from __future__ import annotations
+
+import re
+from typing import Any, Dict
+
 from ..core import AgentOutput, InputData
 from .base import Agent
 
 
 class ContextronAgent(Agent):
-    def __init__(self):
+    """Summarise free‑form context into tagged insights."""
+
+    TAG_SET = "[DEFINITION] [SCOPE] [SOURCE] [NOTE] [WARNING]"
+
+    def __init__(self) -> None:
         super().__init__("Contextron")
 
+    # ── main run ────────────────────────────────────────────────────────────
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
-        # ── 1. No context? early-return ───────────────────────────────────
+        # 1. No context? early‑return
         if not data.context:
             out = AgentOutput(cot="(no context)", result="")
             logs[self.name] = out.__dict__
             return out
 
-        # ── 2. Build the prompt ──────────────────────────────────────────
+        # 2. Build prompt
         prompt = (
-            f"Context:\n{data.context}\n\n"
-            "Summarise only the information that clarifies the table above.\n"
-            "First write a short reasoning paragraph, leave a blank line, "
-            "then list the insights as bullet points."
+            f"CONTEXT (verbatim):\n{data.context}\n\n"
+            "You are an analyst helping auditors interpret the above context in"
+            " relation to a financial table.  Extract only details that *directly"
+            " clarify* numbers, columns, time ranges, or caveats in the table.\n\n"
+            "### OUTPUT LAYOUT (strict)\n"
+            "<one concise reasoning paragraph>\n"
+            "\n"  # single blank line
+            "<3‑7 bullets, each starting with exactly one tag from"
+            f" {self.TAG_SET}>\n\n"
+            "### RULES\n"
+            "1. Never invent data not present in the context.\n"
+            "2. Quote important phrases in \"double quotes\".\n"
+            "3. Keep bullet text ≤20 words.\n"
+            "4. You may think between ##### markers; that text will be removed.\n\n"
+            "##### INTERNAL SCRATCHPAD (think here)\n#####\n\n"
+            "Now generate the final answer:"
         )
 
-        cot_and_ins = self._chat(prompt)  # default temperature = 0
+        cot_and_ins = self._chat(prompt, temperature=0.25)
 
-        # ── 3. Robustly separate CoT and insights ────────────────────────
+        # 3. Remove any internal scratchpad echoed back
+        cot_and_ins = re.sub(r"#####.*?#####", "", cot_and_ins, flags=re.DOTALL).strip()
+
+        # 4. Separate CoT and insights
         parts = cot_and_ins.split("\n\n", 1)
         if len(parts) == 2:
             cot, insight_block = parts
-        else:                              # model returned single block
-            cot, insight_block = "", cot_and_ins
+        else:
+            cot, insight_block = "", cot_and_ins  # model didn't insert blank line
 
-        out = AgentOutput(
-            cot=cot.strip(),
-            result=insight_block.strip()
-        )
+        out = AgentOutput(cot=cot.strip(), result=insight_block.strip())
 
-        # ── 4. Record structured + raw in the shared log ────────────────
-        logs[self.name] = out.__dict__
-        logs[self.name]["raw"] = cot_and_ins
-
+        # 5. Log raw output for debugging
+        logs[self.name] = out.__dict__ | {"raw": cot_and_ins}
         return out
