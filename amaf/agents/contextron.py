@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any, Dict
 
 from ..core import AgentOutput, InputData
 from .base import Agent
+
+PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "contextron.txt"
 
 
 class ContextronAgent(Agent):
@@ -25,26 +28,10 @@ class ContextronAgent(Agent):
             logs[self.name] = out.__dict__
             return out
 
-        # 2. Build prompt
-        prompt = (
-            f"CONTEXT (verbatim):\n{data.context}\n\n"
-            "You are an analyst helping auditors interpret the above context in"
-            " relation to a financial table.  Extract only details that *directly"
-            " clarify* numbers, columns, time ranges, or caveats in the table.\n\n"
-            "### OUTPUT LAYOUT (strict)\n"
-            "<one concise reasoning paragraph>\n"
-            "\n"  # single blank line
-            "<3‑7 bullets, each starting with exactly one tag from"
-            f" {self.TAG_SET}>\n\n"
-            "### RULES\n"
-            "1. Never invent data not present in the context.\n"
-            "2. Quote important phrases in \"double quotes\".\n"
-            "3. Keep bullet text ≤20 words.\n"
-            "4. You may think between ##### markers; that text will be removed.\n\n"
-            "##### INTERNAL SCRATCHPAD (think here)\n#####\n\n"
-            "Now generate the final answer:"
-        )
-
+        # 2. Build prompt from external template
+        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
+        
         cot_and_ins = self._chat(prompt, temperature=0.25)
 
         # 3. Remove any internal scratchpad echoed back
