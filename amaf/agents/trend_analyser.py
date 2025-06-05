@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any, Dict
 
 from ..core import AgentOutput, InputData
 from .base import Agent
-
+PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "trend_analyser.txt"
 
 class TrendAnalyserAgent(Agent):
     """Identify and explain the two most significant numeric trends."""
@@ -24,24 +25,9 @@ class TrendAnalyserAgent(Agent):
             logs[self.name] = out.__dict__
             return out
 
-        # 2. Build prompt
-        prompt = (
-            f"FACTS (verbatim from table):\n{facts}\n\n"
-            "You are a financial analyst asked to surface the *two* numeric trends\n"
-            "that matter most for decision‑makers.  A *trend* is a notable increase\n"
-            "or decrease implied by the numbers (e.g., 2‑year change, YoY delta,\n"
-            "ratio shift).\n\n"
-            "### OUTPUT LAYOUT (strict)\n"
-            "<one short reasoning paragraph>\n\n"
-            "<exactly 2 bullets, each starting with ▲ or ▼, quoting numbers>\n\n"
-            "### RULES\n"
-            "1. Compute % change when a fact shows A→B or A/B.\n"
-            "2. Quote all numbers & units from the facts; do *not* invent.\n"
-            "3. Bullet ≤ 25 words.\n"
-            "4. Think between ##### markers; that text will be removed.\n\n"
-            "##### INTERNAL SCRATCHPAD (think here)\n#####\n\n"
-            "Now generate the final answer:"
-        )
+        # 2. Build prompt from external template
+        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt = prompt_template.format(facts=facts)
 
         cot_and_bullets = self._chat(prompt, temperature=0.25)
 
