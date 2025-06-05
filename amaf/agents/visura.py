@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any, Dict
 
 from ..core import AgentOutput, InputData
 from .base import Agent
+PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "visura.txt"
 
 
 class VisuraAgent(Agent):
@@ -23,21 +25,9 @@ class VisuraAgent(Agent):
             logs[self.name] = out.__dict__
             return out
 
-        # 2. Build prompt
-        prompt = (
-            f"IMAGE DESCRIPTION (verbatim):\n{data.image_cues}\n\n"
-            "You are an investigative analyst interpreting the image for auditors.\n"
-            "### OUTPUT FORMAT (strict)\n"
-            "<one short reasoning paragraph>\n\n"
-            "<≤2 sentences conveying the single most important takeaway>\n\n"
-            "### RULES\n"
-            "1. Quote any numbers/units exactly as given (e.g., \"42 kg\").\n"
-            "2. Do NOT invent facts absent from the description.\n"
-            "3. Keep each public sentence ≤20 words.\n"
-            "4. You may think inside ##### blocks; that text will be removed.\n\n"
-            "##### INTERNAL SCRATCHPAD (think here)\n#####\n\n"
-            "Now generate the final answer:"
-        )
+        # 2. Build prompt from external template
+        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt = prompt_template.format(image_cues=data.image_cues)
 
         cot_and_msg = self._chat(prompt, temperature=0.3)
 

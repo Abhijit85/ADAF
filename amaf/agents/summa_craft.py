@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 import textwrap
 from typing import Any, Dict
 
 from ..core import AgentOutput, InputData
 from .base import Agent
+PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "summa_craft.txt"
 
 
 # ───────── helpers ─────────────────────────────────────────────────────
@@ -61,25 +63,13 @@ class SummaCraftAgent(Agent):
             ),
         }
         template = templates.get(data.user_profile, templates["general"])
-
-        # 3. Build prompt with INTERNAL scratchpad
-        prompt = textwrap.dedent(f"""
-            {template}
-
-            SOURCE NOTES (verbatim):
-            {bundle_for_reasoning}
-
-            TASK
-            ----
-            1. ##### Think in detail here to pick 3-5 decision-relevant points
-               and craft a narrative. This block will be removed. #####
-            2. Output ONLY the final public summary:
-               • one-sentence overview
-               • 3–4 numbered bullets
-            3. Quote every number exactly as in the notes; do NOT invent data.
-
-            Begin now:
-        """)
+        
+        # 3. Build prompt from external template
+        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt = prompt_template.format(
+            template=template,
+            bundle_for_reasoning=bundle_for_reasoning,
+        )
 
         # 4. Call LLM and post-process
         raw_resp = self._chat(prompt, temperature=0).strip()
