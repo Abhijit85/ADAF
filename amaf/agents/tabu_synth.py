@@ -5,11 +5,12 @@ from __future__ import annotations
 import json
 import logging
 import re
+from pathlib import Path
 from typing import Any, Dict, List
 
 from ..core import AgentOutput, InputData
 from .base import Agent
-
+PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "tabu_synth.txt"
 
 class TabuSynthAgent(Agent):
     def __init__(self) -> None:
@@ -44,30 +45,8 @@ class TabuSynthAgent(Agent):
         header, rows = self._deduce_header_rows(data.table)
         md_table = self._markdown(header, rows)
 
-        prompt = (
-            "You are a senior forensic accountant specialising in fraud detection.\n"
-            "Your job is to review a financial table and surface the most material "
-            "quantitative findings.\n\n"
-            "### RULES\n"
-            "1. **Use ONLY numbers that appear verbatim in the table.** No invented\n"
-            "   columns such as GDP, population, etc.\n"
-            "2. **Tag each finding** with one of the following brackets: [TREND],\n"
-            "   [RATIO], [ANOMALY], [OUTLIER]. Pick the most relevant tag.\n"
-            "3. **Quote numbers exactly** (including units) and, when helpful, show\n"
-            "   calculations using Δ (difference) or → (before→after) notation.\n"
-            "4. Provide **6–10 concise bullets** that stand on their own.\n"
-            "5. Return **VALID JSON ONLY** with keys `reasoning` and `bullets`.\n"
-            "   Example:\n"
-            "   { \"reasoning\": \"...\",\n"
-            "     \"bullets\": [\"- [TREND] cash ↓0.2 (16.0→15.8)\", ...] }\n"
-            "6. Do NOT wrap the JSON in markdown fences.\n"
-            "7. You may use an INTERNAL scratchpad between \"#####\" markers to\n"
-            "   think step‑by‑step; this part will be removed automatically.\n\n"
-            "TABLE (Markdown):\n" + md_table + "\n\n"
-            "##### INTERNAL SCRATCHPAD (think here, will be hidden)\n"
-            "#####\n\n"
-            "Now output the final JSON object:\n"
-        )
+        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt = prompt_template.format(md_table=md_table)
 
         # Temperature slightly above zero for richer insights but still stable.
         raw = self._chat(prompt, temperature=0.2).strip()
