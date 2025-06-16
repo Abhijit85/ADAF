@@ -15,9 +15,10 @@ ds_path = Path('data/TATQA/tatqa_dataset_dev.json')
 
 with ds_path.open() as f:
     ds = json.load(f)
-log_dir = Path('out/tatqa_logs')
+log_dir = Path('out/tatqa_logs/15_06_2025')
 
 total = hits = 0
+count = 0
 for ex in ds:
     uid = ex.get('id') or ex.get('table', {}).get('uid')
     if not uid:
@@ -34,4 +35,7 @@ for ex in ds:
         total += 1
         if ans and re.search(re.escape(ans), summary):
             hits += 1
+    count += 1
+    if count > 129:
+        break
 print(f"Coverage hit‑rate: {hits}/{total}  ->  {hits/total:.2%}")

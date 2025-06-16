@@ -11,7 +11,7 @@ class Agent(ABC):
     def __init__(self, name: str):
         self.name = name
         # override default model via env or fallback to valid default
-        default_model = "gpt-3.5-turbo"
+        default_model = "gpt-4"
         self.model = os.getenv("AMAF_MODEL", default_model)
     # ensure the OPENAI_API_KEY is set in the environment
 

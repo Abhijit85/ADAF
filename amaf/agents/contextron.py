@@ -30,7 +30,7 @@ class ContextronAgent(Agent):
 
         # 2. Build prompt from external template
         prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
-        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
+        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET, questions=data.questions)
         
         cot_and_ins = self._chat(prompt, temperature=0.25)
 
