@@ -10,6 +10,7 @@ class InputData:
     image_cues: str = ""
     user_profile: str = "general"
     questions: str = ""
+    table_context: str = ""
 
 
 @dataclass
