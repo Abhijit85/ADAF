@@ -49,11 +49,9 @@ class SummaCraftAgent(Agent):
         # 2. Audience-specific template
         templates = {
             "general": (
-                "Answer the questions first using the table and context."
-                "Write a concise analysis ≈150 words: start with one-sentence "
-                "overview, then 3–4 numbered bullets on key quantitative and "
-                "contextual insights ."
-            ),
+                "Answer the questions first using the information extracted by TabuSynth and contextron."
+                "Put them in the same order as the questions."
+                ),
             "retail investor": (
                 "Explain in plain language why these figures matter to a non-expert "
                 "investor. Use ≤180 words, same structure."
