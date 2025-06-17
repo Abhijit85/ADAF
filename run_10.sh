@@ -6,7 +6,8 @@ for f in examples/tatqa/*.json; do
     python run_amaf.py "$f" > out/tatqa_logs/15_06_2025/"${base}_out.txt"
     echo "Processed $base"
     count=$((count + 1))
-    if [ $count -gt 30 ]; then
+    if [ $count -gt 5 ]; then
         break
     fi
 done
+

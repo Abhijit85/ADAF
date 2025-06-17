@@ -23,14 +23,19 @@ class ContextronAgent(Agent):
     # ── main run ────────────────────────────────────────────────────────────
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
         # 1. No context? early‑return
-        if not data.context:
+        if not data.context and not data.table_context:
             out = AgentOutput(cot="(no context)", result="")
             logs[self.name] = out.__dict__
             return out
 
         # 2. Build prompt from external template
         prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
-        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET, questions=data.questions)
+        prompt = prompt_template.format(
+            context=data.context,
+            table_context=data.table_context,
+            tag_set=self.TAG_SET,
+            questions=data.questions
+        )
         
         cot_and_ins = self._chat(prompt, temperature=0.25)
 

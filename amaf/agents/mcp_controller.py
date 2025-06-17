@@ -30,10 +30,33 @@ class MCPController(Agent):
     # ---------- main ----------
     def run(self, data: InputData, logs: Dict) -> str:
         summary = ""
+        # Initialize a variable to hold TabuSynth's output
+        tabu_synth_output = "" 
+
         for step in self.proto["steps"]:
             agent_name = step["agent"]
             if self._cond_ok(step.get("when", ""), data):
-                out: AgentOutput = self.registry[agent_name].run(data, logs)
+                # If the agent is TabuSynth, capture its result
+                if agent_name == "TabuSynth":
+                    out: AgentOutput = self.registry[agent_name].run(data, logs)
+                    tabu_synth_output = out.result  # Capture the result
+                
+                # If the agent is Contextron, inject the captured table context
+                elif agent_name == "Contextron" and tabu_synth_output:
+                    # Create a new InputData instance with updated table_context
+                    # to avoid modifying the original 'data' object directly for this run
+                    updated_data = InputData(
+                        table=data.table,
+                        context=data.context,
+                        image_cues=data.image_cues,
+                        user_profile=data.user_profile,
+                        questions=data.questions,
+                        table_context=tabu_synth_output # Inject the captured context
+                    )
+                    out: AgentOutput = self.registry[agent_name].run(updated_data, logs)
+                else:
+                    out: AgentOutput = self.registry[agent_name].run(data, logs)
+                
                 # keep latest summary if the agent supplies one
                 if out.result:
                     summary = out.result

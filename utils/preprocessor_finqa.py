@@ -46,4 +46,4 @@ for ex in tqdm.tqdm(ds, desc='Converting FinQA examples'):
     # Write to file
     (out_dir / f"{uid}.json").write_text(json.dumps(amaf, indent=2))
 
-print('✅', len(ds), 'files written to', out_dir) 
+print('✅', len(ds), 'files written to', out_dir)
