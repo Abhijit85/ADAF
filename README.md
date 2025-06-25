@@ -50,7 +50,8 @@ python run_amaf.py examples/sample_finqa.json
   prompt template resides in `amaf/prompts/tabu_synth.txt`.
 - **Contextron**: Extracts contextual metadata (e.g., titles, notes, captions). The
   prompt template resides in `amaf/prompts/contextron.txt`.
-- **Visura**: Converts visual cues (e.g., color/bold/highlight) to semantic tags.
+- **Visura**: Converts visual cues to semantic tags.  It now also accepts an
+  `image_path` and performs OCR before summarising the visual.
   The prompt template resides in `amaf/prompts/visura.txt`.
 - **TrendAnalyser**: Spots the two most important numeric trends.
   The prompt template resides in `amaf/prompts/trend_analyser.txt`.
