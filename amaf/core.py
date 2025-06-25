@@ -8,6 +8,7 @@ class InputData:
     table: Dict[str, Any]
     context: str = ""
     image_cues: str = ""
+    image_path: str = ""
     user_profile: str = "general"
 
 
