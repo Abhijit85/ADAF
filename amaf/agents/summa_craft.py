@@ -9,7 +9,6 @@ from typing import Any, Dict
 
 from ..core import AgentOutput, InputData
 from .base import Agent
-PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "summa_craft.txt"
 
 
 # ───────── helpers ─────────────────────────────────────────────────────
@@ -23,8 +22,8 @@ def canonicalise_numbers(text: str) -> str:
 class SummaCraftAgent(Agent):
     """Synthesize upstream notes into a concise, audience-aware summary."""
 
-    def __init__(self) -> None:
-        super().__init__("SummaCraft")
+    def __init__(self, dataset: str = None) -> None:
+        super().__init__("SummaCraft", dataset)
 
     # ------------------------------------------------------------------
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
@@ -33,7 +32,7 @@ class SummaCraftAgent(Agent):
         for key in ("TabuSynth", "Contextron", "Visura",
                     "TrendAnalyser", "TopKFilter"):
             txt = logs.get(key, {}).get("result", "")
-            txt = re.sub(r"^\[\w+] *", "", txt).strip()          # drop “[Agent]”
+            txt = re.sub(r"^\[\w+] *", "", txt).strip()          # drop "[Agent]"
             if txt:
                 raw_blocks.append(txt)
 
@@ -65,7 +64,8 @@ class SummaCraftAgent(Agent):
         template = templates.get(data.user_profile, templates["general"])
         
         # 3. Build prompt from external template
-        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt_file = self.get_prompt_path("summa_craft.txt")
+        prompt_template = prompt_file.read_text(encoding="utf-8")
         prompt = prompt_template.format(
             template=template,
             bundle_for_reasoning=bundle_for_reasoning,

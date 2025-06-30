@@ -8,13 +8,12 @@ from typing import Any, Dict
 
 from ..core import AgentOutput, InputData
 from .base import Agent
-PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "trend_analyser.txt"
 
 class TrendAnalyserAgent(Agent):
     """Identify and explain the two most significant numeric trends."""
 
-    def __init__(self) -> None:
-        super().__init__("TrendAnalyser")
+    def __init__(self, dataset: str = None) -> None:
+        super().__init__("TrendAnalyser", dataset)
 
     # ── main run ────────────────────────────────────────────────────────────
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
@@ -26,7 +25,8 @@ class TrendAnalyserAgent(Agent):
             return out
 
         # 2. Build prompt from external template
-        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
+        prompt_file = self.get_prompt_path("trend_analyser.txt")
+        prompt_template = prompt_file.read_text(encoding="utf-8")
         prompt = prompt_template.format(facts=facts)
 
         cot_and_bullets = self._chat(prompt, temperature=0.25)

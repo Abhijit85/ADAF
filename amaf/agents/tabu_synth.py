@@ -10,19 +10,24 @@ from typing import Any, Dict, List
 
 from ..core import AgentOutput, InputData
 from .base import Agent
-PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "tabu_synth.txt"
 
 class TabuSynthAgent(Agent):
-    def __init__(self) -> None:
-        super().__init__("TabuSynth")
+    def __init__(self, dataset: str = None) -> None:
+        super().__init__("TabuSynth", dataset)
 
     # ── schema‑agnostic header/rows ------------------------------------------
     @staticmethod
-    def _deduce_header_rows(tbl: Dict[str, Any]) -> tuple[List[str], List[List[str]]]:
-        hdr, rows = tbl.get("header"), tbl.get("rows")
-        if hdr is not None and rows is not None:
-            return hdr, rows
-        arr: List[List[str]] = tbl.get("table", [])
+    def _deduce_header_rows(tbl: Any) -> tuple[List[str], List[List[str]]]:
+        if isinstance(tbl, dict):
+            hdr, rows = tbl.get("header"), tbl.get("rows")
+            if hdr is not None and rows is not None:
+                return hdr, rows
+            arr: List[List[str]] = tbl.get("table", [])
+        elif isinstance(tbl, list):
+            arr: List[List[str]] = tbl
+        else:
+            return ([], [])
+
         arr = [r for r in arr if any(str(c).strip() for c in r)]
         return (arr[0], arr[1:]) if arr else ([], [])
 
@@ -45,8 +50,19 @@ class TabuSynthAgent(Agent):
         header, rows = self._deduce_header_rows(data.table)
         md_table = self._markdown(header, rows)
 
-        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
-        prompt = prompt_template.format(md_table=md_table)
+        prompt_file = self.get_prompt_path("tabu_synth.txt")
+        prompt_template = prompt_file.read_text(encoding="utf-8")
+        
+        # Check if this is the new TATQA format with table_str and questions
+        if "{table_str}" in prompt_template and "{questions}" in prompt_template:
+            # Convert table to simple string format for TATQA
+            table_str = "\n".join([" | ".join(map(str, row)) for row in [header] + rows if row])
+            # Handle questions - use question field if available, otherwise empty string
+            questions = getattr(data, 'question', '') or ''
+            prompt = prompt_template.format(table_str=table_str, questions=questions)
+        else:
+            # Use the original format
+            prompt = prompt_template.format(md_table=md_table)
 
         # Temperature slightly above zero for richer insights but still stable.
         raw = self._chat(prompt, temperature=0.2).strip()

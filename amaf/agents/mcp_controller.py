@@ -8,10 +8,11 @@ from ..core import InputData, AgentOutput
 
 class MCPController(Agent):
     """YAML/Jinja2-driven orchestrator."""
-    def __init__(self, proto_file: str, registry: Dict[str, Agent]):
-        super().__init__("MCP")
+    def __init__(self, proto_file: str, registry: Dict[str, Agent], dataset: str = None):
+        super().__init__("MCP", dataset)
         self.proto = yaml.safe_load(Path(proto_file).read_text())
         self.registry = registry
+        self.dataset = dataset
         self.env = jinja2.Environment()
 
     # ---------- helpers ----------
@@ -38,4 +39,3 @@ class MCPController(Agent):
                 if out.result:
                     summary = out.result
         return summary
-    

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 CLI: run AMAF via an MCP controller.
-Usage:  python run_amaf.py <input.json>  [-p basic.yaml]
+Usage:  python run_amaf.py <input.json>  [-p basic.yaml] [-d dataset]
 """
 from amaf.agents import (
     TabuSynthAgent,
@@ -28,6 +28,9 @@ def main():
     ap.add_argument("-p", "--protocol", 
                     default="basic.yaml",  # YAML file path
                     help="YAML protocol file for MCP")
+    ap.add_argument("-d", "--dataset", 
+                    default=None,
+                    help="Dataset name (mmqa, tatqa, finqa) for dataset-specific prompts")
     
     args = ap.parse_args()
 
@@ -42,16 +45,16 @@ def main():
 
     # -------- build registry of agents
     registry = {
-        "TabuSynth":   TabuSynthAgent(),
-        "Contextron":  ContextronAgent(),
-        "Visura":      VisuraAgent(),
-        "SummaCraft":  SummaCraftAgent(),
+        "TabuSynth":   TabuSynthAgent(dataset=args.dataset),
+        "Contextron":  ContextronAgent(dataset=args.dataset),
+        "Visura":      VisuraAgent(dataset=args.dataset),
+        "SummaCraft":  SummaCraftAgent(dataset=args.dataset),
         # add TrendAnalyser / TopKFilter if referenced in YAML
-        "TrendAnalyser": TrendAnalyserAgent(),
+        "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset),
     }
 
     # -------- run MCP
-    controller = MCPController(args.protocol, registry)
+    controller = MCPController(args.protocol, registry, dataset=args.dataset)
     logs = {}
     summary = controller.run(data, logs)
 

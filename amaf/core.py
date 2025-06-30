@@ -1,6 +1,6 @@
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Dict, Any
+from dataclasses import dataclass, field
+from typing import Dict, Any, List
 
 
 @dataclass
@@ -8,8 +8,9 @@ class InputData:
     table: Dict[str, Any]
     context: str = ""
     image_cues: str = ""
-    image_path: str = ""
+    image_path: List[str] = field(default_factory=list)
     user_profile: str = "general"
+    question: str = ""
 
 
 @dataclass

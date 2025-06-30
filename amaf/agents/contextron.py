@@ -9,16 +9,14 @@ from typing import Any, Dict
 from ..core import AgentOutput, InputData
 from .base import Agent
 
-PROMPT_FILE = Path(__file__).resolve().parent.parent / "prompts" / "contextron.txt"
-
 
 class ContextronAgent(Agent):
     """Summarise free‑form context into tagged insights."""
 
     TAG_SET = "[DEFINITION] [SCOPE] [SOURCE] [NOTE] [WARNING]"
 
-    def __init__(self) -> None:
-        super().__init__("Contextron")
+    def __init__(self, dataset: str = None) -> None:
+        super().__init__("Contextron", dataset)
 
     # ── main run ────────────────────────────────────────────────────────────
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
@@ -29,8 +27,22 @@ class ContextronAgent(Agent):
             return out
 
         # 2. Build prompt from external template
-        prompt_template = PROMPT_FILE.read_text(encoding="utf-8")
-        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
+        prompt_file = self.get_prompt_path("contextron.txt")
+        prompt_template = prompt_file.read_text(encoding="utf-8")
+        
+        # Check if this is the new TATQA format with table_context and questions
+        if "{table_context}" in prompt_template and "{questions}" in prompt_template:
+            # Get table context from TabuSynth if available
+            table_context = logs.get("TabuSynth", {}).get("result", "") or "(no table analysis available)"
+            questions = getattr(data, 'question', '') or ''
+            prompt = prompt_template.format(
+                context=data.context, 
+                table_context=table_context,
+                questions=questions
+            )
+        else:
+            # Use the original format
+            prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
         
         cot_and_ins = self._chat(prompt, temperature=0.25)
 
