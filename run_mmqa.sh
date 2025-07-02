@@ -1,14 +1,27 @@
-#! /bin/bash
-mkdir -p out/mmqa_logs
+#!/usr/bin/env bash
+# Run AMAF on MMQA examples into out/mmqa_logs/<RUN_ID>/
+
+DATASET="mmqa"
+RUN_ID="${RUN_ID:-$(date +%Y%m%d_%H%M%S)}"
+
+LOG_DIR="out/${DATASET}_logs/${RUN_ID}"
+mkdir -p "$LOG_DIR"
+
+echo "Logs will be stored in $LOG_DIR"
+
 count=0
 for f in examples/mmqa/*.json; do
     base=$(basename "$f" .json)
-    python run_amaf.py "$f" -d mmqa > out/mmqa_logs/"${base}_out.txt"
-    echo "--------------------------------"
-    echo "--------------------------------"
+    python run_amaf.py "$f" -d "$DATASET" > "$LOG_DIR/${base}_out.txt"
     echo "processing $f"
+    echo "--------------------------------"
+    echo "--------------------------------"
     count=$((count+1))
     if [ $count -eq 10 ]; then
         break
     fi
 done
+
+echo "Run complete. ${count} files processed. Logs in $LOG_DIR"
+
+python scripts/build_generation_report.py --log_dir "$LOG_DIR" --dataset "$DATASET" || true

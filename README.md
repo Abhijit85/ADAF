@@ -9,41 +9,39 @@ AMAF (Adaptive Multi-Agent Framework) is a modular pipeline for personalized and
 
 
 ## 📁 Project Structure
-
-```
-amaf_project/
-├── amaf/                 # Python package
-│   ├── __init__.py
-│   ├── core.py           # Common dataclasses / utils
-│   └── agents/
-│       ├── __init__.py
-│       ├── base.py           # Agent ABC + CoT helpers
-│       ├── tabu_synth.py     # Tabular reasoning agent
-│       ├── contextron.py     # Contextual text agent
-│       ├── visura.py         # Visual cue agent
-│       ├── datamorph.py      # Adaptive orchestrator
-│       ├── summa_craft.py    # Personalised summariser
-│       # Optional dynamic helpers (invoked by DataMorph)
-│       ├── trend_analyser.py
-│       └── topk_filter.py
-│
-├── run_amaf.py           # CLI entry‑point
-├── examples/
-│   └── sample_finqa.json # Example input
+```text
+ADAF/
+├── amaf/                 # Core agents + data classes
+│   └── agents/           # Individual agent implementations
+├── cli/                  # Command-line wrappers (evaluation etc.)
+├── data/                 # Raw benchmark data dumps
+├── diagrams/             # Architecture / flow charts
+├── evaluation/           # Metric implementations + helpers
+├── examples/             # Minimal JSON inputs for each dataset
+├── scripts/              # Helper scripts (report builders, preprocessors)
+├── run_amaf.py           # One-shot JSON execution
+├── run_tatqa.sh          # Batch generation for TAT-QA
+├── run_finqa.sh          # Batch generation for FinQA
+├── run_mmqa.sh           # Batch generation for MMQA
 └── requirements.txt
 ```
 ## 🔄 Pipeline Flow
 ![Pipeline Flow](diagrams/ADAF_SIngle_Flow.png)
-```
 
 
 ## 🔧 Installation
 
 ```bash
-pip install -r requirements.txt
-export OPENAI_API_KEY="sk-..."  # your key
-export AMAF_MODEL="gpt-4-turbo"   # optional model override
-python run_amaf.py examples/sample_finqa.json
+python -m pip install -r requirements.txt
+
+# ➊  Provide your OpenAI key (or place it in a .env file)
+export OPENAI_API_KEY="sk-..."
+
+# ➋  (Optional) override the default GPT-3.5-Turbo model
+export AMAF_MODEL="gpt-4o-mini"
+
+# ➌  Run the pipeline on a single example
+python run_amaf.py examples/finqa/ZBH_2017_page_71.pdf-1.json
 ```
 ## 🧠 Agent Descriptions
 - **TabuSynth**: Extracts structured facts from tabular data using TAPAS or T5. The
@@ -60,7 +58,7 @@ python run_amaf.py examples/sample_finqa.json
 
 ## 📓 Usage
 ```bash
-python agents/summa_craft.py --input data/sample_table.csv --profile "retail investor"
+python amaf/agents/summa_craft.py --input data/sample_table.csv --profile "retail investor"
 ```
 
 ## 🧪 Fine-Tuning
@@ -72,22 +70,104 @@ for personalized, context‑aware table summarization using OpenAI's chat models
 
 
 ## 📊 Evaluation
-To assess summarization quality on benchmark datasets we provide `utils/rouge_bleu_eval.py`.
-For TAT-QA it converts every ground-truth question/answer pair into a statement and
-computes ROUGE-L and BLEU between that concatenated reference and the generated
-summary.  FinQA QA accuracy is calculated as the fraction of answers that appear
-verbatim (or numerically close) in the summary.  Example usage:
+
+⚠️  The legacy `utils/rouge_bleu_eval.py` script has been removed.  
+Use the workflow below powered by `python -m cli.eval_dataset`.
+
+## 📊 Evaluation Workflow (new)
+
+1. **Generate model outputs**
+
+   Each helper script spins up AMAF, captures the summary + logs and now also
+   writes a spreadsheet / JSON snapshot right next to the raw logs.
+
+   ```bash
+   # uses timestamp as RUN_ID, logs to out/tatqa_logs/<RUN_ID>/
+   bash run_tatqa.sh
+   # inside that folder you will see:
+   #   *_out.txt     raw summaries
+   #   run.json      generation snapshot (no metrics)
+   #   run.xlsx      same in Excel
+   ```
+
+2. **Evaluate**
+
+   ```bash
+   LOG_RUN_ID=<timestamp from previous step>
+
+   python -m cli.eval_dataset \
+          --dataset tatqa \
+          --gold    data/TATQA/tatqa_dataset_dev.json \
+          --pred    out/tatqa_logs/$LOG_RUN_ID \
+          --run_id  $LOG_RUN_ID            # save under results/...
+   ```
+
+   Output structure:
+
+   ```text
+   results/
+     tatqa/
+       <LOG_RUN_ID>/
+         <EVAL_ID>/
+           report_<LOG_RUN_ID>_<EVAL_ID>.json   # aggregates + per-question rows
+           detailed_<LOG_RUN_ID>_<EVAL_ID>.xlsx # same as spreadsheet
+   ```
+
+   *If you supply `--openai_key`, CAE will be graded by GPT-4o.*
+
+3. **What's in the spreadsheets**
+
+   Columns:  `qid`, `question`, `gold`, `summary`, `answer_echoes`, one column
+   per agent (`agent_TabuSynth`, `agent_Contextron`, …) plus metric columns
+   (`em`, `f1`, `rems`, `hcs`, `cae`) for evaluation runs.
+
+---
+
+See `evaluation/README.md` for API details if you want to call the evaluator
+programmatically.
+
+
+## 🚀 Quick start
 
 ```bash
-python utils/rouge_bleu_eval.py --tatqa data/TATQA/tatqa_dataset_dev.json \
-    --tatqa_logs out/tatqa_logs \
-    --finqa data/sample_finqa.json --finqa_logs out/finqa_logs
+# 1️⃣  Generate outputs
+
+# TAT-QA
+bash run_tatqa.sh          # logs → out/tatqa_logs/<RUN_ID>/
+
+# FinQA
+bash run_finqa.sh          # logs → out/finqa_logs/<RUN_ID>/
+
+# MMQA (multimodal)
+bash run_mmqa.sh           # logs → out/mmqa_logs/<RUN_ID>/
+
+# After each script you will find inside that RUN_ID folder:
+#   *_out.txt     – raw summary + agent scratch-logs
+#   run.json      – per-question snapshot (no metrics)
+#   run.xlsx      – same content in Excel for quick browsing
 ```
 
-`AMAF w/o Visura` can be evaluated by omitting visual cues when generating the
-summaries to measure the impact of the `Visura` agent.
+`RUN_ID` defaults to a timestamp, or set it manually:
 
-This repository contains a modular Python implementation of the AMAF pipeline
-for personalized, context‑aware table summarization using OpenAI's chat models
-(defaults to `gpt-3.5-turbo`; override with the `AMAF_MODEL` environment variable).
+```bash
+export RUN_ID=my_llama2_trial
+bash run_tatqa.sh
+```
+
+---
+
+```bash
+# 2️⃣  Evaluate any generated run
+
+LOG_RUN_ID=20240703_101212   # or $RUN_ID you just produced
+
+python -m cli.eval_dataset \
+       --dataset tatqa \
+       --gold    data/TATQA/tatqa_dataset_dev.json \
+       --pred    out/tatqa_logs/$LOG_RUN_ID \
+       --run_id  $LOG_RUN_ID            # required for results archiving
+       # optional extras
+       # --eval_id   my_metric_ablation
+       # --openai_key $OPENAI_API_KEY
+```
 
