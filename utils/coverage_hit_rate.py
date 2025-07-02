@@ -6,13 +6,13 @@ import json
 from datasets import load_dataset, DownloadConfig
 
 log_dir = Path("out/tatqa_logs")
-local_json = Path("data/TATQA/tatqa_dataset_dev.json")  # adjust if elsewhere
+local_json = Path("data/tatqa/tatqa_dataset_dev.json")  # adjust if elsewhere
 
 # ------------------------------------------------------------------ #
 # 1) try HF hub, else local file
 # ------------------------------------------------------------------ #
 try:
-    # timeout=10 s avoids long waits if there’s no internet
+    # timeout=10 s avoids long waits if there's no internet
     ds = load_dataset(
         "next-tat/TAT-QA",
         split="dev",

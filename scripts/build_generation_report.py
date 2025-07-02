@@ -45,7 +45,7 @@ def parse_out_file(path: Path):
 def load_gold(dataset: str, path: Path | None = None):
     if path is None:
         default_paths = {
-            "tatqa": Path("data/TATQA/tatqa_dataset_dev.json"),
+            "tatqa": Path("data/tatqa/tatqa_dataset_dev.json"),
             "finqa": Path("data/finqa/finqa_dev.json"),
             "mmqa": Path("data/mmqa/mmqa_dev.jsonl"),
         }

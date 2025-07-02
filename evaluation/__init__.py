@@ -46,6 +46,20 @@ def evaluate(
         Optional evaluation ID for saving results.
     """
 
+    # ------------------------------------------------------------------
+    # Lazy-import the dataset-specific scorer so that its @register_dataset
+    # decorator runs and populates the global registry.  Without this step the
+    # first call would fail with "Unknown dataset" because nothing has touched
+    # the scorer module yet.
+    # ------------------------------------------------------------------
+    import importlib
+
+    try:
+        importlib.import_module(f"{__name__}.{dataset.lower()}.scorer")
+    except ModuleNotFoundError:
+        # if module path does not exist we'll fall back to registry error below
+        pass
+
     evaluator_cls = get_evaluator(dataset)
     evaluator = evaluator_cls(
         gold_path=Path(gold_path),

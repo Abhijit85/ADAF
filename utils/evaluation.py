@@ -11,7 +11,7 @@ from pathlib import Path
 import re
 
 # Load the local TAT-QA development split
-ds_path = Path('data/TATQA/tatqa_dataset_dev.json')
+ds_path = Path('data/tatqa/tatqa_dataset_dev.json')
 
 with ds_path.open() as f:
     ds = json.load(f)

@@ -6,7 +6,7 @@ out_dir = Path('examples/tatqa')
 out_dir.mkdir(parents=True, exist_ok=True)
 
 # Load the local TAT-QA dev split
-in_path = Path('data/TATQA/tatqa_dataset_dev.json')
+in_path = Path('data/tatqa/tatqa_dataset_dev.json')
 with in_path.open() as f:
     ds = json.load(f)
 

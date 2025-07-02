@@ -97,7 +97,7 @@ Use the workflow below powered by `python -m cli.eval_dataset`.
 
    python -m cli.eval_dataset \
           --dataset tatqa \
-          --gold    data/TATQA/tatqa_dataset_dev.json \
+          --gold    data/tatqa/tatqa_dataset_dev.json \
           --pred    out/tatqa_logs/$LOG_RUN_ID \
           --run_id  $LOG_RUN_ID            # save under results/...
    ```
@@ -163,7 +163,7 @@ LOG_RUN_ID=20240703_101212   # or $RUN_ID you just produced
 
 python -m cli.eval_dataset \
        --dataset tatqa \
-       --gold    data/TATQA/tatqa_dataset_dev.json \
+       --gold    data/tatqa/tatqa_dataset_dev.json \
        --pred    out/tatqa_logs/$LOG_RUN_ID \
        --run_id  $LOG_RUN_ID            # required for results archiving
        # optional extras

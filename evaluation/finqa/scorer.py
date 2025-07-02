@@ -12,12 +12,28 @@ from .preprocessor import _normalise
 @register_dataset("finqa")
 class FinqaEvaluator(EvalEngine):
     def _load_gold(self):
+        """Load only the gold rows needed for the current prediction set."""
+
+        # 1) collect qids present in predictions
+        needed_qids: set[str] = set()
+        p = self.pred_path
+        if p.is_dir():
+            needed_qids = {f.stem.replace("_out", "") for f in p.glob("*_out.txt")}
+        else:
+            try:
+                needed_qids = set(_json.loads(p.read_text()).keys())
+            except Exception:
+                pass  # fallback keep all
+
+        # 2) parse gold file and keep subset
         data = _json.loads(self.gold_path.read_text())
         self._q_text: Dict[str, str] = {}
         answers: Dict[str, str] = {}
         for ex in data:
             for qa in ex.get("questions", ex.get("qa_pairs", [])):
                 qid = qa.get("id") or qa.get("uid") or qa.get("question_id")
+                if needed_qids and qid not in needed_qids:
+                    continue
                 self._q_text[qid] = qa.get("question", "")
                 answers[qid] = _normalise(qa.get("answer"))
         return answers

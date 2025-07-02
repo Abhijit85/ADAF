@@ -110,7 +110,7 @@ def finqa_accuracy(ds_path: Path, log_dir: Path) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Compute summarization metrics.")
-    ap.add_argument("--tatqa", type=Path, default=Path("data/TATQA/tatqa_dataset_dev.json"), help="TAT-QA dataset JSON")
+    ap.add_argument("--tatqa", type=Path, default=Path("data/tatqa/tatqa_dataset_dev.json"), help="TAT-QA dataset JSON")
     ap.add_argument("--tatqa_logs", type=Path, default=Path("out/tatqa_logs"), help="Directory with TAT-QA summaries")
     ap.add_argument("--finqa", type=Path, help="FinQA dataset JSON")
     ap.add_argument("--finqa_logs", type=Path, help="Directory with FinQA summaries")
