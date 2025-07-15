@@ -1,33 +1,92 @@
-You are a senior financial analyst tasked with the job of 
-answering questions on finance domain dataset.
-You will be provided with the table and questions.
-Accordingly follow the below instructions to provide tabular 
-context to the downstream agents that are:
-1. Contextron : It is the Text-data agent, once it gets the 
-tabular context, it will look into the questions that 
-can not be answered using only table data.
-2. Summacarft: This will use the evidence extracted by both the agents and 
-    form answers to the questions.
+Follow a Chain-of-Table reasoning workflow to answer the following financial questions.
 
-### Rules 
-1. **Use ONLY numbers/information that appear verbatim in the table.**
-2. **Go in the order of the questions.
-3. Quote numbers exactly **(Including units).
-4. If the information is not availble in table then provide the context
-   that would be releavnt if part of the answer is coming from the 
-   textual context part.
-5. You may use an INTERNAL scratchpad between "#####" markers to
-   think step-by-step; this part will be removed automatically.
-6. Provide ** concise bullets** that stand on their own.
-7. Return **VALID JSON ONLY** with keys `reasoning` and `bullets`.
-   Example:
-   {{ "reasoning": "...",
-     "bullets": ["..." ...] }}
-TABLE :
-{table_str}
-
-QUESTION :
+QUESTIONS:
 {questions}
+
+WORKFLOW
+1. Examine the table and jot down a Chain-of-Table Reasoning plan — an ordered list of operations (e.g. "1. Filter rows where …", "2. Compute Δ = Current Year – Previous Year", "3. Select max Δ", etc.). Reference ONLY numbers that appear verbatim in the table.
+2. After thinking, output a VALID JSON object with two keys:
+   • "reasoning": the ordered Chain-of-Table steps (as plain text, one per line).
+   • "bullets": a concise answer/explanation for each question, or 6–10 findings if no direct question, each tagged with [TREND], [RATIO], [ANOMALY], [OUTLIER] when relevant. Quote numbers exactly and use Δ or → notation when helpful.
+
+RULES
+• Do NOT invent columns or external data.
+• Keep the JSON flat (no nesting) and do NOT wrap it in markdown fences.
+• The INTERNAL scratchpad between the `#####` delimiters is for your private reasoning only and will be stripped before evaluation.
+
+### Example 1 – Revenue Growth
+
+```
+Input Table:
+| Company | Revenue 2020 | Revenue 2021 |
+|---------|--------------|--------------|
+| ABC     | 1,000        | 1,500        |
+| XYZ     | 2,000        | 1,800        |
+
+Question: Which company had the largest growth in revenue?
+```
+
+**Chain-of-Table Reasoning**
+1. Compute `Revenue_Growth = Revenue 2021 - Revenue 2020` for each row.
+2. Select the row with the maximum `Revenue_Growth`.
+3. Report the company name from that row as the final answer.
+
+Expected Answer: `ABC`
+
+---
+
+### Example 2 – Filtering and Summation
+
+```
+Input Table:
+| Player | Team | Points |
+|--------|------|-------|
+| Alice  | Red  | 12    |
+| Bob    | Blue | 15    |
+| Carol  | Red  | 20    |
+
+Question: How many total points were scored by the Red team?
+```
+
+**Chain-of-Table Reasoning**
+1. Filter rows where `Team` equals `Red`.
+2. Sum the `Points` column of the filtered table.
+3. Return that sum.
+
+Expected Answer: `32`
+
+---
+
+### Example 3 – Joining and Computing Ratios
+
+```
+Table A:
+| CompanyID | Employees |
+|-----------|-----------|
+| 1         | 50        |
+| 2         | 75        |
+
+Table B:
+| CompanyID | Revenue |
+|-----------|---------|
+| 1         | 2,000   |
+| 2         | 3,000   |
+
+Question: Which company has the higher revenue per employee?
+```
+
+**Chain-of-Table Reasoning**
+1. Join Table A and Table B on `CompanyID`.
+2. Compute `RevPerEmp = Revenue / Employees` for each joined row.
+3. Select the row with the highest `RevPerEmp` and output the `CompanyID`.
+
+Expected Answer: `2`
+
+---
+TABLE:
+{table_str}
 
 ##### INTERNAL SCRATCHPAD (think here, will be hidden)
 #####
+
+Now output the final JSON object:
