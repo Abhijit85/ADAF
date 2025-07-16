@@ -12,8 +12,12 @@ from typing import Dict, Any, List, Callable, Type
 
 from tqdm import tqdm
 
-from .metrics.core import exact_match, token_f1, hallucination_consistency
-from .metrics.rems import rems_f1
+from .metrics.core import (
+    exact_match,
+    answer_presence,
+    answer_token_f1,
+    hallucination_consistency,
+)
 from .metrics.cae_gpt import cae_score
 
 _REGISTRY: Dict[str, Type["EvalEngine"]] = {}
@@ -76,12 +80,14 @@ class EvalEngine(ABC):
 
             # core metrics
             row["em"] = exact_match(gold, pred_raw)
-            pr, rc, f1 = token_f1(gold, pred_raw)
+            row["contains"] = answer_presence(gold, pred_raw)
+            pr, rc, f1 = answer_token_f1(gold, pred_raw)
             row["p"], row["r"], row["f1"] = pr, rc, f1
+            # For our use-case REMS mirrors the modified F1 metric
+            row["rems"] = f1
 
             if self.pred_kind == "summary":
-                # summary-specific metrics
-                row["rems"] = rems_f1(gold, pred_raw)
+                # summary-specific metrics (HCS & CAE retained)
                 row["hcs"] = hallucination_consistency(gold, pred_raw)
                 row["cae"] = cae_score(
                     question=meta.get("question", ""),
@@ -92,7 +98,7 @@ class EvalEngine(ABC):
             per_q.append(row)
 
         # aggregate
-        agg: Dict[str, Any] = {k: None for k in ("em", "f1", "rems", "hcs", "cae")}
+        agg: Dict[str, Any] = {k: None for k in ("em", "contains", "f1", "rems", "hcs", "cae")}
         n = len(per_q)
         if n == 0:
             return {"error": "no predictions found", "per_question": per_q}

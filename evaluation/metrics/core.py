@@ -62,3 +62,31 @@ def hallucination_consistency(gold_or_source: str, summary: str) -> float:
         return 1.0  # no numbers = no hallucination
     hallucinated = pred_nums - gold_nums
     return 1.0 - (len(hallucinated) / len(pred_nums)) 
+
+# New helpers ---------------------------------------------------------------
+
+def answer_presence(gold: str, pred: str) -> int:
+    """Return 1 if the *normalised* gold answer string occurs anywhere in *pred*.
+
+    Both strings are canonicalised via _normalise_text before substring search so
+    minor casing / whitespace differences do not affect the match.
+    """
+    return int(_normalise_text(gold) in _normalise_text(pred))
+
+
+def answer_token_f1(gold: str, pred: str):
+    """Precision/Recall/F1 computed *only* over gold answer tokens.
+
+    We ignore extra tokens present in the prediction – the metric reflects
+    coverage of the gold answer rather than penalising verbosity.
+    """
+    gold_toks = set(_tokens(gold))
+    if not gold_toks:
+        return 1.0, 1.0, 1.0  # degenerate – no gold tokens
+
+    pred_toks = set(_tokens(pred))
+    overlap = len(gold_toks & pred_toks)
+    coverage = overlap / len(gold_toks)  # fraction of answer tokens found
+    return coverage, coverage, coverage
+
+# --------------------------------------------------------------------------- 
