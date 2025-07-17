@@ -17,7 +17,7 @@ for ex in tqdm.tqdm(ds, desc='convert'):
         p.get('text', '') if isinstance(p, dict) else str(p)
         for p in ex.get('paragraphs', [])
     ]
-    questions = [q.get('text', '') if isinstance(q, dict) else str(q) for q in ex.get('questions', [])]
+    questions = [q['question'] for q in ex.get('questions', []) if 'question' in q]
     amaf = {
         'table': ex['table'],
         'context': ' '.join(context_parts),
