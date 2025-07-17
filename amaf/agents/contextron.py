@@ -42,7 +42,7 @@ class ContextronAgent(Agent):
             )
         else:
             # Use the original format
-            prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
+        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
         
         cot_and_ins = self._chat(prompt, temperature=0.25)
 

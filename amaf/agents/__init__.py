@@ -6,5 +6,6 @@ from .contextron import ContextronAgent
 from .visura import VisuraAgent
 from .summa_craft import SummaCraftAgent
 from .trend_analyser import TrendAnalyserAgent      #  ← add
+from .calculator import CalculatorAgent
 # from .topk_filter import TopKFilterAgent         #  ← if you use it
 from .mcp_controller import MCPController          #  ← if you created MCP file

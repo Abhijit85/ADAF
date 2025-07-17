@@ -48,9 +48,9 @@ class SummaCraftAgent(Agent):
         # 2. Audience-specific template
         templates = {
             "general": (
-                 "Answrrt the questions in answere echoes."
+                 "Answer the questions in answer echoes."
                  "There should be as many answer echoes as there are "
-                "questions. Also write a summary of the answer echoes."
+                "questions."
             ),
             "retail investor": (
                 "Explain in plain language why these figures matter to a non-expert "

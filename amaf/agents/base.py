@@ -49,11 +49,11 @@ class Agent(ABC):
                 temperature=temperature,
             )
         else:
-            resp = openai.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=temperature,
-            )
+        resp = openai.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=temperature,
+        )
         return resp.choices[0].message.content.strip()
 
     @abstractmethod

@@ -19,10 +19,10 @@ class TabuSynthAgent(Agent):
     @staticmethod
     def _deduce_header_rows(tbl: Any) -> tuple[List[str], List[List[str]]]:
         if isinstance(tbl, dict):
-            hdr, rows = tbl.get("header"), tbl.get("rows")
-            if hdr is not None and rows is not None:
-                return hdr, rows
-            arr: List[List[str]] = tbl.get("table", [])
+        hdr, rows = tbl.get("header"), tbl.get("rows")
+        if hdr is not None and rows is not None:
+            return hdr, rows
+        arr: List[List[str]] = tbl.get("table", [])
         elif isinstance(tbl, list):
             arr: List[List[str]] = tbl
         else:
@@ -62,7 +62,7 @@ class TabuSynthAgent(Agent):
             prompt = prompt_template.format(table_str=table_str, questions=questions)
         else:
             # Use the original format
-            prompt = prompt_template.format(md_table=md_table)
+        prompt = prompt_template.format(md_table=md_table)
 
         # Temperature slightly above zero for richer insights but still stable.
         raw = self._chat(prompt, temperature=0.2).strip()
