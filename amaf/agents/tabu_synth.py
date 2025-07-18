@@ -20,7 +20,7 @@ class TabuSynthAgent(Agent):
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:  # noqa: D401
         """Analyse the table and output structured forensic insights."""
 
-        prompt_file = self.get_prompt_path("tabu_synth.txt")
+        prompt_file = self.get_prompt_path("tabu_synth_enhanced.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
         
         # Check if this is the new TATQA format with table_str and questions

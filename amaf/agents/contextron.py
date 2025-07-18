@@ -27,7 +27,7 @@ class ContextronAgent(Agent):
             return out
 
         # 2. Build prompt from external template
-        prompt_file = self.get_prompt_path("contextron.txt")
+        prompt_file = self.get_prompt_path("contextron_enhanced.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
         
         # Check if this is the new TATQA format with table_context and questions

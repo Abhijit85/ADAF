@@ -27,23 +27,34 @@ class SummaCraftAgent(Agent):
 
     # ------------------------------------------------------------------
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
-        # 1. Collect upstream notes (TabuSynth, Contextron, …)
-        raw_blocks: list[str] = []
-        for key in ("TabuSynth", "Contextron", "Visura",
-                    "TrendAnalyser", "TopKFilter"):
-            txt = logs.get(key, {}).get("result", "")
+        # 1. Collect TabuSynth and Contextron raw outputs separately
+        tabu_synth_output = ""
+        contextron_output = ""
+        
+        # Get TabuSynth raw output
+        tabu_synth_log = logs.get("TabuSynth", {})
+        if tabu_synth_log:
+            txt = tabu_synth_log.get("raw", "")  # Use raw instead of result
             txt = re.sub(r"^\[\w+] *", "", txt).strip()          # drop "[Agent]"
-            if txt:
-                raw_blocks.append(txt)
+            tabu_synth_output = txt
 
-        bundle_for_reasoning = "\n\n".join(raw_blocks) or "(no notes)"
+        # Get Contextron raw output
+        contextron_log = logs.get("Contextron", {})
+        if contextron_log:
+            txt = contextron_log.get("raw", "")  # Use raw instead of result
+            txt = re.sub(r"^\[\w+] *", "", txt).strip()          # drop "[Agent]"
+            contextron_output = txt
 
-        # Also gather individual bullet lines for Answer Echoes
-        echo_lines = [
-            ln.strip() for blk in raw_blocks
-            for ln in blk.splitlines()
-            if ln.strip().lstrip().startswith("-")
-        ]
+        # Also gather individual bullet lines for Answer Echoes from processed results
+        echo_lines = []
+        for agent_name in ["TabuSynth", "Contextron"]:
+            agent_log = logs.get(agent_name, {})
+            if agent_log:
+                txt = agent_log.get("result", "")  # Still use result for echoes
+                txt = re.sub(r"^\[\w+] *", "", txt).strip()
+                if txt:
+                    lines = [ln.strip() for ln in txt.splitlines() if ln.strip().lstrip().startswith("-")]
+                    echo_lines.extend(lines)
 
         # 2. Audience-specific template
         templates = {
@@ -64,7 +75,7 @@ class SummaCraftAgent(Agent):
         template = templates.get(data.user_profile, templates["general"])
         
         # 3. Build prompt from external template
-        prompt_file = self.get_prompt_path("summa_craft.txt")
+        prompt_file = self.get_prompt_path("summa_craft_fixed.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
         
         # Format questions for the prompt
@@ -77,8 +88,9 @@ class SummaCraftAgent(Agent):
             questions_str = ""
 
         prompt = prompt_template.format(
-            template=template,
-            bundle_for_reasoning=bundle_for_reasoning,
+            #template=template,
+            tabu_synth_output=tabu_synth_output,
+            contextron_output=contextron_output,
             questions=questions_str
         )
 

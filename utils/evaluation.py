@@ -15,7 +15,7 @@ ds_path = Path('data/TATQA/tatqa_dataset_dev.json')
 
 with ds_path.open() as f:
     ds = json.load(f)
-log_dir = Path('out/tatqa_logs/280')
+log_dir = Path('out/tatqa_logs/20250718_130215')
 
 total = hits = 0
 for ex in ds:
