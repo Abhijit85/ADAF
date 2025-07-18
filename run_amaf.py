@@ -10,7 +10,8 @@ from amaf.agents import (
     SummaCraftAgent,
     TrendAnalyserAgent,
     MCPController,
-    CalculatorAgent
+    CalculatorAgent,
+    PostCheckAgent
 )
 from amaf.core import InputData
 import argparse
@@ -53,6 +54,7 @@ def main():
         # add TrendAnalyser / TopKFilter if referenced in YAML
         "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset),
         "Calculator": CalculatorAgent(dataset=args.dataset),
+        "PostCheck": PostCheckAgent(dataset=args.dataset),
     }
 
     # -------- run MCP

@@ -1,0 +1,343 @@
+
+=== FINAL SUMMARY ===
+
+1) The dividend yield in 2017 is 4.1% and in 2018 is 4.6%.
+2) The dividend yield in 2018 is 4.6% and in 2019 is 4.5%.
+3) The expected volatility in 2017 is 27.1% and in 2018 is 28.7%.
+4) 4.35 percent
+5) 4.55 percent
+6) 27.9 percent
+
+Answer Echoes:
+1) TABLE: Extract the dividend yield values for 2017 and 2018 from the table. | CONTEXT: (none) | TAG: PARTIAL
+2) TABLE: Extract the dividend yield values for 2018 and 2019 from the table. | CONTEXT: (none) | TAG: PARTIAL
+3) TABLE: Extract the expected volatility values for 2017 and 2018 from the table. | CONTEXT: (none) | TAG: PARTIAL
+4) TABLE: Calculate the average of the dividend yield for 2017 and 2018: (4.1% + 4.6%) / 2. | CONTEXT: (none) | CALC: 4.35 | TAG: FULL
+5) TABLE: Calculate the average of the dividend yield for 2018 and 2019: (4.6% + 4.5%) / 2. | CONTEXT: (none) | CALC: 4.55 | TAG: FULL
+6) TABLE: Calculate the average of the expected volatility for 2017 and 2018: (27.1% + 28.7%) / 2. | CONTEXT: (none) | CALC: 27.9 | TAG: FULL
+
+=== LOGS (per-agent) ===
+{'Contextron': {'prompt': '# TAT-QA CONTEXTRON v2 – context-first agent\n'
+                          '#\n'
+                          '# INPUTS\n'
+                          '#   • CONTEXT – free-form paragraphs.\n'
+                          '#   • TABLE_CONTEXT – bull…',
+                'input': '8. Stock option and award plan: (Continued) The '
+                         'accounting for equity-based compensation expense '
+                         'requires the Company to…',
+                'cot': '',
+                'result': '(json emitted)',
+                'raw': '{"status": "NONE", "text": "", "expr": ""}',
+                'json': [{'status': 'NONE', 'text': '', 'expr': ''}]},
+ 'TabuSynth': {'prompt': 'You are the **Table agent**.  For each question you '
+                         'must decide whether the table alone can answer it, '
+                         'then (if needed) compute the answer using a '
+                         'Chain-of-Table reasoning plan.\n'
+                         '\n'
+                         'You are given the *current status* from the Context '
+                         'agent.  If that status is "FULL" simply verify the '
+                         'numeric precision and echo the answer; otherwise '
+                         'fill the gap.\n'
+                         '\n'
+                         'Return a JSON **list** — one object per question, '
+                         'matching the input order.\n'
+                         '\n'
+                         'WORKFLOW (per question)\n'
+                         '1. Look at `ctx_status` entry.  If `status == '
+                         '"FULL"`, set `status" : "FULL"` in your output and '
+                         'copy the `text` untouched.  `expr` should be "".\n'
+                         '2. Otherwise draw ONLY from the table to craft a '
+                         'reasoning plan (ordered steps).  Put that plan in '
+                         '`reasoning` field.\n'
+                         '3. Produce an answer in `text`.  If arithmetic is '
+                         'still needed, leave an *unsolved* expression in '
+                         '`expr` and tag it with `[CALC]`.\n'
+                         '\n'
+                         'Output object keys:\n'
+                         '  • reasoning – your chain-of-table steps or "" if '
+                         'not needed\n'
+                         '  • status – FULL | PARTIAL | NONE  (relative to '
+                         '*table* contribution)\n'
+                         '  • text   – answer snippet (may be empty when '
+                         'NONE)\n'
+                         '  • expr   – unsolved numeric expression or ""\n'
+                         '\n'
+                         'RULES\n'
+                         '• Use ONLY numbers that appear verbatim in the '
+                         'table.\n'
+                         '• Preserve units, commas, decimals exactly.\n'
+                         '• Return a JSON *array* (no markdown fences) — one '
+                         'object per question.\n'
+                         '• Think inside ##### scratchpad; it will be '
+                         'removed.\n'
+                         '\n'
+                         '### Example 1 – Revenue Growth\n'
+                         '\n'
+                         '```\n'
+                         'Input Table:\n'
+                         '| Company | Revenue 2020 | Revenue 2021 |\n'
+                         '|---------|--------------|--------------|\n'
+                         '| ABC     | 1,000        | 1,500        |\n'
+                         '| XYZ     | 2,000        | 1,800        |\n'
+                         '\n'
+                         'Question: Which company had the largest growth in '
+                         'revenue?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Compute `Revenue_Growth = Revenue 2021 - Revenue '
+                         '2020` for each row.\n'
+                         '2. Select the row with the maximum '
+                         '`Revenue_Growth`.\n'
+                         '3. Report the company name from that row as the '
+                         'final answer.\n'
+                         '\n'
+                         'Expected Answer: `ABC`\n'
+                         '\n'
+                         '---\n'
+                         '\n'
+                         '### Example 2 – Filtering and Summation\n'
+                         '\n'
+                         '```\n'
+                         'Input Table:\n'
+                         '| Player | Team | Points |\n'
+                         '|--------|------|-------|\n'
+                         '| Alice  | Red  | 12    |\n'
+                         '| Bob    | Blue | 15    |\n'
+                         '| Carol  | Red  | 20    |\n'
+                         '\n'
+                         'Question: How many total points were scored by the '
+                         'Red team?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Filter rows where `Team` equals `Red`.\n'
+                         '2. Sum the `Points` column of the filtered table.\n'
+                         '3. Return that sum.\n'
+                         '\n'
+                         'Expected Answer: `32`\n'
+                         '\n'
+                         '---\n'
+                         '\n'
+                         '### Example 3 – Joining and Computing Ratios\n'
+                         '\n'
+                         '```\n'
+                         'Table A:\n'
+                         '| CompanyID | Employees |\n'
+                         '|-----------|-----------|\n'
+                         '| 1         | 50        |\n'
+                         '| 2         | 75        |\n'
+                         '\n'
+                         'Table B:\n'
+                         '| CompanyID | Revenue |\n'
+                         '|-----------|---------|\n'
+                         '| 1         | 2,000   |\n'
+                         '| 2         | 3,000   |\n'
+                         '\n'
+                         'Question: Which company has the higher revenue per '
+                         'employee?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Join Table A and Table B on `CompanyID`.\n'
+                         '2. Compute `RevPerEmp = Revenue / Employees` for '
+                         'each joined row.\n'
+                         '3. Select the row with the highest `RevPerEmp` and '
+                         'output the `CompanyID`.\n'
+                         '\n'
+                         'Expected Answer: `2`\n'
+                         '\n'
+                         '---\n'
+                         'TABLE:\n'
+                         'Years Ended December 31 |  |  | \n'
+                         'Black-Scholes Assumptions | 2019 | 2018 | 2017\n'
+                         'Dividend yield | 4.5% | 4.6% | 4.1%\n'
+                         'Expected volatility | 28.3% | 28.7% | 27.1%\n'
+                         'Risk-free interest rate | 2.5% | 2.5% | 2.0%\n'
+                         'Expected life of the option term (in years) | 4.3 | '
+                         '4.4 | 4.5\n'
+                         '\n'
+                         'CTX_STATUS (from Context agent):\n'
+                         '[{"status": "NONE", "text": "", "expr": ""}]\n'
+                         '\n'
+                         'QUESTIONS:\n'
+                         'What are the respective dividend yield in 2017 and '
+                         '2018?\n'
+                         'What are the respective dividend yield in 2018 and '
+                         '2019?\n'
+                         'What are the respective expected volatility in 2017 '
+                         'and 2018?\n'
+                         'What is the average dividend yield in 2017 and '
+                         '2018?\n'
+                         'What is the average dividend yield in 2018 and '
+                         '2019?\n'
+                         'What is the average expected volatility in 2017 and '
+                         '2018?\n'
+                         '\n'
+                         '##### INTERNAL SCRATCHPAD (think here, will be '
+                         'hidden)\n'
+                         '#####\n'
+                         '\n'
+                         'Now output the final JSON array:\n',
+               'input': 'Years Ended December 31 |  |  | \n'
+                        'Black-Scholes Assumptions | 2019 | 2018 | 2017\n'
+                        'Dividend yield | 4.5% | 4.6% | 4.1%\n'
+                        'Expe…',
+               'cot': '',
+               'result': '(json emitted)',
+               'raw': '[\n'
+                      '    {\n'
+                      '        "reasoning": "Extract the dividend yield values '
+                      'for 2017 and 2018 from the table.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The dividend yield in 2017 is 4.1% and '
+                      'in 2018 is 4.6%.",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Extract the dividend yield values '
+                      'for 2018 and 2019 from the table.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The dividend yield in 2018 is 4.6% and '
+                      'in 2019 is 4.5%.",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Extract the expected volatility '
+                      'values for 2017 and 2018 from the table.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The expected volatility in 2017 is '
+                      '27.1% and in 2018 is 28.7%.",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Calculate the average of the '
+                      'dividend yield for 2017 and 2018: (4.1% + 4.6%) / 2.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "(4.1 + 4.6) / 2 [CALC]"\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Calculate the average of the '
+                      'dividend yield for 2018 and 2019: (4.6% + 4.5%) / 2.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "(4.6 + 4.5) / 2 [CALC]"\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Calculate the average of the '
+                      'expected volatility for 2017 and 2018: (27.1% + 28.7%) '
+                      '/ 2.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "(27.1 + 28.7) / 2 [CALC]"\n'
+                      '    }\n'
+                      ']',
+               'json': [{'reasoning': 'Extract the dividend yield values for '
+                                      '2017 and 2018 from the table.',
+                         'status': 'PARTIAL',
+                         'text': 'The dividend yield in 2017 is 4.1% and in '
+                                 '2018 is 4.6%.',
+                         'expr': ''},
+                        {'reasoning': 'Extract the dividend yield values for '
+                                      '2018 and 2019 from the table.',
+                         'status': 'PARTIAL',
+                         'text': 'The dividend yield in 2018 is 4.6% and in '
+                                 '2019 is 4.5%.',
+                         'expr': ''},
+                        {'reasoning': 'Extract the expected volatility values '
+                                      'for 2017 and 2018 from the table.',
+                         'status': 'PARTIAL',
+                         'text': 'The expected volatility in 2017 is 27.1% and '
+                                 'in 2018 is 28.7%.',
+                         'expr': ''},
+                        {'reasoning': 'Calculate the average of the dividend '
+                                      'yield for 2017 and 2018: (4.1% + 4.6%) '
+                                      '/ 2.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '(4.1 + 4.6) / 2 [CALC]'},
+                        {'reasoning': 'Calculate the average of the dividend '
+                                      'yield for 2018 and 2019: (4.6% + 4.5%) '
+                                      '/ 2.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '(4.6 + 4.5) / 2 [CALC]'},
+                        {'reasoning': 'Calculate the average of the expected '
+                                      'volatility for 2017 and 2018: (27.1% + '
+                                      '28.7%) / 2.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '(27.1 + 28.7) / 2 [CALC]'}]},
+ 'Calculator': {'cot': '',
+                'result': '(calc done)',
+                'json': [{'status': 'PARTIAL',
+                          'text': 'The dividend yield in 2017 is 4.1% and in '
+                                  '2018 is 4.6%.',
+                          'expr': '',
+                          'reasoning': 'Extract the dividend yield values for '
+                                       '2017 and 2018 from the table.'},
+                         {'reasoning': 'Extract the dividend yield values for '
+                                       '2018 and 2019 from the table.',
+                          'status': 'PARTIAL',
+                          'text': 'The dividend yield in 2018 is 4.6% and in '
+                                  '2019 is 4.5%.',
+                          'expr': ''},
+                         {'reasoning': 'Extract the expected volatility values '
+                                       'for 2017 and 2018 from the table.',
+                          'status': 'PARTIAL',
+                          'text': 'The expected volatility in 2017 is 27.1% '
+                                  'and in 2018 is 28.7%.',
+                          'expr': ''},
+                         {'reasoning': 'Calculate the average of the dividend '
+                                       'yield for 2017 and 2018: (4.1% + 4.6%) '
+                                       '/ 2.',
+                          'status': 'FULL',
+                          'text': '4.35',
+                          'expr': '',
+                          'calc_answer': '4.35'},
+                         {'reasoning': 'Calculate the average of the dividend '
+                                       'yield for 2018 and 2019: (4.6% + 4.5%) '
+                                       '/ 2.',
+                          'status': 'FULL',
+                          'text': '4.55',
+                          'expr': '',
+                          'calc_answer': '4.55'},
+                         {'reasoning': 'Calculate the average of the expected '
+                                       'volatility for 2017 and 2018: (27.1% + '
+                                       '28.7%) / 2.',
+                          'status': 'FULL',
+                          'text': '27.9',
+                          'expr': '',
+                          'calc_answer': '27.9'}]},
+ 'SummaCraft': {'prompt': '(deterministic)',
+                'input': 'merged_items=6',
+                'result': '1) The dividend yield in 2017 is 4.1% and in 2018 '
+                          'is 4.6%.\n'
+                          '2) The dividend yield in 2018 is 4.6% and in 2019 '
+                          'is 4.5%.\n'
+                          '3) The expected volatility in 2017 is 27.1% and in '
+                          '2018 is 28.7%.\n'
+                          '4) 4.35 percent\n'
+                          '5) 4.55 percent\n'
+                          '6) 27.9 percent\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '1) TABLE: Extract the dividend yield values for '
+                          '2017 and 2018 from the table. | CONTEXT: (none) | '
+                          'TAG: PARTIAL\n'
+                          '2) TABLE: Extract the dividend yield values for '
+                          '2018 and 2019 from the table. | CONTEXT: (none) | '
+                          'TAG: PARTIAL\n'
+                          '3) TABLE: Extract the expected volatility values '
+                          'for 2017 and 2018 from the table. | CONTEXT: (none) '
+                          '| TAG: PARTIAL\n'
+                          '4) TABLE: Calculate the average of the dividend '
+                          'yield for 2017 and 2018: (4.1% + 4.6%) / 2. | '
+                          'CONTEXT: (none) | CALC: 4.35 | TAG: FULL\n'
+                          '5) TABLE: Calculate the average of the dividend '
+                          'yield for 2018 and 2019: (4.6% + 4.5%) / 2. | '
+                          'CONTEXT: (none) | CALC: 4.55 | TAG: FULL\n'
+                          '6) TABLE: Calculate the average of the expected '
+                          'volatility for 2017 and 2018: (27.1% + 28.7%) / 2. '
+                          '| CONTEXT: (none) | CALC: 27.9 | TAG: FULL'}}

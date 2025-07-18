@@ -1,0 +1,372 @@
+
+=== FINAL SUMMARY ===
+
+1) Salaries and fees, Incentive schemes1, Other benefits2
+2) Financial data for 2017, 2018, and 2019 for Salaries and fees, Incentive schemes1, and Other benefits2.
+3) 4 million
+4) 4 million
+5) 2.5 million
+6) 1.5 million
+
+Answer Echoes:
+1) TABLE: The financial items listed in the table are the row labels: 'Salaries and fees', 'Incentive schemes1', and 'Other benefits2'. | CONTEXT: (none) | TAG: PARTIAL
+2) TABLE: The table shows financial data for the years 2017, 2018, and 2019, specifically for 'Salaries and fees', 'Incentive schemes1', and 'Other benefits2'. | CONTEXT: (none) | TAG: PARTIAL
+3) TABLE: The 2019 salaries and fees are directly listed in the table under the column '2019 €m' for the row 'Salaries and fees'. | CONTEXT: (none) | TAG: PARTIAL
+4) TABLE: 1. Locate 'Salaries and fees' for 2018 and 2019: 4 and 4.
+2. Compute the average: (4 + 4) / 2. | CONTEXT: (none) | CALC: 4 | TAG: FULL
+5) TABLE: 1. Locate 'Incentive schemes1' for 2018 and 2019: 3 and 2.
+2. Compute the average: (3 + 2) / 2. | CONTEXT: (none) | CALC: 2.5 | TAG: FULL
+6) TABLE: 1. Compute average salaries and fees for 2018 and 2019: (4 + 4) / 2.
+2. Compute average incentive schemes for 2018 and 2019: (3 + 2) / 2.
+3. Find the difference between these averages. | CONTEXT: (none) | CALC: 1.5 | TAG: FULL
+
+=== LOGS (per-agent) ===
+{'Contextron': {'cot': '',
+                'result': '(json emitted)',
+                'raw': '{ "status": "NONE", "text": "", "expr": "" }',
+                'json': [{'status': 'NONE', 'text': '', 'expr': ''}]},
+ 'TabuSynth': {'prompt': 'You are the **Table agent**.  For each question you '
+                         'must decide whether the table alone can answer it, '
+                         'then (if needed) compute the answer using a '
+                         'Chain-of-Table reasoning plan.\n'
+                         '\n'
+                         'You are given the *current status* from the Context '
+                         'agent.  If that status is "FULL" simply verify the '
+                         'numeric precision and echo the answer; otherwise '
+                         'fill the gap.\n'
+                         '\n'
+                         'Return a JSON **list** — one object per question, '
+                         'matching the input order.\n'
+                         '\n'
+                         'WORKFLOW (per question)\n'
+                         '1. Look at `ctx_status` entry.  If `status == '
+                         '"FULL"`, set `status" : "FULL"` in your output and '
+                         'copy the `text` untouched.  `expr` should be "".\n'
+                         '2. Otherwise draw ONLY from the table to craft a '
+                         'reasoning plan (ordered steps).  Put that plan in '
+                         '`reasoning` field.\n'
+                         '3. Produce an answer in `text`.  If arithmetic is '
+                         'still needed, leave an *unsolved* expression in '
+                         '`expr` and tag it with `[CALC]`.\n'
+                         '\n'
+                         'Output object keys:\n'
+                         '  • reasoning – your chain-of-table steps or "" if '
+                         'not needed\n'
+                         '  • status – FULL | PARTIAL | NONE  (relative to '
+                         '*table* contribution)\n'
+                         '  • text   – answer snippet (may be empty when '
+                         'NONE)\n'
+                         '  • expr   – unsolved numeric expression or ""\n'
+                         '\n'
+                         'RULES\n'
+                         '• Use ONLY numbers that appear verbatim in the '
+                         'table.\n'
+                         '• Preserve units, commas, decimals exactly.\n'
+                         '• Return a JSON *array* (no markdown fences) — one '
+                         'object per question.\n'
+                         '• Think inside ##### scratchpad; it will be '
+                         'removed.\n'
+                         '\n'
+                         '### Example 1 – Revenue Growth\n'
+                         '\n'
+                         '```\n'
+                         'Input Table:\n'
+                         '| Company | Revenue 2020 | Revenue 2021 |\n'
+                         '|---------|--------------|--------------|\n'
+                         '| ABC     | 1,000        | 1,500        |\n'
+                         '| XYZ     | 2,000        | 1,800        |\n'
+                         '\n'
+                         'Question: Which company had the largest growth in '
+                         'revenue?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Compute `Revenue_Growth = Revenue 2021 - Revenue '
+                         '2020` for each row.\n'
+                         '2. Select the row with the maximum '
+                         '`Revenue_Growth`.\n'
+                         '3. Report the company name from that row as the '
+                         'final answer.\n'
+                         '\n'
+                         'Expected Answer: `ABC`\n'
+                         '\n'
+                         '---\n'
+                         '\n'
+                         '### Example 2 – Filtering and Summation\n'
+                         '\n'
+                         '```\n'
+                         'Input Table:\n'
+                         '| Player | Team | Points |\n'
+                         '|--------|------|-------|\n'
+                         '| Alice  | Red  | 12    |\n'
+                         '| Bob    | Blue | 15    |\n'
+                         '| Carol  | Red  | 20    |\n'
+                         '\n'
+                         'Question: How many total points were scored by the '
+                         'Red team?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Filter rows where `Team` equals `Red`.\n'
+                         '2. Sum the `Points` column of the filtered table.\n'
+                         '3. Return that sum.\n'
+                         '\n'
+                         'Expected Answer: `32`\n'
+                         '\n'
+                         '---\n'
+                         '\n'
+                         '### Example 3 – Joining and Computing Ratios\n'
+                         '\n'
+                         '```\n'
+                         'Table A:\n'
+                         '| CompanyID | Employees |\n'
+                         '|-----------|-----------|\n'
+                         '| 1         | 50        |\n'
+                         '| 2         | 75        |\n'
+                         '\n'
+                         'Table B:\n'
+                         '| CompanyID | Revenue |\n'
+                         '|-----------|---------|\n'
+                         '| 1         | 2,000   |\n'
+                         '| 2         | 3,000   |\n'
+                         '\n'
+                         'Question: Which company has the higher revenue per '
+                         'employee?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Join Table A and Table B on `CompanyID`.\n'
+                         '2. Compute `RevPerEmp = Revenue / Employees` for '
+                         'each joined row.\n'
+                         '3. Select the row with the highest `RevPerEmp` and '
+                         'output the `CompanyID`.\n'
+                         '\n'
+                         'Expected Answer: `2`\n'
+                         '\n'
+                         '---\n'
+                         'TABLE:\n'
+                         ' | 2019 €m | 2018 €m | 2017 €m\n'
+                         'Salaries and fees | 4 | 4 | 4\n'
+                         'Incentive schemes1 | 2 | 3 | 2\n'
+                         'Other benefits2 | – | 1 | 1\n'
+                         ' | 6 | 8 | 7\n'
+                         '\n'
+                         'CTX_STATUS (from Context agent):\n'
+                         '[{"status": "NONE", "text": "", "expr": ""}]\n'
+                         '\n'
+                         'QUESTIONS:\n'
+                         'What are the financial items listed in the table?\n'
+                         'What does the table show?\n'
+                         'How much is the 2019 salaries and fees ?\n'
+                         'What is the average salaries and fees between 2018 '
+                         'and 2019?\n'
+                         'What is the average incentive schemes between 2018 '
+                         'and 2019?\n'
+                         'What is the difference between average salaries and '
+                         'fees and average incentive schemes from 2018 to '
+                         '2019?\n'
+                         '\n'
+                         '##### INTERNAL SCRATCHPAD (think here, will be '
+                         'hidden)\n'
+                         '#####\n'
+                         '\n'
+                         'Now output the final JSON array:\n',
+               'input': ' | 2019 €m | 2018 €m | 2017 €m\n'
+                        'Salaries and fees | 4 | 4 | 4\n'
+                        'Incentive schemes1 | 2 | 3 | 2\n'
+                        'Other benefits2 | – | 1 | 1\n'
+                        '…',
+               'cot': '',
+               'result': '(json emitted)',
+               'raw': '[\n'
+                      '    {\n'
+                      '        "reasoning": "The financial items listed in the '
+                      "table are the row labels: 'Salaries and fees', "
+                      '\'Incentive schemes1\', and \'Other benefits2\'.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "Salaries and fees, Incentive schemes1, '
+                      'Other benefits2",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "The table shows financial data '
+                      'for the years 2017, 2018, and 2019, specifically for '
+                      "'Salaries and fees', 'Incentive schemes1', and 'Other "
+                      'benefits2\'.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "Financial data for 2017, 2018, and '
+                      '2019 for Salaries and fees, Incentive schemes1, and '
+                      'Other benefits2.",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "The 2019 salaries and fees are '
+                      "directly listed in the table under the column '2019 €m' "
+                      'for the row \'Salaries and fees\'.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "4",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "1. Locate \'Salaries and fees\' '
+                      'for 2018 and 2019: 4 and 4.\\n2. Compute the average: '
+                      '(4 + 4) / 2.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "(4 + 4) / 2 [CALC]"\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "1. Locate \'Incentive schemes1\' '
+                      'for 2018 and 2019: 3 and 2.\\n2. Compute the average: '
+                      '(3 + 2) / 2.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "(3 + 2) / 2 [CALC]"\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "1. Compute average salaries and '
+                      'fees for 2018 and 2019: (4 + 4) / 2.\\n2. Compute '
+                      'average incentive schemes for 2018 and 2019: (3 + 2) / '
+                      '2.\\n3. Find the difference between these averages.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "((4 + 4) / 2) - ((3 + 2) / 2) [CALC]"\n'
+                      '    }\n'
+                      ']',
+               'json': [{'reasoning': 'The financial items listed in the table '
+                                      "are the row labels: 'Salaries and "
+                                      "fees', 'Incentive schemes1', and 'Other "
+                                      "benefits2'.",
+                         'status': 'PARTIAL',
+                         'text': 'Salaries and fees, Incentive schemes1, Other '
+                                 'benefits2',
+                         'expr': ''},
+                        {'reasoning': 'The table shows financial data for the '
+                                      'years 2017, 2018, and 2019, '
+                                      "specifically for 'Salaries and fees', "
+                                      "'Incentive schemes1', and 'Other "
+                                      "benefits2'.",
+                         'status': 'PARTIAL',
+                         'text': 'Financial data for 2017, 2018, and 2019 for '
+                                 'Salaries and fees, Incentive schemes1, and '
+                                 'Other benefits2.',
+                         'expr': ''},
+                        {'reasoning': 'The 2019 salaries and fees are directly '
+                                      'listed in the table under the column '
+                                      "'2019 €m' for the row 'Salaries and "
+                                      "fees'.",
+                         'status': 'PARTIAL',
+                         'text': '4',
+                         'expr': ''},
+                        {'reasoning': "1. Locate 'Salaries and fees' for 2018 "
+                                      'and 2019: 4 and 4.\n'
+                                      '2. Compute the average: (4 + 4) / 2.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '(4 + 4) / 2 [CALC]'},
+                        {'reasoning': "1. Locate 'Incentive schemes1' for 2018 "
+                                      'and 2019: 3 and 2.\n'
+                                      '2. Compute the average: (3 + 2) / 2.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '(3 + 2) / 2 [CALC]'},
+                        {'reasoning': '1. Compute average salaries and fees '
+                                      'for 2018 and 2019: (4 + 4) / 2.\n'
+                                      '2. Compute average incentive schemes '
+                                      'for 2018 and 2019: (3 + 2) / 2.\n'
+                                      '3. Find the difference between these '
+                                      'averages.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '((4 + 4) / 2) - ((3 + 2) / 2) [CALC]'}]},
+ 'Calculator': {'cot': '',
+                'result': '(calc done)',
+                'json': [{'status': 'PARTIAL',
+                          'text': 'Salaries and fees, Incentive schemes1, '
+                                  'Other benefits2',
+                          'expr': '',
+                          'reasoning': 'The financial items listed in the '
+                                       "table are the row labels: 'Salaries "
+                                       "and fees', 'Incentive schemes1', and "
+                                       "'Other benefits2'."},
+                         {'reasoning': 'The table shows financial data for the '
+                                       'years 2017, 2018, and 2019, '
+                                       "specifically for 'Salaries and fees', "
+                                       "'Incentive schemes1', and 'Other "
+                                       "benefits2'.",
+                          'status': 'PARTIAL',
+                          'text': 'Financial data for 2017, 2018, and 2019 for '
+                                  'Salaries and fees, Incentive schemes1, and '
+                                  'Other benefits2.',
+                          'expr': ''},
+                         {'reasoning': 'The 2019 salaries and fees are '
+                                       'directly listed in the table under the '
+                                       "column '2019 €m' for the row 'Salaries "
+                                       "and fees'.",
+                          'status': 'PARTIAL',
+                          'text': '4',
+                          'expr': ''},
+                         {'reasoning': "1. Locate 'Salaries and fees' for 2018 "
+                                       'and 2019: 4 and 4.\n'
+                                       '2. Compute the average: (4 + 4) / 2.',
+                          'status': 'FULL',
+                          'text': '4',
+                          'expr': '',
+                          'calc_answer': '4'},
+                         {'reasoning': "1. Locate 'Incentive schemes1' for "
+                                       '2018 and 2019: 3 and 2.\n'
+                                       '2. Compute the average: (3 + 2) / 2.',
+                          'status': 'FULL',
+                          'text': '2.5',
+                          'expr': '',
+                          'calc_answer': '2.5'},
+                         {'reasoning': '1. Compute average salaries and fees '
+                                       'for 2018 and 2019: (4 + 4) / 2.\n'
+                                       '2. Compute average incentive schemes '
+                                       'for 2018 and 2019: (3 + 2) / 2.\n'
+                                       '3. Find the difference between these '
+                                       'averages.',
+                          'status': 'FULL',
+                          'text': '1.5',
+                          'expr': '',
+                          'calc_answer': '1.5'}]},
+ 'SummaCraft': {'prompt': '(deterministic)',
+                'input': 'merged_items=6',
+                'result': '1) Salaries and fees, Incentive schemes1, Other '
+                          'benefits2\n'
+                          '2) Financial data for 2017, 2018, and 2019 for '
+                          'Salaries and fees, Incentive schemes1, and Other '
+                          'benefits2.\n'
+                          '3) 4 million\n'
+                          '4) 4 million\n'
+                          '5) 2.5 million\n'
+                          '6) 1.5 million\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '1) TABLE: The financial items listed in the table '
+                          "are the row labels: 'Salaries and fees', 'Incentive "
+                          "schemes1', and 'Other benefits2'. | CONTEXT: (none) "
+                          '| TAG: PARTIAL\n'
+                          '2) TABLE: The table shows financial data for the '
+                          'years 2017, 2018, and 2019, specifically for '
+                          "'Salaries and fees', 'Incentive schemes1', and "
+                          "'Other benefits2'. | CONTEXT: (none) | TAG: "
+                          'PARTIAL\n'
+                          '3) TABLE: The 2019 salaries and fees are directly '
+                          "listed in the table under the column '2019 €m' for "
+                          "the row 'Salaries and fees'. | CONTEXT: (none) | "
+                          'TAG: PARTIAL\n'
+                          "4) TABLE: 1. Locate 'Salaries and fees' for 2018 "
+                          'and 2019: 4 and 4.\n'
+                          '2. Compute the average: (4 + 4) / 2. | CONTEXT: '
+                          '(none) | CALC: 4 | TAG: FULL\n'
+                          "5) TABLE: 1. Locate 'Incentive schemes1' for 2018 "
+                          'and 2019: 3 and 2.\n'
+                          '2. Compute the average: (3 + 2) / 2. | CONTEXT: '
+                          '(none) | CALC: 2.5 | TAG: FULL\n'
+                          '6) TABLE: 1. Compute average salaries and fees for '
+                          '2018 and 2019: (4 + 4) / 2.\n'
+                          '2. Compute average incentive schemes for 2018 and '
+                          '2019: (3 + 2) / 2.\n'
+                          '3. Find the difference between these averages. | '
+                          'CONTEXT: (none) | CALC: 1.5 | TAG: FULL'}}

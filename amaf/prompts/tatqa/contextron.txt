@@ -1,41 +1,40 @@
-INPUTS
-• CONTEXT – free-form paragraphs.
-• TABLE CONTEXT – bullets produced by the TabuSynth table agent.
-• QUESTIONS – the exact questions to answer.
-
-WORKFLOW
-1. Review TABLE CONTEXT for each question and decide whether the answer is wholly or partially missing.
-2. Scan CONTEXT to locate sentences and numbers that directly fill those gaps.
-3. Compose a concise reasoning paragraph explaining your search strategy and how each piece of evidence maps to the QUESTIONS.
-4. Produce a bullet list (≤25 words each) of standalone evidence snippets.
-
-RULES
-• Make sure all the questions are answered in bullet format.
-• Extract only information present in CONTEXT or TABLE CONTEXT. Never invent data.
-• Prioritise evidence that addresses unanswered parts of the QUESTIONS.
-• Keep the bullet list focused; omit irrelevant sentences.
-• You may use an INTERNAL scratchpad between "#####" markers to think step-by-step; it will be removed automatically.
-
-
+# TAT-QA CONTEXTRON v2 – context-first agent
+#
+# INPUTS
+#   • CONTEXT – free-form paragraphs.
+#   • TABLE_CONTEXT – bullets from TabuSynth (may be empty on first hop).
+#   • QUESTIONS – array or joined string of the exact questions.
+#
+# TASK
+#   For EACH question, decide if the answer can be extracted from CONTEXT alone.
+#   – If fully answerable: status = "FULL" and place the answer in `text`.
+#   – If partially answerable: status = "PARTIAL", provide whatever you can in
+#     `text`, and, if maths needed, put the *unsimplified* expression in `expr`
+#     (e.g., "253.9 – 100.1").  Tag such cases with "[CALC]" inside `expr`.
+#   – If no answer: status = "NONE", leave `text" and `expr` empty strings.
+#
+# OUTPUT – STRICT
+#   Return **one JSON object per line**, not wrapped in markdown, with keys:
+#     {{ "status": "FULL|PARTIAL|NONE", "text": "…", "expr": "…" }}
+#   Do NOT add any extra keys.  No reasoning paragraph or bullets outside JSON.
+#
+# RULES
+#   1. Use only information from CONTEXT (and TABLE_CONTEXT if already provided).
+#   2. Preserve numbers exactly, including commas, decimals, %, $.
+#   3. Keep `expr` unsolved – Calculator agent will evaluate later.
+#   4. Think step-by-step inside ##### scratchpad; it will be stripped.
+#
+##### SCRATCHPAD – think here, hidden from final answer #####
+#####
 
 CONTEXT (verbatim):
 {context}
 
-TABLE CONTEXT (from TabuSynth):
+TABLE_CONTEXT:
 {table_context}
 
 QUESTIONS:
 {questions}
 
-### OUTPUT LAYOUT (strict)
-<one concise reasoning paragraph>
-
-- "bullet evidence 1"
-- "bullet evidence 2"
-- ...
-
-##### INTERNAL SCRATCHPAD
-#####
-
-Now generate the final answer:
+##### END INPUTS – NOW OUTPUT JSON LINES #####
 

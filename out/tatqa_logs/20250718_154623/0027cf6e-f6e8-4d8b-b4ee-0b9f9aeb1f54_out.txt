@@ -1,0 +1,394 @@
+
+=== FINAL SUMMARY ===
+
+1) The cash amount at June 30, 2019, is $3,795 and at December 31, 2019, is $3,795. thousand
+2) The working capital adjustment at June 30, 2019, is (38) and at December 31, 2019, is (18). thousand
+3) The total fair value of consideration transferred at June 30, 2019, is 3,757 and at December 31, 2019, is 3,777. thousand
+4) The change in the cash amount between June 30 and December 31, 2019, is $0. thousand
+5) -52.63 percent
+6) 0.53 percent
+
+Answer Echoes:
+1) TABLE: Look up the 'Cash' row for values at June 30 and December 31, 2019. | CONTEXT: (none) | TAG: PARTIAL
+2) TABLE: Look up the 'Working capital adjustment to purchase price' row for values at June 30 and December 31, 2019. | CONTEXT: (none) | TAG: PARTIAL
+3) TABLE: Look up the 'Total fair value of consideration transferred' row for values at June 30 and December 31, 2019. | CONTEXT: (none) | TAG: PARTIAL
+4) TABLE: Calculate the change in cash amount by subtracting the June 30 value from the December 31 value. | CONTEXT: (none) | TAG: PARTIAL
+5) TABLE: Calculate the percentage change in working capital adjustment by finding the difference between December 31 and June 30 values, then dividing by the June 30 value and multiplying by 100. | CONTEXT: (none) | CALC: -52.63 | TAG: FULL
+6) TABLE: Calculate the percentage change in total fair value of consideration transferred by finding the difference between December 31 and June 30 values, then dividing by the June 30 value and multiplying by 100. | CONTEXT: (none) | CALC: 0.53 | TAG: FULL
+
+=== LOGS (per-agent) ===
+{'Contextron': {'cot': '',
+                'result': '(json emitted)',
+                'raw': '{"status": "NONE", "text": "", "expr": ""}',
+                'json': [{'status': 'NONE', 'text': '', 'expr': ''}]},
+ 'TabuSynth': {'prompt': 'You are the **Table agent**.  For each question you '
+                         'must decide whether the table alone can answer it, '
+                         'then (if needed) compute the answer using a '
+                         'Chain-of-Table reasoning plan.\n'
+                         '\n'
+                         'You are given the *current status* from the Context '
+                         'agent.  If that status is "FULL" simply verify the '
+                         'numeric precision and echo the answer; otherwise '
+                         'fill the gap.\n'
+                         '\n'
+                         'Return a JSON **list** — one object per question, '
+                         'matching the input order.\n'
+                         '\n'
+                         'WORKFLOW (per question)\n'
+                         '1. Look at `ctx_status` entry.  If `status == '
+                         '"FULL"`, set `status" : "FULL"` in your output and '
+                         'copy the `text` untouched.  `expr` should be "".\n'
+                         '2. Otherwise draw ONLY from the table to craft a '
+                         'reasoning plan (ordered steps).  Put that plan in '
+                         '`reasoning` field.\n'
+                         '3. Produce an answer in `text`.  If arithmetic is '
+                         'still needed, leave an *unsolved* expression in '
+                         '`expr` and tag it with `[CALC]`.\n'
+                         '\n'
+                         'Output object keys:\n'
+                         '  • reasoning – your chain-of-table steps or "" if '
+                         'not needed\n'
+                         '  • status – FULL | PARTIAL | NONE  (relative to '
+                         '*table* contribution)\n'
+                         '  • text   – answer snippet (may be empty when '
+                         'NONE)\n'
+                         '  • expr   – unsolved numeric expression or ""\n'
+                         '\n'
+                         'RULES\n'
+                         '• Use ONLY numbers that appear verbatim in the '
+                         'table.\n'
+                         '• Preserve units, commas, decimals exactly.\n'
+                         '• Return a JSON *array* (no markdown fences) — one '
+                         'object per question.\n'
+                         '• Think inside ##### scratchpad; it will be '
+                         'removed.\n'
+                         '\n'
+                         '### Example 1 – Revenue Growth\n'
+                         '\n'
+                         '```\n'
+                         'Input Table:\n'
+                         '| Company | Revenue 2020 | Revenue 2021 |\n'
+                         '|---------|--------------|--------------|\n'
+                         '| ABC     | 1,000        | 1,500        |\n'
+                         '| XYZ     | 2,000        | 1,800        |\n'
+                         '\n'
+                         'Question: Which company had the largest growth in '
+                         'revenue?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Compute `Revenue_Growth = Revenue 2021 - Revenue '
+                         '2020` for each row.\n'
+                         '2. Select the row with the maximum '
+                         '`Revenue_Growth`.\n'
+                         '3. Report the company name from that row as the '
+                         'final answer.\n'
+                         '\n'
+                         'Expected Answer: `ABC`\n'
+                         '\n'
+                         '---\n'
+                         '\n'
+                         '### Example 2 – Filtering and Summation\n'
+                         '\n'
+                         '```\n'
+                         'Input Table:\n'
+                         '| Player | Team | Points |\n'
+                         '|--------|------|-------|\n'
+                         '| Alice  | Red  | 12    |\n'
+                         '| Bob    | Blue | 15    |\n'
+                         '| Carol  | Red  | 20    |\n'
+                         '\n'
+                         'Question: How many total points were scored by the '
+                         'Red team?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Filter rows where `Team` equals `Red`.\n'
+                         '2. Sum the `Points` column of the filtered table.\n'
+                         '3. Return that sum.\n'
+                         '\n'
+                         'Expected Answer: `32`\n'
+                         '\n'
+                         '---\n'
+                         '\n'
+                         '### Example 3 – Joining and Computing Ratios\n'
+                         '\n'
+                         '```\n'
+                         'Table A:\n'
+                         '| CompanyID | Employees |\n'
+                         '|-----------|-----------|\n'
+                         '| 1         | 50        |\n'
+                         '| 2         | 75        |\n'
+                         '\n'
+                         'Table B:\n'
+                         '| CompanyID | Revenue |\n'
+                         '|-----------|---------|\n'
+                         '| 1         | 2,000   |\n'
+                         '| 2         | 3,000   |\n'
+                         '\n'
+                         'Question: Which company has the higher revenue per '
+                         'employee?\n'
+                         '```\n'
+                         '\n'
+                         '**Chain-of-Table Reasoning**\n'
+                         '1. Join Table A and Table B on `CompanyID`.\n'
+                         '2. Compute `RevPerEmp = Revenue / Employees` for '
+                         'each joined row.\n'
+                         '3. Select the row with the highest `RevPerEmp` and '
+                         'output the `CompanyID`.\n'
+                         '\n'
+                         'Expected Answer: `2`\n'
+                         '\n'
+                         '---\n'
+                         'TABLE:\n'
+                         ' | Estimated at June 30, 2019 | Adjustments | Final '
+                         'as of December 31, 2019\n'
+                         'Cash | $3,795 | $ - | $3,795\n'
+                         'Working capital adjustment to purchase price | (38) '
+                         '| 20 | (18)\n'
+                         'Total fair value of consideration transferred | '
+                         '3,757 | 20 | 3,777\n'
+                         'Accounts receivable | 591 | - | 591\n'
+                         'Inventories | 149 | - | 149\n'
+                         'Deposits and other current assets | 4 | 8 | 12\n'
+                         'Property and equipment | 1,560 | - | 1,560\n'
+                         'Customer relationship | 930 | - | 930\n'
+                         'Other finite-lived intangible assets | 35 | - | 35\n'
+                         'Accounts payable | (219) | - | (219)\n'
+                         'Finance lease liabilities | (18) | - | (18)\n'
+                         'Net recognized amounts of identifiable assets '
+                         'acquired and liabilities assumed | 3,032 | 8 | '
+                         '3,040\n'
+                         'Goodwill | $                          725 | '
+                         '$                            12 | '
+                         '$                          737\n'
+                         '\n'
+                         'CTX_STATUS (from Context agent):\n'
+                         '[{"status": "NONE", "text": "", "expr": ""}]\n'
+                         '\n'
+                         'QUESTIONS:\n'
+                         'What are the respective cash amount at June 30 and '
+                         'December 31, 2019?\n'
+                         'What are the respective working capital adjustment '
+                         'at June 30 and December 31, 2019?\n'
+                         'What are the respective total fair value of '
+                         'consideration transferred at June 30 and December '
+                         '31, 2019?\n'
+                         'What is the change in the cash amount between June '
+                         '30 and December 31, 2019?\n'
+                         'What is the percentage change in the working capital '
+                         'adjustment at June 30 and December 31, 2019?\n'
+                         'What is the percentage change in the total fair '
+                         'value of consideration transferred at June 30 and '
+                         'December 31, 2019?\n'
+                         '\n'
+                         '##### INTERNAL SCRATCHPAD (think here, will be '
+                         'hidden)\n'
+                         '#####\n'
+                         '\n'
+                         'Now output the final JSON array:\n',
+               'input': ' | Estimated at June 30, 2019 | Adjustments | Final '
+                        'as of December 31, 2019\n'
+                        'Cash | $3,795 | $ - | $3,795\n'
+                        'Working capital…',
+               'cot': '',
+               'result': '(json emitted)',
+               'raw': '[\n'
+                      '    {\n'
+                      '        "reasoning": "Look up the \'Cash\' row for '
+                      'values at June 30 and December 31, 2019.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The cash amount at June 30, 2019, is '
+                      '$3,795 and at December 31, 2019, is $3,795.",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Look up the \'Working capital '
+                      "adjustment to purchase price' row for values at June 30 "
+                      'and December 31, 2019.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The working capital adjustment at June '
+                      '30, 2019, is (38) and at December 31, 2019, is (18).",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Look up the \'Total fair value of '
+                      "consideration transferred' row for values at June 30 "
+                      'and December 31, 2019.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The total fair value of consideration '
+                      'transferred at June 30, 2019, is 3,757 and at December '
+                      '31, 2019, is 3,777.",\n'
+                      '        "expr": ""\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Calculate the change in cash '
+                      'amount by subtracting the June 30 value from the '
+                      'December 31 value.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "The change in the cash amount between '
+                      'June 30 and December 31, 2019, is $0.",\n'
+                      '        "expr": "3795 - 3795"\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Calculate the percentage change '
+                      'in working capital adjustment by finding the difference '
+                      'between December 31 and June 30 values, then dividing '
+                      'by the June 30 value and multiplying by 100.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "(((-18) - (-38)) / (-38)) * 100 '
+                      '[CALC]"\n'
+                      '    },\n'
+                      '    {\n'
+                      '        "reasoning": "Calculate the percentage change '
+                      'in total fair value of consideration transferred by '
+                      'finding the difference between December 31 and June 30 '
+                      'values, then dividing by the June 30 value and '
+                      'multiplying by 100.",\n'
+                      '        "status": "PARTIAL",\n'
+                      '        "text": "",\n'
+                      '        "expr": "((3777 - 3757) / 3757) * 100 [CALC]"\n'
+                      '    }\n'
+                      ']',
+               'json': [{'reasoning': "Look up the 'Cash' row for values at "
+                                      'June 30 and December 31, 2019.',
+                         'status': 'PARTIAL',
+                         'text': 'The cash amount at June 30, 2019, is $3,795 '
+                                 'and at December 31, 2019, is $3,795.',
+                         'expr': ''},
+                        {'reasoning': "Look up the 'Working capital adjustment "
+                                      "to purchase price' row for values at "
+                                      'June 30 and December 31, 2019.',
+                         'status': 'PARTIAL',
+                         'text': 'The working capital adjustment at June 30, '
+                                 '2019, is (38) and at December 31, 2019, is '
+                                 '(18).',
+                         'expr': ''},
+                        {'reasoning': "Look up the 'Total fair value of "
+                                      "consideration transferred' row for "
+                                      'values at June 30 and December 31, '
+                                      '2019.',
+                         'status': 'PARTIAL',
+                         'text': 'The total fair value of consideration '
+                                 'transferred at June 30, 2019, is 3,757 and '
+                                 'at December 31, 2019, is 3,777.',
+                         'expr': ''},
+                        {'reasoning': 'Calculate the change in cash amount by '
+                                      'subtracting the June 30 value from the '
+                                      'December 31 value.',
+                         'status': 'PARTIAL',
+                         'text': 'The change in the cash amount between June '
+                                 '30 and December 31, 2019, is $0.',
+                         'expr': '3795 - 3795'},
+                        {'reasoning': 'Calculate the percentage change in '
+                                      'working capital adjustment by finding '
+                                      'the difference between December 31 and '
+                                      'June 30 values, then dividing by the '
+                                      'June 30 value and multiplying by 100.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '(((-18) - (-38)) / (-38)) * 100 [CALC]'},
+                        {'reasoning': 'Calculate the percentage change in '
+                                      'total fair value of consideration '
+                                      'transferred by finding the difference '
+                                      'between December 31 and June 30 values, '
+                                      'then dividing by the June 30 value and '
+                                      'multiplying by 100.',
+                         'status': 'PARTIAL',
+                         'text': '',
+                         'expr': '((3777 - 3757) / 3757) * 100 [CALC]'}]},
+ 'Calculator': {'cot': '',
+                'result': '(calc done)',
+                'json': [{'status': 'PARTIAL',
+                          'text': 'The cash amount at June 30, 2019, is $3,795 '
+                                  'and at December 31, 2019, is $3,795.',
+                          'expr': '',
+                          'reasoning': "Look up the 'Cash' row for values at "
+                                       'June 30 and December 31, 2019.'},
+                         {'reasoning': "Look up the 'Working capital "
+                                       "adjustment to purchase price' row for "
+                                       'values at June 30 and December 31, '
+                                       '2019.',
+                          'status': 'PARTIAL',
+                          'text': 'The working capital adjustment at June 30, '
+                                  '2019, is (38) and at December 31, 2019, is '
+                                  '(18).',
+                          'expr': ''},
+                         {'reasoning': "Look up the 'Total fair value of "
+                                       "consideration transferred' row for "
+                                       'values at June 30 and December 31, '
+                                       '2019.',
+                          'status': 'PARTIAL',
+                          'text': 'The total fair value of consideration '
+                                  'transferred at June 30, 2019, is 3,757 and '
+                                  'at December 31, 2019, is 3,777.',
+                          'expr': ''},
+                         {'reasoning': 'Calculate the change in cash amount by '
+                                       'subtracting the June 30 value from the '
+                                       'December 31 value.',
+                          'status': 'PARTIAL',
+                          'text': 'The change in the cash amount between June '
+                                  '30 and December 31, 2019, is $0.',
+                          'expr': '3795 - 3795'},
+                         {'reasoning': 'Calculate the percentage change in '
+                                       'working capital adjustment by finding '
+                                       'the difference between December 31 and '
+                                       'June 30 values, then dividing by the '
+                                       'June 30 value and multiplying by 100.',
+                          'status': 'FULL',
+                          'text': '-52.63',
+                          'expr': '',
+                          'calc_answer': '-52.63'},
+                         {'reasoning': 'Calculate the percentage change in '
+                                       'total fair value of consideration '
+                                       'transferred by finding the difference '
+                                       'between December 31 and June 30 '
+                                       'values, then dividing by the June 30 '
+                                       'value and multiplying by 100.',
+                          'status': 'FULL',
+                          'text': '0.53',
+                          'expr': '',
+                          'calc_answer': '0.53'}]},
+ 'SummaCraft': {'prompt': '(deterministic)',
+                'input': 'merged_items=6',
+                'result': '1) The cash amount at June 30, 2019, is $3,795 and '
+                          'at December 31, 2019, is $3,795. thousand\n'
+                          '2) The working capital adjustment at June 30, 2019, '
+                          'is (38) and at December 31, 2019, is (18). '
+                          'thousand\n'
+                          '3) The total fair value of consideration '
+                          'transferred at June 30, 2019, is 3,757 and at '
+                          'December 31, 2019, is 3,777. thousand\n'
+                          '4) The change in the cash amount between June 30 '
+                          'and December 31, 2019, is $0. thousand\n'
+                          '5) -52.63 percent\n'
+                          '6) 0.53 percent\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "1) TABLE: Look up the 'Cash' row for values at June "
+                          '30 and December 31, 2019. | CONTEXT: (none) | TAG: '
+                          'PARTIAL\n'
+                          "2) TABLE: Look up the 'Working capital adjustment "
+                          "to purchase price' row for values at June 30 and "
+                          'December 31, 2019. | CONTEXT: (none) | TAG: '
+                          'PARTIAL\n'
+                          "3) TABLE: Look up the 'Total fair value of "
+                          "consideration transferred' row for values at June "
+                          '30 and December 31, 2019. | CONTEXT: (none) | TAG: '
+                          'PARTIAL\n'
+                          '4) TABLE: Calculate the change in cash amount by '
+                          'subtracting the June 30 value from the December 31 '
+                          'value. | CONTEXT: (none) | TAG: PARTIAL\n'
+                          '5) TABLE: Calculate the percentage change in '
+                          'working capital adjustment by finding the '
+                          'difference between December 31 and June 30 values, '
+                          'then dividing by the June 30 value and multiplying '
+                          'by 100. | CONTEXT: (none) | CALC: -52.63 | TAG: '
+                          'FULL\n'
+                          '6) TABLE: Calculate the percentage change in total '
+                          'fair value of consideration transferred by finding '
+                          'the difference between December 31 and June 30 '
+                          'values, then dividing by the June 30 value and '
+                          'multiplying by 100. | CONTEXT: (none) | CALC: 0.53 '
+                          '| TAG: FULL'}}

@@ -10,7 +10,14 @@ class InputData:
     image_cues: str = ""
     image_path: List[str] = field(default_factory=list)
     user_profile: str = "general"
+    # For datasets with single-question inputs.
     question: str = ""
+    # For datasets like TAT-QA providing multiple questions per table.
+    questions: List[str] = field(default_factory=list)
+    # Desired units / magnitudes per question (e.g., ["million", "%", ""])
+    answer_scales: List[str] = field(default_factory=list)
+    # Expected answer datatypes per question (e.g., ["number", "span", ...])
+    answer_types: List[str] = field(default_factory=list)
 
 
 @dataclass

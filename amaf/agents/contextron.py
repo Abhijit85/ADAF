@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 from typing import Any, Dict
+import json
 
 from ..core import AgentOutput, InputData
 from .base import Agent
@@ -42,22 +43,50 @@ class ContextronAgent(Agent):
             )
         else:
             # Use the original format
-        prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
+            prompt = prompt_template.format(context=data.context, tag_set=self.TAG_SET)
         
+        logs.setdefault(self.name, {})["prompt"] = prompt
         cot_and_ins = self._chat(prompt, temperature=0.25)
 
         # 3. Remove any internal scratchpad echoed back
-        cot_and_ins = re.sub(r"#####.*?#####", "", cot_and_ins, flags=re.DOTALL).strip()
+        cleaned = re.sub(r"#####.*?#####", "", cot_and_ins, flags=re.DOTALL).strip()
+        # Store input preview (context first 120 chars)
+        logs[self.name]["input"] = data.context[:100] + ("…" if len(data.context) > 100 else "")
 
-        # 4. Separate CoT and insights
-        parts = cot_and_ins.split("\n\n", 1)
-        if len(parts) == 2:
-            cot, insight_block = parts
-        else:
-            cot, insight_block = "", cot_and_ins  # model didn't insert blank line
+        # Validate presence of questions for tatqa early – missing questions halt pipeline
+        if self.dataset == "tatqa" and not getattr(data, "questions", None):
+            raise ValueError("[Contextron] No questions provided for TAT-QA input; aborting pipeline.")
+
+        # ---- Dataset-specific handling ------------------------------------
+        if self.dataset == "tatqa":
+            # Expect one JSON object per line (v2 spec).
+            json_objs = []
+            for line in cleaned.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    json_objs.append(json.loads(line))
+                except Exception:
+                    # not valid JSON line → ignore / fallback
+                    pass
+
+            if json_objs:
+                out = AgentOutput(cot="", result="(json emitted)")
+                existing = logs.get(self.name, {})
+                logs[self.name] = existing | out.__dict__ | {
+                    "prompt": prompt[:100] + ("…" if len(prompt) > 100 else ""),
+                    "input": (data.context or "")[:100] + ("…" if len(data.context) > 100 else ""),
+                    "raw": cot_and_ins,
+                    "json": json_objs,
+                }
+                return out
+
+        # ---- Fallback to original behaviour ------------------------------
+        parts = cleaned.split("\n\n", 1)
+        cot, insight_block = parts if len(parts) == 2 else ("", cleaned)
 
         out = AgentOutput(cot=cot.strip(), result=insight_block.strip())
-
-        # 5. Log raw output for debugging
-        logs[self.name] = out.__dict__ | {"raw": cot_and_ins}
+        existing = logs.get(self.name, {})
+        logs[self.name] = existing | out.__dict__ | {"raw": cot_and_ins}
         return out
