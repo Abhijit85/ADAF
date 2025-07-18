@@ -45,6 +45,6 @@ for ex in ds:
             ans = ' '.join(str(a) for a in ans)
         ans = str(ans).lower().strip()
         total += 1
-        if ans and re.search(re.escape(ans), answer_echoes):
+        if ans and re.search(re.escape(ans), summary_text):
             hits += 1
 print(f"Coverage hit‑rate: {hits}/{total}  ->  {hits/total:.2%}")

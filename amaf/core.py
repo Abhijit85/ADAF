@@ -10,7 +10,7 @@ class InputData:
     image_cues: str = ""
     image_path: List[str] = field(default_factory=list)
     user_profile: str = "general"
-    question: str = ""
+    questions: List[str] = field(default_factory=list)
 
 
 @dataclass

@@ -17,11 +17,13 @@ for ex in tqdm.tqdm(ds, desc='convert'):
         p.get('text', '') if isinstance(p, dict) else str(p)
         for p in ex.get('paragraphs', [])
     ]
+    questions = [q['question'] for q in ex.get('questions', []) if 'question' in q]
     amaf = {
         'table': ex['table'],
         'context': ' '.join(context_parts),
         'image_cues': '',
         'user_profile': 'general',
+        'questions': questions
     }
     uid = ex.get('id') or ex.get('table', {}).get('uid')
     if not uid:

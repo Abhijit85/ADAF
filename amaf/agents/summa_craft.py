@@ -48,9 +48,9 @@ class SummaCraftAgent(Agent):
         # 2. Audience-specific template
         templates = {
             "general": (
-                "Write a concise analysis ≈150 words: start with one-sentence "
-                "overview, then 3–4 numbered bullets on key quantitative and "
-                "contextual insights."
+                "answer the questions precisely using the context from table and text agent "
+                "Output the answer in bullet points."
+                "also provide contextual insights."
             ),
             "retail investor": (
                 "Explain in plain language why these figures matter to a non-expert "
@@ -66,9 +66,20 @@ class SummaCraftAgent(Agent):
         # 3. Build prompt from external template
         prompt_file = self.get_prompt_path("summa_craft.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
+        
+        # Format questions for the prompt
+        questions = getattr(data, "questions", None)
+        if isinstance(questions, list):
+            questions_str = "\n".join(f"{i+1}. {q}" for i, q in enumerate(questions))
+        elif isinstance(questions, str):
+            questions_str = questions
+        else:
+            questions_str = ""
+
         prompt = prompt_template.format(
             template=template,
             bundle_for_reasoning=bundle_for_reasoning,
+            questions=questions_str
         )
 
         # 4. Call LLM and post-process
