@@ -41,6 +41,15 @@ def main():
     except FileNotFoundError:
         sys.exit(f"Cannot open {args.json_file}")
 
+    # Handle both 'question' (singular) and 'questions' (plural) for compatibility
+    if 'question' in raw and 'questions' not in raw:
+        raw['questions'] = [raw['question']]
+        del raw['question']
+    elif 'question' in raw and 'questions' in raw:
+        # If both exist, prefer 'questions' but warn
+        print(f"Warning: Both 'question' and 'questions' found in {args.json_file}. Using 'questions'.")
+        del raw['question']
+
     data = InputData(**raw)
 
     # -------- build registry of agents

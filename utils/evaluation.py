@@ -15,7 +15,9 @@ ds_path = Path('data/TATQA/tatqa_dataset_dev.json')
 
 with ds_path.open() as f:
     ds = json.load(f)
-log_dir = Path('out/tatqa_logs/20250718_130215')
+log_dir = Path('out/tatqa_logs/20250718_131942')
+# The following code sets up the evaluation for TAT-QA summaries.
+# It loads the development split, sets the log directory, and prepares for answer coverage checking.
 
 total = hits = 0
 for ex in ds:

@@ -20,15 +20,17 @@ class TabuSynthAgent(Agent):
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:  # noqa: D401
         """Analyse the table and output structured forensic insights."""
 
-        prompt_file = self.get_prompt_path("tabu_synth_enhanced.txt")
+        prompt_file = self.get_prompt_path("tabu_synth.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
         
-        # Check if this is the new TATQA format with table_str and questions
+        # Check if this is the new FinQA format with table_str and questions
         if "{table_str}" in prompt_template and "{questions}" in prompt_template:
-            # Convert table to simple string format for TATQA
-            table_str = data.table
-            # Handle questions - use question field if available, otherwise empty string
-            questions = getattr(data, 'questions', '') or ''
+            # Convert table to simple string format for FinQA
+            table_str = str(data.table)
+            # Handle questions - use questions field if available, otherwise empty string
+            questions = getattr(data, 'questions', ['']) or ['']
+            if isinstance(questions, list):
+                questions = questions[0] if questions else ''
             prompt = prompt_template.format(table_str=table_str, questions=questions)
         else:
             # Use the original format
@@ -39,15 +41,21 @@ class TabuSynthAgent(Agent):
 
         # Remove scratchpad if model kept delimiters but echoed them.
         raw = re.sub(r"#####.*?#####", "", raw, flags=re.DOTALL)
-        json_txt = re.sub(r"^```json\s*|^```\s*|```$", "", raw, flags=re.DOTALL)
-
-        try:
-            obj = json.loads(json_txt)
-            reasoning = obj.get("reasoning", "").strip()
-            bullets = "\n".join(obj.get("bullets", [])).strip()
-        except json.JSONDecodeError:
-            logging.warning("TabuSynth: JSON parse failed; returning raw text")
-            reasoning, bullets = "", json_txt.strip()
+        
+        # For FinQA format, don't try to parse JSON - use raw output
+        if "{table_str}" in prompt_template and "{questions}" in prompt_template:
+            reasoning = raw.strip()
+            bullets = raw.strip()
+        else:
+            # Original JSON parsing for other formats
+            json_txt = re.sub(r"^```json\s*|^```\s*|```$", "", raw, flags=re.DOTALL)
+            try:
+                obj = json.loads(json_txt)
+                reasoning = obj.get("reasoning", "").strip()
+                bullets = "\n".join(obj.get("bullets", [])).strip()
+            except json.JSONDecodeError:
+                logging.warning("TabuSynth: JSON parse failed; returning raw text")
+                reasoning, bullets = "", json_txt.strip()
 
         out = AgentOutput(cot=reasoning, result=bullets)
         logs[self.name] = out.__dict__ | {"raw": raw}

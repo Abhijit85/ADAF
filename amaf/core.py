@@ -16,4 +16,4 @@ class InputData:
 @dataclass
 class AgentOutput:
     cot: str  # chain of thought
-    result: str  # agent’s main payload (facts/summary/etc.)
+    result: str  # agent's main payload (facts/summary/etc.)

@@ -20,7 +20,7 @@ for ex in tqdm.tqdm(ds, desc = 'Converting FinQA examples'):
     question = ex['qa'].get('question', '')
     amaf = {
         'context': context,
-        'question': question,
+        'questions': question,
         'table': table,
         'image_cues': ''
     }

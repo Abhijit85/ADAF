@@ -27,14 +27,17 @@ class ContextronAgent(Agent):
             return out
 
         # 2. Build prompt from external template
-        prompt_file = self.get_prompt_path("contextron_enhanced.txt")
+        prompt_file = self.get_prompt_path("contextron.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
         
-        # Check if this is the new TATQA format with table_context and questions
+        # Check if this is the new FinQA format with table_context and questions
         if "{table_context}" in prompt_template and "{questions}" in prompt_template:
             # Get table context from TabuSynth if available
             table_context = logs.get("TabuSynth", {}).get("result", "") or "(no table analysis available)"
-            questions = getattr(data, 'question', '') or ''
+            # Handle questions - use questions field if available, otherwise empty string
+            questions = getattr(data, 'questions', ['']) or ['']
+            if isinstance(questions, list):
+                questions = questions[0] if questions else ''
             prompt = prompt_template.format(
                 context=data.context, 
                 table_context=table_context,

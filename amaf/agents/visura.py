@@ -72,7 +72,10 @@ class VisuraAgent(Agent):
         # 2. Build prompt from external template
         prompt_file = self.get_prompt_path("visura.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
-        prompt = prompt_template.format(image_cues=image_text)
+        
+        # Use image_cues from data, or empty string if not available
+        image_cues = data.image_cues.strip() if data.image_cues else ""
+        prompt = prompt_template.format(image_cues=image_cues)
 
         cot_and_msg = self._chat(prompt, temperature=0.3)
 
@@ -86,5 +89,5 @@ class VisuraAgent(Agent):
 
         # 5. Package result
         out = AgentOutput(cot=cot.strip(), result=msg.strip())
-        logs[self.name] = out.__dict__ | {"raw": cot_and_msg, "ocr": ocr_text}
+        logs[self.name] = out.__dict__ | {"raw": cot_and_msg}
         return out

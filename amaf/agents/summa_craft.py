@@ -27,9 +27,10 @@ class SummaCraftAgent(Agent):
 
     # ------------------------------------------------------------------
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:
-        # 1. Collect TabuSynth and Contextron raw outputs separately
+        # 1. Collect all agent raw outputs separately
         tabu_synth_output = ""
         contextron_output = ""
+        visura_output = ""
         
         # Get TabuSynth raw output
         tabu_synth_log = logs.get("TabuSynth", {})
@@ -45,9 +46,16 @@ class SummaCraftAgent(Agent):
             txt = re.sub(r"^\[\w+] *", "", txt).strip()          # drop "[Agent]"
             contextron_output = txt
 
+        # Get Visura raw output
+        visura_log = logs.get("Visura", {})
+        if visura_log:
+            txt = visura_log.get("raw", "")  # Use raw instead of result
+            txt = re.sub(r"^\[\w+] *", "", txt).strip()          # drop "[Agent]"
+            visura_output = txt
+
         # Also gather individual bullet lines for Answer Echoes from processed results
         echo_lines = []
-        for agent_name in ["TabuSynth", "Contextron"]:
+        for agent_name in ["TabuSynth", "Contextron", "Visura"]:
             agent_log = logs.get(agent_name, {})
             if agent_log:
                 txt = agent_log.get("result", "")  # Still use result for echoes
@@ -75,7 +83,7 @@ class SummaCraftAgent(Agent):
         template = templates.get(data.user_profile, templates["general"])
         
         # 3. Build prompt from external template
-        prompt_file = self.get_prompt_path("summa_craft_fixed.txt")
+        prompt_file = self.get_prompt_path("summa_craft.txt")
         prompt_template = prompt_file.read_text(encoding="utf-8")
         
         # Format questions for the prompt
@@ -88,9 +96,9 @@ class SummaCraftAgent(Agent):
             questions_str = ""
 
         prompt = prompt_template.format(
-            #template=template,
             tabu_synth_output=tabu_synth_output,
             contextron_output=contextron_output,
+            visura_output=visura_output,
             questions=questions_str
         )
 
