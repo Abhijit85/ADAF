@@ -84,6 +84,10 @@ python utils/rouge_bleu_eval.py --tatqa data/TATQA/tatqa_dataset_dev.json \
     --finqa data/sample_finqa.json --finqa_logs out/finqa_logs
 ```
 
+For tatqa eval ,  clone tatqa repo. Then install numpy, pandas, scipy and 
+then run the command : python tatqa_eval.py --gold_path=:path_to_dev --pred_path=:path_to_predictions
+For more details check the  link:https://nextplusplus.github.io/TAT-QA/
+
 `AMAF w/o Visura` can be evaluated by omitting visual cues when generating the
 summaries to measure the impact of the `Visura` agent.
 
