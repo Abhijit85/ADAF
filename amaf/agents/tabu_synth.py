@@ -27,11 +27,16 @@ class TabuSynthAgent(Agent):
         if "{table_str}" in prompt_template and "{questions}" in prompt_template:
             # Convert table to simple string format for FinQA
             table_str = str(data.table)
-            # Handle questions - use questions field if available, otherwise empty string
+            # Handle questions - support both list and dict formats
             questions = getattr(data, 'questions', ['']) or ['']
-            if isinstance(questions, list):
-                questions = questions[0] if questions else ''
-            prompt = prompt_template.format(table_str=table_str, questions=questions)
+            if isinstance(questions, dict):
+                # For TATQA format with qid -> question mapping
+                questions_text = '\n'.join([f"QID: {qid} - {question}" for qid, question in questions.items()])
+            elif isinstance(questions, list):
+                questions_text = questions[0] if questions else ''
+            else:
+                questions_text = str(questions)
+            prompt = prompt_template.format(table_str=table_str, questions=questions_text)
         else:
             # Use the original format
             prompt = prompt_template.format(md_table=data.table)

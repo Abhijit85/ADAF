@@ -10,7 +10,7 @@ class InputData:
     image_cues: str = ""
     image_path: List[str] = field(default_factory=list)
     user_profile: str = "general"
-    questions: List[str] = field(default_factory=list)
+    questions: Dict[str, str] = field(default_factory=dict)  # qid -> question mapping for TATQA
 
 
 @dataclass

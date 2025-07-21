@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 import textwrap
 from typing import Any, Dict
+import json
 
 from ..core import AgentOutput, InputData
 from .base import Agent
@@ -88,7 +89,10 @@ class SummaCraftAgent(Agent):
         
         # Format questions for the prompt
         questions = getattr(data, "questions", None)
-        if isinstance(questions, list):
+        if isinstance(questions, dict):
+            # For TATQA format with qid -> question mapping
+            questions_str = "\n".join(f"QID: {qid} - {question}" for qid, question in questions.items())
+        elif isinstance(questions, list):
             questions_str = "\n".join(f"{i+1}. {q}" for i, q in enumerate(questions))
         elif isinstance(questions, str):
             questions_str = questions
@@ -107,14 +111,51 @@ class SummaCraftAgent(Agent):
         # strip scratchpad if the model echoed it
         cleaned_resp = re.sub(r"#####.*?#####", "", raw_resp, flags=re.DOTALL).strip()
 
-        summary = canonicalise_numbers(cleaned_resp)
+        # 5. Handle TATQA format - try to extract JSON
+        if self.dataset == "tatqa" and isinstance(questions, dict):
+            # Try to extract JSON from the response
+            try:
+                # Look for JSON in the response
+                json_match = re.search(r'\{.*\}', cleaned_resp, re.DOTALL)
+                if json_match:
+                    json_str = json_match.group(0)
+                    tatqa_answers = json.loads(json_str)
+                    
+                    # Simple post-processing for unicode characters only
+                    for qid, answer_pair in tatqa_answers.items():
+                        if isinstance(answer_pair, list) and len(answer_pair) >= 2:
+                            answer, unit = answer_pair[0], answer_pair[1]
+                            
+                            # Fix unicode characters only
+                            if isinstance(answer, str):
+                                answer = answer.replace('\u00a3', '£')  # Fix pound symbol
+                                answer = answer.strip()
+                            elif isinstance(answer, list):
+                                # Fix unicode in list items
+                                answer = [str(item).replace('\u00a3', '£').strip() if isinstance(item, str) else str(item) for item in answer]
+                            
+                            # Update the answer pair
+                            tatqa_answers[qid] = [answer, unit]
+                    
+                    summary = json.dumps(tatqa_answers, indent=2)
+                else:
+                    # If no JSON found, create a fallback format
+                    summary = "{}"
+            except (json.JSONDecodeError, AttributeError):
+                # If JSON parsing fails, create empty result
+                summary = "{}"
+        else:
+            # For other datasets, use the original format
+            summary = canonicalise_numbers(cleaned_resp)
 
-        # 5. Build Answer Echoes
-        answer_echoes = "\n".join(echo_lines) or "(none)"
+        # 6. Build Answer Echoes (for non-TATQA datasets)
+        if self.dataset != "tatqa":
+            answer_echoes = "\n".join(echo_lines) or "(none)"
+            final_text = f"{summary.rstrip()}\n\nAnswer Echoes:\n{answer_echoes}"
+        else:
+            final_text = summary
 
-        final_text = f"{summary.rstrip()}\n\nAnswer Echoes:\n{answer_echoes}"
-
-        # 6. Package result
+        # 7. Package result
         out = AgentOutput(cot="(omitted)", result=final_text)
         logs[self.name] = out.__dict__ | {"raw": raw_resp}
         return out
