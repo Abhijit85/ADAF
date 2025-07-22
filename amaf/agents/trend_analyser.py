@@ -12,8 +12,8 @@ from .base import Agent
 class TrendAnalyserAgent(Agent):
     """Identify and explain the two most significant numeric trends."""
 
-    def __init__(self, dataset: str = None) -> None:
-        super().__init__("TrendAnalyser", dataset)
+    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
+        super().__init__("TrendAnalyser", dataset, provider=provider, model=model)
 
     # ── main run ────────────────────────────────────────────────────────────
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:

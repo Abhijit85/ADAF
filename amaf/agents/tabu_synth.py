@@ -12,8 +12,8 @@ from ..core import AgentOutput, InputData
 from .base import Agent
 
 class TabuSynthAgent(Agent):
-    def __init__(self, dataset: str = None) -> None:
-        super().__init__("TabuSynth", dataset)
+    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
+        super().__init__("TabuSynth", dataset, provider=provider, model=model)
 
     
     # ── main run -------------------------------------------------------------

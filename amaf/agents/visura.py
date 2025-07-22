@@ -17,8 +17,8 @@ from .base import Agent
 class VisuraAgent(Agent):
     """Summarise `image_cues` into a two-sentence insight."""
 
-    def __init__(self, dataset: str = None) -> None:
-        super().__init__("Visura", dataset)
+    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
+        super().__init__("Visura", dataset, provider=provider, model=model)
 
     def find_image_with_extension(self, base_path):
         # Try the path as given first
