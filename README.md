@@ -45,6 +45,29 @@ export OPENAI_API_KEY="sk-..."  # your key
 export AMAF_MODEL="gpt-4-turbo"   # optional model override
 python run_amaf.py examples/sample_finqa.json
 ```
+
+
+
+##TATQA
+```
+bash run_tatqa.sh --provider mistral --model mistral-small-2506  
+``` FOR MISTRAL
+
+
+```
+ bash run_tatqa.sh --provider gemini --model gemini-1.5-flash
+ ```
+ For Gemini
+
+ ##FINQA
+```bash run_finqa.sh --provider mistral --model mistral-small-2506```
+
+##FETQA
+```
+bash run_fetaqa.sh --provider mistral --model mistral-small-2506
+```
+
+
 ## 🧠 Agent Descriptions
 - **TabuSynth**: Extracts structured facts from tabular data using TAPAS or T5. The
   prompt template resides in `amaf/prompts/tabu_synth.txt`.

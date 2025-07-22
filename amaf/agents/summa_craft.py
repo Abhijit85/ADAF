@@ -23,8 +23,8 @@ def canonicalise_numbers(text: str) -> str:
 class SummaCraftAgent(Agent):
     """Synthesize upstream notes into a concise, audience-aware summary."""
 
-    def __init__(self, dataset: str = None) -> None:
-        super().__init__("SummaCraft", dataset)
+    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
+        super().__init__("SummaCraft", dataset, provider=provider, model=model)
 
     # ------------------------------------------------------------------
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:

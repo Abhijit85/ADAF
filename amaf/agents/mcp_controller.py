@@ -8,12 +8,13 @@ from ..core import InputData, AgentOutput
 
 class MCPController(Agent):
     """YAML/Jinja2-driven orchestrator."""
-    def __init__(self, proto_file: str, registry: Dict[str, Agent], dataset: str = None):
-        super().__init__("MCP", dataset)
+    def __init__(self, proto_file: str, registry: Dict[str, Agent], dataset: str = None, provider: str = "openai", model: str = "gpt-3.5-turbo"):
+        super().__init__("MCP", dataset, provider=provider, model=model)
         self.proto = yaml.safe_load(Path(proto_file).read_text())
         self.registry = registry
         self.dataset = dataset
         self.env = jinja2.Environment()
+        self.agents = {}
 
     # ---------- helpers ----------
     def _cond_ok(self, expr: str, data: InputData) -> bool:
@@ -39,3 +40,9 @@ class MCPController(Agent):
                 if out.result:
                     summary = out.result
         return summary
+
+    def add_agent(self, name: str, agent: Agent):
+        self.agents[name] = agent
+        self.registry[name] = agent
+        agent.provider = self.provider
+        agent.model = self.model

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 CLI: run AMAF via an MCP controller.
-Usage:  python run_amaf.py <input.json>  [-p basic.yaml] [-d dataset]
+Usage:  python run_amaf.py <input.json>  [-p basic.yaml] [-d dataset] [--provider openai|mistral|gemini] [--model model_name]
 """
 from amaf.agents import (
     TabuSynthAgent,
@@ -31,8 +31,18 @@ def main():
     ap.add_argument("-d", "--dataset", 
                     default=None,
                     help="Dataset name (mmqa, tatqa, finqa) for dataset-specific prompts")
+    ap.add_argument("--provider", choices=["openai", "mistral", "gemini"], default="openai", help="LLM provider to use")
+    ap.add_argument("--model", default="gpt-3.5-turbo", help="Model name to use with the provider")
     
     args = ap.parse_args()
+
+    # ---- provider-specific API key sanity check ----
+    if args.provider == "openai" and not os.getenv("OPENAI_API_KEY"):
+        sys.exit("OPENAI_API_KEY not set for provider openai")
+    if args.provider == "mistral" and not os.getenv("MISTRAL_API_KEY"):
+        sys.exit("MISTRAL_API_KEY not set for provider mistral")
+    if args.provider == "gemini" and not os.getenv("GEMINI_API_KEY"):
+        sys.exit("GEMINI_API_KEY not set for provider gemini")
 
     # -------- read input
     try:
@@ -52,18 +62,20 @@ def main():
 
     data = InputData(**raw)
 
+    # Print provider / model debug line once per run
+    print(f"[RUN_AMAF] provider={args.provider} | model={args.model}")
+
     # -------- build registry of agents
     registry = {
-        "TabuSynth":   TabuSynthAgent(dataset=args.dataset),
-        "Contextron":  ContextronAgent(dataset=args.dataset),
-        "Visura":      VisuraAgent(dataset=args.dataset),
-        "SummaCraft":  SummaCraftAgent(dataset=args.dataset),
-        # add TrendAnalyser / TopKFilter if referenced in YAML
-        "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset),
+        "TabuSynth":   TabuSynthAgent(dataset=args.dataset, provider=args.provider, model=args.model),
+        "Contextron":  ContextronAgent(dataset=args.dataset, provider=args.provider, model=args.model),
+        "Visura":      VisuraAgent(dataset=args.dataset, provider=args.provider, model=args.model),
+        "SummaCraft":  SummaCraftAgent(dataset=args.dataset, provider=args.provider, model=args.model),
+        "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset, provider=args.provider, model=args.model),
     }
 
     # -------- run MCP
-    controller = MCPController(args.protocol, registry, dataset=args.dataset)
+    controller = MCPController(args.protocol, registry, dataset=args.dataset, provider=args.provider, model=args.model)
     logs = {}
     summary = controller.run(data, logs)
 
@@ -75,8 +87,4 @@ def main():
     
     
 if __name__ == "__main__":
-    
-    # Verify the OpenAI key is set
-    if not os.getenv("OPENAI_API_KEY"):
-        sys.exit("OPENAI_API_KEY not set")
     main()
