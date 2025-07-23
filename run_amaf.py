@@ -31,8 +31,9 @@ def main():
     ap.add_argument("-d", "--dataset", 
                     default=None,
                     help="Dataset name (mmqa, tatqa, finqa) for dataset-specific prompts")
-    ap.add_argument("--provider", choices=["openai", "mistral", "gemini"], default="openai", help="LLM provider to use")
+    ap.add_argument("--provider", choices=["openai", "mistral", "gemini","lambda"], default="openai", help="LLM provider to use")
     ap.add_argument("--model", default="gpt-3.5-turbo", help="Model name to use with the provider")
+    ap.add_argument('--method', type=str, default=None, help='Prompting method/folder')
     
     args = ap.parse_args()
 
@@ -43,6 +44,8 @@ def main():
         sys.exit("MISTRAL_API_KEY not set for provider mistral")
     if args.provider == "gemini" and not os.getenv("GEMINI_API_KEY"):
         sys.exit("GEMINI_API_KEY not set for provider gemini")
+    if args.provider == "lambda" and not os.getenv("LAMBDA_API_KEY"):
+        sys.exit("LAMBDA_API_KEY not set for provider lambda")
 
     # -------- read input
     try:
@@ -67,11 +70,11 @@ def main():
 
     # -------- build registry of agents
     registry = {
-        "TabuSynth":   TabuSynthAgent(dataset=args.dataset, provider=args.provider, model=args.model),
-        "Contextron":  ContextronAgent(dataset=args.dataset, provider=args.provider, model=args.model),
-        "Visura":      VisuraAgent(dataset=args.dataset, provider=args.provider, model=args.model),
-        "SummaCraft":  SummaCraftAgent(dataset=args.dataset, provider=args.provider, model=args.model),
-        "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset, provider=args.provider, model=args.model),
+        "TabuSynth":   TabuSynthAgent(dataset=args.dataset, provider=args.provider, model=args.model, method=args.method),
+        "Contextron":  ContextronAgent(dataset=args.dataset, provider=args.provider, model=args.model, method=args.method),
+        "Visura":      VisuraAgent(dataset=args.dataset, provider=args.provider, model=args.model, method=args.method),
+        "SummaCraft":  SummaCraftAgent(dataset=args.dataset, provider=args.provider, model=args.model, method=args.method),
+        "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset, provider=args.provider, model=args.model, method=args.method),
     }
 
     # -------- run MCP

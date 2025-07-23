@@ -17,8 +17,8 @@ from .base import Agent
 class VisuraAgent(Agent):
     """Summarise `image_cues` into a two-sentence insight."""
 
-    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
-        super().__init__("Visura", dataset, provider=provider, model=model)
+    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo", method=None):
+        super().__init__("Visura", dataset, provider=provider, model=model, method=method)
 
     def find_image_with_extension(self, base_path):
         # Try the path as given first
@@ -91,3 +91,48 @@ class VisuraAgent(Agent):
         out = AgentOutput(cot=cot.strip(), result=msg.strip())
         logs[self.name] = out.__dict__ | {"raw": cot_and_msg}
         return out
+
+    def _chat(self, prompt: str, temperature: float = .0, image_path: str = None) -> str:
+        print(f"DEBUG: _chat called with provider={self.provider}, model={self.model}")
+        
+        if image_path and os.path.exists(image_path):
+            # Handle image input
+            import base64
+            with open(image_path, "rb") as image_file:
+                if self.provider == "lambda":  # or other providers
+                    response = self.client.chat.completions.create(
+                        model=self.model,
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": [
+                                    {"type": "text", "text": prompt},
+                                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64.b64encode(image_file.read()).decode()}"}}
+                                ]
+                            }
+                        ],
+                        temperature=temperature,
+                    )
+                else:
+                    # Fallback to text-only for other providers
+                    response = self.client.chat.completions.create(
+                        model=self.model,
+                        messages=[{"role": "user", "content": prompt}],
+                        temperature=temperature,
+                    )
+        else:
+            # Text-only path (existing logic)
+            if self.provider == "mistral":
+                response = self.client.chat.complete(
+                    model=self.model,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature,
+                )
+            else:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature,
+                )
+        
+        return response.choices[0].message.content
