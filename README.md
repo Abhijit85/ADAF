@@ -50,21 +50,12 @@ python run_amaf.py examples/sample_finqa.json
 
 ##TATQA
 ```
-bash run_tatqa.sh --provider mistral --model mistral-small-2506  
-``` FOR MISTRAL
-
-
+bash run_tatqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs --comment myexperiment
 ```
- bash run_tatqa.sh --provider gemini --model gemini-1.5-flash
- ```
- For Gemini
-
- ##FINQA
-```bash run_finqa.sh --provider mistral --model mistral-small-2506```
 
 ##FETQA
 ```
-bash run_fetaqa.sh --provider mistral --model mistral-small-2506
+ bash run_fetaqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs --comment myexperiment
 ```
 
 
