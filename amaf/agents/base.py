@@ -11,11 +11,12 @@ from pathlib import Path
 class Agent(ABC):
     name: str
 
-    def __init__(self, name: str, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
+    def __init__(self, name: str, dataset: str = None, provider="openai", model="gpt-3.5-turbo", method: str = None):
         self.name = name
         self.dataset = dataset
         self.provider = provider
         self.model = model
+        self.method = method
 
         print(f"DEBUG: Initializing agent {self.name} with provider={self.provider}, model={self.model}")
 
@@ -28,20 +29,31 @@ class Agent(ABC):
                 api_key=os.environ["GEMINI_API_KEY"],
                 base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
             )
+        elif provider == "lambda":
+            from openai import OpenAI
+            self.client = OpenAI(api_key=os.environ["LAMBDA_API_KEY"],
+                                 base_url="https://api.lambda.ai/v1")
         else:  # openai
             from openai import OpenAI
             self.client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        
 
     def get_prompt_path(self, prompt_filename: str) -> Path:
-        """Get the path to a prompt file, preferring dataset-specific version."""
+        """Get the path to a prompt file, preferring method- and dataset-specific version."""
         prompts_dir = Path(__file__).resolve().parent.parent / "prompts"
         
-        # Try dataset-specific path first
+        # Try method + dataset-specific path first
+        if self.dataset and self.method:
+            method_prompt_path = prompts_dir / self.dataset / self.method / prompt_filename
+            if method_prompt_path.exists():
+                return method_prompt_path
+
+        # Try dataset-specific path
         if self.dataset:
             dataset_prompt_path = prompts_dir / self.dataset / prompt_filename
             if dataset_prompt_path.exists():
                 return dataset_prompt_path
-        
+
         # Fallback to default prompt
         return prompts_dir / prompt_filename
 
@@ -62,7 +74,7 @@ class Agent(ABC):
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
-                temperature=temperature,
+                #temperature=temperature,
             )
             print(f"DEBUG: OpenAI API call successful, response type: {type(response)}")
             return response.choices[0].message.content

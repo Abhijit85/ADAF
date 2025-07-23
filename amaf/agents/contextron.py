@@ -15,8 +15,8 @@ class ContextronAgent(Agent):
 
     TAG_SET = "[DEFINITION] [SCOPE] [SOURCE] [NOTE] [WARNING]"
 
-    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo"):
-        super().__init__("Contextron", dataset, provider=provider, model=model)
+    def __init__(self, dataset: str = None, provider="openai", model="gpt-3.5-turbo", method=None):
+        super().__init__("Contextron", dataset, provider=provider, model=model, method=method)
 
     # ── main run ────────────────────────────────────────────────────────────
     def run(self, data: InputData, logs: Dict[str, Any]) -> AgentOutput:

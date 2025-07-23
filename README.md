@@ -114,3 +114,4 @@ This repository contains a modular Python implementation of the AMAF pipeline
 for personalized, context‑aware table summarization using OpenAI's chat models
 (defaults to `gpt-3.5-turbo`; override with the `AMAF_MODEL` environment variable).
 
+bash run_tatqa.sh --provider lambda --model llama-4-scout-17b-16e-instruct 
