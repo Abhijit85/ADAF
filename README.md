@@ -48,15 +48,7 @@ python run_amaf.py examples/sample_finqa.json
 
 
 
-##TATQA
-```
-bash run_tatqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs --comment myexperiment
-```
 
-##FETQA
-```
- bash run_fetaqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs --comment myexperiment
-```
 
 
 ## 🧠 Agent Descriptions
@@ -72,41 +64,96 @@ bash run_tatqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs 
 - **SummaCraft**: Performs personalized summarization using CoT prompting. The
   prompt template resides in `amaf/prompts/summa_craft.txt`.
 
-## 📓 Usage
-```bash
-python agents/summa_craft.py --input data/sample_table.csv --profile "retail investor"
+
+
+
+
+
+
+## 📊 Run and Evaluation
+We provide a lightweight utility that converts a raw AMAF run folder into a
+single JSON file that pairs each **question-id** with its gold answer and your
+model’s prediction.  This is the canonical input for scorers that will follow.
+
+### Step 1 – Generate predictions
+
+##TATQA
+```
+bash run_tatqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs --comment myexperiment
 ```
 
-## 🧪 Fine-Tuning
-Use `notebooks/5_Finetune_Summarizer_Finance.ipynb` to fine-tune a FLAN-T5 or Mistral model using LoRA on financial summarization data.
-
-This repository contains a modular Python implementation of the AMAF pipeline
-for personalized, context‑aware table summarization using OpenAI's chat models
-(defaults to `gpt-3.5-turbo`; override with the `AMAF_MODEL` environment variable).
-
-
-## 📊 Evaluation
-To assess summarization quality on benchmark datasets we provide `utils/rouge_bleu_eval.py`.
-For TAT-QA it converts every ground-truth question/answer pair into a statement and
-computes ROUGE-L and BLEU between that concatenated reference and the generated
-summary.  FinQA QA accuracy is calculated as the fraction of answers that appear
-verbatim (or numerically close) in the summary.  Example usage:
-
-```bash
-python utils/rouge_bleu_eval.py --tatqa data/TATQA/tatqa_dataset_dev.json \
-    --tatqa_logs out/tatqa_logs \
-    --finqa data/sample_finqa.json --finqa_logs out/finqa_logs
+##FETQA
+```
+ bash run_fetaqa.sh --provider lambda --model llama3.1-8b-instruct --method ee_fs --comment myexperiment
 ```
 
-For Tatqa evaluation, clone Tatqa repo. 
-Then run the command : ```python tatqa_eval.py --gold_path=:path_to_dev --pred_path=:path_to_predictions```
-For more details check the  link:https://nextplusplus.github.io/TAT-QA/
 
-`AMAF w/o Visura` can be evaluated by omitting visual cues when generating the
-summaries to measure the impact of the `Visura` agent.
 
-This repository contains a modular Python implementation of the AMAF pipeline
-for personalized, context‑aware table summarization using OpenAI's chat models
-(defaults to `gpt-3.5-turbo`; override with the `AMAF_MODEL` environment variable).
+### Step 2 – Consolidate a run
+```bash
+# example for a TatQA run folder
+python ADAF/ADAF/evaluation/scripts/consolidate_run.py \
+       --dataset tatqa \
+       --run_dir ADAF/ADAF/out/tatqa_logs/llama3.1-8b-instruct_lambda_ee_fs_myexperiment_20250722_145826
+```
+The script
+1. loads the official *dev* gold answers from `ADAF/ADAF/data/<dataset>/…`,
+2. parses every `*_out.txt`,
+3. creates `ADAF/ADAF/evaluation/<dataset>/<run_folder>/consolidated_<timestamp>.json`.
 
-bash run_tatqa.sh --provider lambda --model llama-4-scout-17b-16e-instruct 
+Each record in that JSON looks like:
+```jsonc
+{
+  "qid": "9337c3e6-c53f-45a9-836a-02c474ceac16",
+  "gold_answer": "4.6",
+  "gold_scale" : "percent",
+  "pred_answer": "4.3",
+  "pred_scale" : "percent"
+}
+```
+If a gold or prediction is missing, the corresponding field is `null`.
+
+### Supported datasets
+* **tatqa**  – `tatqa_dataset_dev.json`
+* **finqa**  – `finqa_dev.json`
+* **fetaqa** – `fetaQA-v1_dev.jsonl`
+* **mmqa**   – `MMQA_dev.jsonl`
+
+Run `python consolidate_run.py --help` for full CLI options. 
+
+## 🏁 End-to-End Evaluation Pipeline
+The `evaluation/` package contains three tiny CLIs that transform raw
+AMAF outputs into scored metrics.
+
+Folder anatomy created during a run (example for TatQA):
+```
+ADAF/ADAF/out/tatqa_logs/<run_folder>/           # raw *_out.txt files
+ADAF/ADAF/evaluation/tatqa/<run_folder>/
+    consolidated_<ts>.json          # step ①
+    postprocessed_<ts>.json         # step ②
+    scored_<ts>.json                # step ③ (per-question metrics)
+    avg_scores_<ts>.json            # step ③ (dataset averages)
+```
+
+Step-by-step
+1. **Consolidate** raw logs with gold answers
+   ```bash
+   python evaluation/scripts/consolidate_run.py \
+          --dataset tatqa \
+          --run_dir out/tatqa_logs/<run_folder>
+   ```
+2. **Post-process** (unit conversion, numeric cleaning, etc.)
+   ```bash
+   python evaluation/scripts/postprocess_run.py \
+          --dataset tatqa \
+          --consolidated_file evaluation/tatqa/<run_folder>/consolidated_<ts>.json
+   ```
+3. **Score** to obtain Exact-Match / F1 and summary tables
+   ```bash
+   python evaluation/scripts/score_run.py \
+          --post_file evaluation/tatqa/<run_folder>/postprocessed_<ts>.json
+   ```
+
+You can run the three commands in sequence for **finqa**, **fetaqa**, and
+**mmqa** by changing the `--dataset` flag and pointing to the correct
+directories. 
