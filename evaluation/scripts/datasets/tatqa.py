@@ -40,6 +40,18 @@ class TatqaDataset(BaseDataset):
                 self._atype_map[qid] = q.get("answer_type", "")
         return gold
 
+    def load_gold_source(self):
+        """Return the full TatQA dev-set JSON loaded from disk.
+
+        This is primarily used by downstream evaluation utilities (e.g. score_run)
+        that need access to the original question text keyed by *uid*.
+        """
+        if getattr(self, "_gold_source_cache", None) is None:
+            path = self.GOLD_FILE
+            with Path(path).open("r", encoding="utf-8") as fp:
+                self._gold_source_cache = json.load(fp)
+        return self._gold_source_cache
+
     def __init__(self):
         # build map once
         self._atype_map: Dict[str, str] = {}

@@ -1,0 +1,95 @@
+[RUN_AMAF] provider=lambda | model=deepseek-r1-671b
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent Contextron with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent Visura with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent MCP with provider=lambda, model=deepseek-r1-671b
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "what portion of total long-term borrowings is due in the next 36 months?",
+  "Calculation": "(750 million (2015 Notes) + 700 million (table)) / 4950 million = 1450 / 4950 = 0.2929 × 100",
+  "Answer": "29.29%",
+  "Source": "combined"
+}
+
+Answer Echoes:
+- Total borrowings due in next 36 months = $750 million (2015 Notes) + $700 million (implied from table) = $1,450 million.
+- Portion = ($1,450 million / $4,950 million) × 100 ≈ 29.29%.
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '**Calculation**: (750 + 700) / 4,950 = 1,450 / 4,950 ≈ '
+                      '0.2929 or 29.29%  \n'
+                      '**Answer**: 29.29%',
+               'result': '**Calculation**: (750 + 700) / 4,950 = 1,450 / 4,950 '
+                         '≈ 0.2929 or 29.29%  \n'
+                         '**Answer**: 29.29%',
+               'raw': '**Calculation**: (750 + 700) / 4,950 = 1,450 / 4,950 ≈ '
+                      '0.2929 or 29.29%  \n'
+                      '**Answer**: 29.29%'},
+ 'Contextron': {'cot': '**Data Extraction**: \n'
+                       '- From text: 2015 Notes (due June 2015) = $750 '
+                       'million. \n'
+                       '- From table data: Total long-term borrowings = $4,950 '
+                       'million. Additional amount due within 36 months = $700 '
+                       'million (implied from table calculation).',
+                'result': '**Calculation Steps**: \n'
+                          '- Total borrowings due in next 36 months = $750 '
+                          'million (2015 Notes) + $700 million (implied from '
+                          'table) = $1,450 million.\n'
+                          '- Portion = ($1,450 million / $4,950 million) × 100 '
+                          '≈ 29.29%.\n'
+                          '\n'
+                          '**Answer**: 29.29%',
+                'raw': '**Data Extraction**: \n'
+                       '- From text: 2015 Notes (due June 2015) = $750 '
+                       'million. \n'
+                       '- From table data: Total long-term borrowings = $4,950 '
+                       'million. Additional amount due within 36 months = $700 '
+                       'million (implied from table calculation).\n'
+                       '\n'
+                       '**Calculation Steps**: \n'
+                       '- Total borrowings due in next 36 months = $750 '
+                       'million (2015 Notes) + $700 million (implied from '
+                       'table) = $1,450 million.\n'
+                       '- Portion = ($1,450 million / $4,950 million) × 100 ≈ '
+                       '29.29%.\n'
+                       '\n'
+                       '**Answer**: 29.29%'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "what portion of total long-term '
+                          'borrowings is due in the next 36 months?",\n'
+                          '  "Calculation": "(750 million (2015 Notes) + 700 '
+                          'million (table)) / 4950 million = 1450 / 4950 = '
+                          '0.2929 × 100",\n'
+                          '  "Answer": "29.29%",\n'
+                          '  "Source": "combined"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Total borrowings due in next 36 months = $750 '
+                          'million (2015 Notes) + $700 million (implied from '
+                          'table) = $1,450 million.\n'
+                          '- Portion = ($1,450 million / $4,950 million) × 100 '
+                          '≈ 29.29%.',
+                'raw': '{\n'
+                       '  "Question": "what portion of total long-term '
+                       'borrowings is due in the next 36 months?",\n'
+                       '  "Calculation": "(750 million (2015 Notes) + 700 '
+                       'million (table)) / 4,950 million = 1,450 / 4,950 = '
+                       '0.2929 × 100",\n'
+                       '  "Answer": "29.29%",\n'
+                       '  "Source": "combined"\n'
+                       '}'}}

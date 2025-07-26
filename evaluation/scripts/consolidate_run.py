@@ -3,6 +3,7 @@
 
 Usage:
     python consolidate_run.py --dataset tatqa --run_dir <path>
+    python -m evaluation.scripts consolidate --dataset tatqa --run_dir <path>
 """
 from __future__ import annotations
 
@@ -10,20 +11,9 @@ import argparse
 import sys
 from pathlib import Path
 
-try:
-    # running as module (python -m evaluation.scripts.consolidate_run)
-    from evaluation.scripts.datasets import DATASETS  # type: ignore
-except ModuleNotFoundError:
-    # running as plain script
-    from pathlib import Path as _P
-    import sys as _sys
-    _sys.path.append(str(_P(__file__).resolve().parent))
-    from datasets import DATASETS  # type: ignore
-
-
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", required=True, choices=DATASETS.keys(), help="Dataset name (tatqa, finqa, fetaqa, mmqa)")
+    ap.add_argument("--dataset", required=True, choices=["tatqa", "finqa", "fetaqa", "mmqa"], help="Dataset name")
     ap.add_argument("--run_dir", required=True, help="Path to AMAF run directory containing *_out.txt files")
     ap.add_argument("--quiet", action="store_true", help="Suppress warnings")
     args = ap.parse_args(argv)
@@ -31,6 +21,17 @@ def main(argv=None):
     if args.quiet:
         import warnings
         warnings.filterwarnings("ignore")
+
+    # Handle imports with fallback
+    try:
+        # running as module (python -m evaluation.scripts.consolidate_run)
+        from evaluation.scripts.datasets import DATASETS  # type: ignore
+    except ModuleNotFoundError:
+        # running as plain script
+        from pathlib import Path as _P
+        import sys as _sys
+        _sys.path.append(str(_P(__file__).resolve().parent))
+        from datasets import DATASETS  # type: ignore
 
     ds_class = DATASETS[args.dataset]
     ds = ds_class()

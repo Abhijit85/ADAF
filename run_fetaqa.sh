@@ -78,13 +78,25 @@ done
 count=0
 for f in examples/fetaqa/*.json; do
     base=$(basename "$f" .json)
-    python3 run_amaf.py "$f" -d fetaqa "${FILTERED_ARGS[@]}" > "$outdir/${base}_out.txt"
-    echo "--------------------------------"
-    echo "processing $f"
-    ((count++))
-    if [ $count -ge 10 ]; then
-        break
+    output_file="$outdir/${base}_out.txt"
+    
+    echo "Processing $f..."
+    if source .venv/bin/activate && python3 run_amaf.py "$f" -d fetaqa "${FILTERED_ARGS[@]}" > "$output_file" 2>&1; then
+        echo "--------------------------------"
+        echo "✅ Processed $f"
+        ((count++))
+    else
+        echo "❌ Failed to process $f - removing output file"
+        rm -f "$output_file"  # Remove the output file if it was created
     fi
+    
+    # Add sleep to avoid rate limiting (4 seconds between requests)
+    echo "Sleeping for 4 seconds to avoid rate limiting..."
+    sleep 4
+    
+    # if [ $count -ge 10 ]; then
+    #     break
+    # fi
 done
 
 echo "Completed $count examples" 

@@ -1,6 +1,9 @@
 from .tatqa import TatqaPostProcessor
+from .fetaqa import FetaqaPostProcessor
+from .finqa import FinqaPostProcessor
 
 PROCESSORS = {
     "tatqa": TatqaPostProcessor,
-    # other datasets can be added later
+    "fetaqa": FetaqaPostProcessor,
+    "finqa": FinqaPostProcessor,
 } 

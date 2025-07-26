@@ -1,0 +1,107 @@
+[RUN_AMAF] provider=lambda | model=deepseek-r1-671b
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent Contextron with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent Visura with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent MCP with provider=lambda, model=deepseek-r1-671b
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "what percentage of warehouse locations are in north america?",
+  "Calculation": "(3 North American warehouse locations / 6 total principal warehouse locations) × 100 = 50%",
+  "Answer": "50%",
+  "Source": "table"
+}
+
+Answer Echoes:
+- North American principal warehouse locations: 3
+- Total principal warehouse locations: 6
+- Percentage: \( \frac{3}{6} \times 100 = 50\% \)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '**Calculation**: (Number of North American Locations / '
+                      'Total Locations) × 100 = (3 / 6) × 100 = 50%  \n'
+                      '**Answer**: 50%',
+               'result': '**Calculation**: (Number of North American Locations '
+                         '/ Total Locations) × 100 = (3 / 6) × 100 = 50%  \n'
+                         '**Answer**: 50%',
+               'raw': '**Calculation**: (Number of North American Locations / '
+                      'Total Locations) × 100 = (3 / 6) × 100 = 50%  \n'
+                      '**Answer**: 50%'},
+ 'Contextron': {'cot': '**Data Extraction**: \n'
+                       '- From the principal properties table: 3 North '
+                       'American locations (Santa Clara, CA; Austin, TX; '
+                       'Gloucester, MA) out of 6 total principal properties.\n'
+                       '- Additional text notes 16 North American locations in '
+                       'the supplementary 75 global facilities, but these '
+                       'include offices, plants, and/or warehouses without '
+                       'explicit warehouse counts.',
+                'result': '**Calculation Steps**:  \n'
+                          'The question is interpreted to focus on principal '
+                          'warehouse locations (explicitly listed in the '
+                          'table) due to insufficient data on '
+                          'warehouse-specific counts in the supplementary 75 '
+                          'facilities.  \n'
+                          '- North American principal warehouse locations: '
+                          '3  \n'
+                          '- Total principal warehouse locations: 6  \n'
+                          '- Percentage: \\( \\frac{3}{6} \\times 100 = 50\\% '
+                          '\\)  \n'
+                          '\n'
+                          '**Answer**: 50%',
+                'raw': '**Data Extraction**: \n'
+                       '- From the principal properties table: 3 North '
+                       'American locations (Santa Clara, CA; Austin, TX; '
+                       'Gloucester, MA) out of 6 total principal properties.\n'
+                       '- Additional text notes 16 North American locations in '
+                       'the supplementary 75 global facilities, but these '
+                       'include offices, plants, and/or warehouses without '
+                       'explicit warehouse counts.\n'
+                       '\n'
+                       '**Calculation Steps**:  \n'
+                       'The question is interpreted to focus on principal '
+                       'warehouse locations (explicitly listed in the table) '
+                       'due to insufficient data on warehouse-specific counts '
+                       'in the supplementary 75 facilities.  \n'
+                       '- North American principal warehouse locations: 3  \n'
+                       '- Total principal warehouse locations: 6  \n'
+                       '- Percentage: \\( \\frac{3}{6} \\times 100 = 50\\% '
+                       '\\)  \n'
+                       '\n'
+                       '**Answer**: 50%'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "what percentage of warehouse '
+                          'locations are in north america?",\n'
+                          '  "Calculation": "(3 North American warehouse '
+                          'locations / 6 total principal warehouse locations) '
+                          '× 100 = 50%",\n'
+                          '  "Answer": "50%",\n'
+                          '  "Source": "table"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- North American principal warehouse locations: 3\n'
+                          '- Total principal warehouse locations: 6\n'
+                          '- Percentage: \\( \\frac{3}{6} \\times 100 = 50\\% '
+                          '\\)',
+                'raw': '{\n'
+                       '  "Question": "what percentage of warehouse locations '
+                       'are in north america?",\n'
+                       '  "Calculation": "(3 North American warehouse '
+                       'locations / 6 total principal warehouse locations) × '
+                       '100 = 50%",\n'
+                       '  "Answer": "50%",\n'
+                       '  "Source": "table"\n'
+                       '}'}}

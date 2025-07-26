@@ -17,6 +17,7 @@ import json
 import os
 import sys
 import pprint
+import time
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -77,10 +78,42 @@ def main():
         "TrendAnalyser": TrendAnalyserAgent(dataset=args.dataset, provider=args.provider, model=args.model, method=args.method),
     }
 
-    # -------- run MCP
+    # -------- run MCP with retry logic
     controller = MCPController(args.protocol, registry, dataset=args.dataset, provider=args.provider, model=args.model)
     logs = {}
-    summary = controller.run(data, logs)
+    
+    # Retry logic for rate limiting
+    max_retries = 5
+    base_sleep = 20  # Start with 20 seconds
+    summary = None
+    
+    for attempt in range(max_retries):
+        try:
+            print(f"Attempt {attempt + 1}/{max_retries} for {args.json_file}")
+            summary = controller.run(data, logs)
+            print(f"✅ Success on attempt {attempt + 1}")
+            break  # Success!
+            
+        except Exception as e:
+            error_msg = str(e).lower()
+            is_rate_limit = ("rate limit" in error_msg or 
+                           "429" in error_msg or 
+                           "rate_limited" in error_msg)
+            
+            if is_rate_limit and attempt < max_retries - 1:
+                sleep_time = base_sleep * (2 ** attempt)  # Exponential backoff: 20s, 40s, 80s, 160s
+                print(f"⚠️  Rate limit hit on attempt {attempt + 1}. Sleeping for {sleep_time} seconds...")
+                time.sleep(sleep_time)
+                continue
+            else:
+                print(f"❌ Failed after {attempt + 1} attempts: {e}")
+                if is_rate_limit:
+                    print("Rate limit exceeded after all retries. Skipping this example.")
+                raise  # Re-raise the exception to stop processing this example
+    
+    if summary is None:
+        print(f"❌ All retries failed for {args.json_file}")
+        return  # Don't write output file
 
     # -------- output
     print("\n=== FINAL SUMMARY ===\n")
