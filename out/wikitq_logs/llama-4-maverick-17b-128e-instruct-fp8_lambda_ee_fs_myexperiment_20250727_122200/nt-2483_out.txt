@@ -1,0 +1,367 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-2483.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many teams did the comets win 2 matches against?",
+  "Factual Answer": "3",
+  "Source": "data",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- Won against Bhopal Badshahs: 0
+- Won against Chennai Cheetahs: 1
+- Won against Delhi Wizards: 2
+- Won against Karnataka Lions: 1
+- Won against Mumbai Marines: 2
+- Won against Pune Strykers: 2
+- Won against Sher-e-Punjab: 1
+- Delhi Wizards: 2
+- Mumbai Marines: 2
+- Pune Strykers: 2
+- Delhi Wizards: 2
+- Mumbai Marines: 2
+- Pune Strykers: 2
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many teams did the comets win 2 '
+                      'matches against?" is a **Numerical Question** because '
+                      'it asks for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract information '
+                      'about the number of matches won by the "Comets" against '
+                      'other teams. The relevant data would be the number of '
+                      'wins against each opposition.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Identify Relevant Data**: We need to find data '
+                      'related to the "Comets" and their wins against other '
+                      'teams.\n'
+                      '2. **Extract Wins**: Look for the number of wins '
+                      'against each opposition.\n'
+                      '3. **Count Teams**: Count how many teams the Comets won '
+                      '2 matches against.\n'
+                      '\n'
+                      '### Step 4: Analyze Provided Data\n'
+                      'The given table data is:\n'
+                      '```python\n'
+                      "{'table': [['Opposition', 'Matches', 'Won', 'Drawn', "
+                      "'Lost', 'For', 'Against', 'Win%'], \n"
+                      "           ['Bhopal Badshahs', 2, 0, 1, 1, 7, 8, "
+                      "'0.00%'], \n"
+                      "           ['Chennai Cheetahs', 2, 1, 0, 1, 6, 5, "
+                      "'50.00%'], \n"
+                      "           ['Delhi Wizards', 2, 2, 0, 0, 4, 2, "
+                      "'100.00%'], \n"
+                      "           ['Karnataka Lions', 2, 1, 0, 1, 8, 4, "
+                      "'50.00%'], \n"
+                      "           ['Mumbai Marines', 2, 2, 0, 0, 9, 5, "
+                      "'100.00%'], \n"
+                      "           ['Pune Strykers', 3, 2, 0, 1, 11, 8, "
+                      "'66.67%'], \n"
+                      "           ['Sher-e-Punjab', 2, 1, 0, 1, 5, 6, "
+                      "'50.00%']], \n"
+                      " 'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      '### Step 5: Perform Analysis\n'
+                      '1. **Identify "Comets" Data**: The table does not '
+                      'explicitly mention "Comets." However, we can infer that '
+                      'the table represents data for a specific team, and the '
+                      'rows represent their opponents.\n'
+                      '2. **Extract Wins Against Opponents**: We look at the '
+                      '"Won" column to see how many matches were won against '
+                      'each opponent.\n'
+                      '   - Won against Bhopal Badshahs: 0\n'
+                      '   - Won against Chennai Cheetahs: 1\n'
+                      '   - Won against Delhi Wizards: 2\n'
+                      '   - Won against Karnataka Lions: 1\n'
+                      '   - Won against Mumbai Marines: 2\n'
+                      '   - Won against Pune Strykers: 2\n'
+                      '   - Won against Sher-e-Punjab: 1\n'
+                      '\n'
+                      '3. **Count Teams Won 2 Matches Against**: We count the '
+                      'number of teams where the "Won" value is 2.\n'
+                      '   - Delhi Wizards: 2\n'
+                      '   - Mumbai Marines: 2\n'
+                      '   - Pune Strykers: 2\n'
+                      '\n'
+                      '### Step 6: Provide Answer\n'
+                      '**Data Analysis**: The table represents the performance '
+                      'of a team (presumably "Comets") against various '
+                      'opponents. The data shows the number of matches won '
+                      'against each opponent.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: The "Won" column in the provided table '
+                      'data.\n'
+                      '\n'
+                      'The answer is based on counting the number of rows '
+                      'where the "Won" column has a value of 2, indicating the '
+                      'team won 2 matches against those opponents.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many teams did the comets win 2 '
+                         'matches against?" is a **Numerical Question** '
+                         'because it asks for a count.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract '
+                         'information about the number of matches won by the '
+                         '"Comets" against other teams. The relevant data '
+                         'would be the number of wins against each '
+                         'opposition.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Identify Relevant Data**: We need to find data '
+                         'related to the "Comets" and their wins against other '
+                         'teams.\n'
+                         '2. **Extract Wins**: Look for the number of wins '
+                         'against each opposition.\n'
+                         '3. **Count Teams**: Count how many teams the Comets '
+                         'won 2 matches against.\n'
+                         '\n'
+                         '### Step 4: Analyze Provided Data\n'
+                         'The given table data is:\n'
+                         '```python\n'
+                         "{'table': [['Opposition', 'Matches', 'Won', 'Drawn', "
+                         "'Lost', 'For', 'Against', 'Win%'], \n"
+                         "           ['Bhopal Badshahs', 2, 0, 1, 1, 7, 8, "
+                         "'0.00%'], \n"
+                         "           ['Chennai Cheetahs', 2, 1, 0, 1, 6, 5, "
+                         "'50.00%'], \n"
+                         "           ['Delhi Wizards', 2, 2, 0, 0, 4, 2, "
+                         "'100.00%'], \n"
+                         "           ['Karnataka Lions', 2, 1, 0, 1, 8, 4, "
+                         "'50.00%'], \n"
+                         "           ['Mumbai Marines', 2, 2, 0, 0, 9, 5, "
+                         "'100.00%'], \n"
+                         "           ['Pune Strykers', 3, 2, 0, 1, 11, 8, "
+                         "'66.67%'], \n"
+                         "           ['Sher-e-Punjab', 2, 1, 0, 1, 5, 6, "
+                         "'50.00%']], \n"
+                         " 'highlighted_cells': []}\n"
+                         '```\n'
+                         '\n'
+                         '### Step 5: Perform Analysis\n'
+                         '1. **Identify "Comets" Data**: The table does not '
+                         'explicitly mention "Comets." However, we can infer '
+                         'that the table represents data for a specific team, '
+                         'and the rows represent their opponents.\n'
+                         '2. **Extract Wins Against Opponents**: We look at '
+                         'the "Won" column to see how many matches were won '
+                         'against each opponent.\n'
+                         '   - Won against Bhopal Badshahs: 0\n'
+                         '   - Won against Chennai Cheetahs: 1\n'
+                         '   - Won against Delhi Wizards: 2\n'
+                         '   - Won against Karnataka Lions: 1\n'
+                         '   - Won against Mumbai Marines: 2\n'
+                         '   - Won against Pune Strykers: 2\n'
+                         '   - Won against Sher-e-Punjab: 1\n'
+                         '\n'
+                         '3. **Count Teams Won 2 Matches Against**: We count '
+                         'the number of teams where the "Won" value is 2.\n'
+                         '   - Delhi Wizards: 2\n'
+                         '   - Mumbai Marines: 2\n'
+                         '   - Pune Strykers: 2\n'
+                         '\n'
+                         '### Step 6: Provide Answer\n'
+                         '**Data Analysis**: The table represents the '
+                         'performance of a team (presumably "Comets") against '
+                         'various opponents. The data shows the number of '
+                         'matches won against each opponent.\n'
+                         '**Factual Answer**: 3\n'
+                         '**Source**: The "Won" column in the provided table '
+                         'data.\n'
+                         '\n'
+                         'The answer is based on counting the number of rows '
+                         'where the "Won" column has a value of 2, indicating '
+                         'the team won 2 matches against those opponents.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many teams did the comets win 2 '
+                      'matches against?" is a **Numerical Question** because '
+                      'it asks for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract information '
+                      'about the number of matches won by the "Comets" against '
+                      'other teams. The relevant data would be the number of '
+                      'wins against each opposition.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Identify Relevant Data**: We need to find data '
+                      'related to the "Comets" and their wins against other '
+                      'teams.\n'
+                      '2. **Extract Wins**: Look for the number of wins '
+                      'against each opposition.\n'
+                      '3. **Count Teams**: Count how many teams the Comets won '
+                      '2 matches against.\n'
+                      '\n'
+                      '### Step 4: Analyze Provided Data\n'
+                      'The given table data is:\n'
+                      '```python\n'
+                      "{'table': [['Opposition', 'Matches', 'Won', 'Drawn', "
+                      "'Lost', 'For', 'Against', 'Win%'], \n"
+                      "           ['Bhopal Badshahs', 2, 0, 1, 1, 7, 8, "
+                      "'0.00%'], \n"
+                      "           ['Chennai Cheetahs', 2, 1, 0, 1, 6, 5, "
+                      "'50.00%'], \n"
+                      "           ['Delhi Wizards', 2, 2, 0, 0, 4, 2, "
+                      "'100.00%'], \n"
+                      "           ['Karnataka Lions', 2, 1, 0, 1, 8, 4, "
+                      "'50.00%'], \n"
+                      "           ['Mumbai Marines', 2, 2, 0, 0, 9, 5, "
+                      "'100.00%'], \n"
+                      "           ['Pune Strykers', 3, 2, 0, 1, 11, 8, "
+                      "'66.67%'], \n"
+                      "           ['Sher-e-Punjab', 2, 1, 0, 1, 5, 6, "
+                      "'50.00%']], \n"
+                      " 'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      '### Step 5: Perform Analysis\n'
+                      '1. **Identify "Comets" Data**: The table does not '
+                      'explicitly mention "Comets." However, we can infer that '
+                      'the table represents data for a specific team, and the '
+                      'rows represent their opponents.\n'
+                      '2. **Extract Wins Against Opponents**: We look at the '
+                      '"Won" column to see how many matches were won against '
+                      'each opponent.\n'
+                      '   - Won against Bhopal Badshahs: 0\n'
+                      '   - Won against Chennai Cheetahs: 1\n'
+                      '   - Won against Delhi Wizards: 2\n'
+                      '   - Won against Karnataka Lions: 1\n'
+                      '   - Won against Mumbai Marines: 2\n'
+                      '   - Won against Pune Strykers: 2\n'
+                      '   - Won against Sher-e-Punjab: 1\n'
+                      '\n'
+                      '3. **Count Teams Won 2 Matches Against**: We count the '
+                      'number of teams where the "Won" value is 2.\n'
+                      '   - Delhi Wizards: 2\n'
+                      '   - Mumbai Marines: 2\n'
+                      '   - Pune Strykers: 2\n'
+                      '\n'
+                      '### Step 6: Provide Answer\n'
+                      '**Data Analysis**: The table represents the performance '
+                      'of a team (presumably "Comets") against various '
+                      'opponents. The data shows the number of matches won '
+                      'against each opponent.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: The "Won" column in the provided table '
+                      'data.\n'
+                      '\n'
+                      'The answer is based on counting the number of rows '
+                      'where the "Won" column has a value of 2, indicating the '
+                      'team won 2 matches against those opponents.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how many teams did '
+                       'the comets win 2 matches against?" is asking for a '
+                       'count of teams that the "Comets" won 2 matches '
+                       'against. The text context does not directly provide '
+                       'this information but implies that the structured data '
+                       'might contain the relevant details.',
+                'result': '**Data Support**: The structured data provided '
+                          'represents the performance of a team (presumably '
+                          '"Comets") against various opponents. The data '
+                          'includes the number of matches won against each '
+                          'opponent. By examining the "Won" column, we can '
+                          'count the number of teams where the "Won" value is '
+                          '2.\n'
+                          '\n'
+                          '**Factual Analysis**:\n'
+                          '1. **Identify Relevant Data**: The table represents '
+                          'the performance of the "Comets" against various '
+                          'opponents.\n'
+                          '2. **Extract Wins**: The "Won" column shows the '
+                          'number of matches won against each opponent.\n'
+                          '3. **Count Teams**: Count the number of teams where '
+                          'the "Won" value is 2.\n'
+                          '   - Delhi Wizards: 2\n'
+                          '   - Mumbai Marines: 2\n'
+                          '   - Pune Strykers: 2\n'
+                          '\n'
+                          '**Factual Answer**: 3\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The final answer is based on the count of teams '
+                          'against whom the "Comets" won 2 matches, as derived '
+                          'from the structured data provided.',
+                'raw': '**Text Analysis**: The question "how many teams did '
+                       'the comets win 2 matches against?" is asking for a '
+                       'count of teams that the "Comets" won 2 matches '
+                       'against. The text context does not directly provide '
+                       'this information but implies that the structured data '
+                       'might contain the relevant details.\n'
+                       '\n'
+                       '**Data Support**: The structured data provided '
+                       'represents the performance of a team (presumably '
+                       '"Comets") against various opponents. The data includes '
+                       'the number of matches won against each opponent. By '
+                       'examining the "Won" column, we can count the number of '
+                       'teams where the "Won" value is 2.\n'
+                       '\n'
+                       '**Factual Analysis**:\n'
+                       '1. **Identify Relevant Data**: The table represents '
+                       'the performance of the "Comets" against various '
+                       'opponents.\n'
+                       '2. **Extract Wins**: The "Won" column shows the number '
+                       'of matches won against each opponent.\n'
+                       '3. **Count Teams**: Count the number of teams where '
+                       'the "Won" value is 2.\n'
+                       '   - Delhi Wizards: 2\n'
+                       '   - Mumbai Marines: 2\n'
+                       '   - Pune Strykers: 2\n'
+                       '\n'
+                       '**Factual Answer**: 3\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The final answer is based on the count of teams '
+                       'against whom the "Comets" won 2 matches, as derived '
+                       'from the structured data provided.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many teams did the comets win 2 '
+                          'matches against?",\n'
+                          '  "Factual Answer": "3",\n'
+                          '  "Source": "data",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Won against Bhopal Badshahs: 0\n'
+                          '- Won against Chennai Cheetahs: 1\n'
+                          '- Won against Delhi Wizards: 2\n'
+                          '- Won against Karnataka Lions: 1\n'
+                          '- Won against Mumbai Marines: 2\n'
+                          '- Won against Pune Strykers: 2\n'
+                          '- Won against Sher-e-Punjab: 1\n'
+                          '- Delhi Wizards: 2\n'
+                          '- Mumbai Marines: 2\n'
+                          '- Pune Strykers: 2\n'
+                          '- Delhi Wizards: 2\n'
+                          '- Mumbai Marines: 2\n'
+                          '- Pune Strykers: 2',
+                'raw': '{\n'
+                       '  "Question": "how many teams did the comets win 2 '
+                       'matches against?",\n'
+                       '  "Factual Answer": "3",\n'
+                       '  "Source": "data",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

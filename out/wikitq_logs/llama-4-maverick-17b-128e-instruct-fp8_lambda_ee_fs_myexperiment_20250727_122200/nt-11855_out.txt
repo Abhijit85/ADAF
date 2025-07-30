@@ -1,0 +1,349 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-11855.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many versions are at least 7 minutes long?",
+  "Factual Answer": "3",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- "4:30"
+- "3:55"
+- "4:32"
+- "5:20"
+- "7:50"
+- "8:30"
+- "5:02"
+- "6:42 (audio)\n8:18 (video)"
+- "4:30" is less than 7 minutes.
+- "3:55" is less than 7 minutes.
+- "4:32" is less than 7 minutes.
+- "5:20" is less than 7 minutes.
+- "7:50" is greater than 7 minutes.
+- "8:30" is greater than 7 minutes.
+- "5:02" is less than 7 minutes.
+- "6:42 (audio)\n8:18 (video)" has two lengths; "6:42" is less than 7 minutes, but "8:18" is greater than 7 minutes.
+- "7:50" is one version.
+- "8:30" is one version.
+- "8:18" (from the live version video length) is one version.
+- "4:30"
+- "3:55"
+- "4:32"
+- "5:20"
+- "7:50"
+- "8:30"
+- "5:02"
+- "6:42 (audio)\n8:18 (video)"
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks to determine the number of versions '
+                      'that are at least 7 minutes long from the given table.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Information\n'
+                      'The table contains information about different versions '
+                      'of a song, including their lengths. The relevant column '
+                      'for this question is "Length".\n'
+                      '\n'
+                      '### Step 3: Analyze the "Length" Column\n'
+                      'The "Length" column contains the durations of various '
+                      'versions of the song. The lengths are given in the '
+                      'format "minutes:seconds".\n'
+                      '\n'
+                      '### Step 4: Identify Versions at Least 7 Minutes Long\n'
+                      'To answer the question, we need to identify the '
+                      'versions with lengths greater than or equal to 7 '
+                      'minutes. The relevant entries in the "Length" column '
+                      'are:\n'
+                      '- "4:30"\n'
+                      '- "3:55"\n'
+                      '- "4:32"\n'
+                      '- "5:20"\n'
+                      '- "7:50"\n'
+                      '- "8:30"\n'
+                      '- "5:02"\n'
+                      '- "6:42 (audio)\\n8:18 (video)"\n'
+                      '\n'
+                      '### Step 5: Convert Lengths to Comparable Format\n'
+                      'To compare, we need to convert these lengths into just '
+                      "minutes or seconds. For simplicity, we'll directly "
+                      'compare the minutes and seconds where necessary.\n'
+                      '\n'
+                      '### Step 6: Compare Lengths\n'
+                      '- "4:30" is less than 7 minutes.\n'
+                      '- "3:55" is less than 7 minutes.\n'
+                      '- "4:32" is less than 7 minutes.\n'
+                      '- "5:20" is less than 7 minutes.\n'
+                      '- "7:50" is greater than 7 minutes.\n'
+                      '- "8:30" is greater than 7 minutes.\n'
+                      '- "5:02" is less than 7 minutes.\n'
+                      '- "6:42 (audio)\\n8:18 (video)" has two lengths; "6:42" '
+                      'is less than 7 minutes, but "8:18" is greater than 7 '
+                      'minutes.\n'
+                      '\n'
+                      '### Step 7: Count Versions at Least 7 Minutes Long\n'
+                      'From the given data:\n'
+                      '- "7:50" is one version.\n'
+                      '- "8:30" is one version.\n'
+                      '- "8:18" (from the live version video length) is one '
+                      'version.\n'
+                      '\n'
+                      '### Step 8: Provide Factual Answer\n'
+                      'There are 3 versions that are at least 7 minutes long.\n'
+                      '\n'
+                      '**Data Analysis**: The table lists different versions '
+                      'of a song along with their lengths. The "Length" column '
+                      'was analyzed to identify versions that are at least 7 '
+                      'minutes long.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: The "Length" column in the provided table.',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks to determine the number of '
+                         'versions that are at least 7 minutes long from the '
+                         'given table.\n'
+                         '\n'
+                         '### Step 2: Extract Relevant Information\n'
+                         'The table contains information about different '
+                         'versions of a song, including their lengths. The '
+                         'relevant column for this question is "Length".\n'
+                         '\n'
+                         '### Step 3: Analyze the "Length" Column\n'
+                         'The "Length" column contains the durations of '
+                         'various versions of the song. The lengths are given '
+                         'in the format "minutes:seconds".\n'
+                         '\n'
+                         '### Step 4: Identify Versions at Least 7 Minutes '
+                         'Long\n'
+                         'To answer the question, we need to identify the '
+                         'versions with lengths greater than or equal to 7 '
+                         'minutes. The relevant entries in the "Length" column '
+                         'are:\n'
+                         '- "4:30"\n'
+                         '- "3:55"\n'
+                         '- "4:32"\n'
+                         '- "5:20"\n'
+                         '- "7:50"\n'
+                         '- "8:30"\n'
+                         '- "5:02"\n'
+                         '- "6:42 (audio)\\n8:18 (video)"\n'
+                         '\n'
+                         '### Step 5: Convert Lengths to Comparable Format\n'
+                         'To compare, we need to convert these lengths into '
+                         "just minutes or seconds. For simplicity, we'll "
+                         'directly compare the minutes and seconds where '
+                         'necessary.\n'
+                         '\n'
+                         '### Step 6: Compare Lengths\n'
+                         '- "4:30" is less than 7 minutes.\n'
+                         '- "3:55" is less than 7 minutes.\n'
+                         '- "4:32" is less than 7 minutes.\n'
+                         '- "5:20" is less than 7 minutes.\n'
+                         '- "7:50" is greater than 7 minutes.\n'
+                         '- "8:30" is greater than 7 minutes.\n'
+                         '- "5:02" is less than 7 minutes.\n'
+                         '- "6:42 (audio)\\n8:18 (video)" has two lengths; '
+                         '"6:42" is less than 7 minutes, but "8:18" is greater '
+                         'than 7 minutes.\n'
+                         '\n'
+                         '### Step 7: Count Versions at Least 7 Minutes Long\n'
+                         'From the given data:\n'
+                         '- "7:50" is one version.\n'
+                         '- "8:30" is one version.\n'
+                         '- "8:18" (from the live version video length) is one '
+                         'version.\n'
+                         '\n'
+                         '### Step 8: Provide Factual Answer\n'
+                         'There are 3 versions that are at least 7 minutes '
+                         'long.\n'
+                         '\n'
+                         '**Data Analysis**: The table lists different '
+                         'versions of a song along with their lengths. The '
+                         '"Length" column was analyzed to identify versions '
+                         'that are at least 7 minutes long.\n'
+                         '**Factual Answer**: 3\n'
+                         '**Source**: The "Length" column in the provided '
+                         'table.',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks to determine the number of versions '
+                      'that are at least 7 minutes long from the given table.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Information\n'
+                      'The table contains information about different versions '
+                      'of a song, including their lengths. The relevant column '
+                      'for this question is "Length".\n'
+                      '\n'
+                      '### Step 3: Analyze the "Length" Column\n'
+                      'The "Length" column contains the durations of various '
+                      'versions of the song. The lengths are given in the '
+                      'format "minutes:seconds".\n'
+                      '\n'
+                      '### Step 4: Identify Versions at Least 7 Minutes Long\n'
+                      'To answer the question, we need to identify the '
+                      'versions with lengths greater than or equal to 7 '
+                      'minutes. The relevant entries in the "Length" column '
+                      'are:\n'
+                      '- "4:30"\n'
+                      '- "3:55"\n'
+                      '- "4:32"\n'
+                      '- "5:20"\n'
+                      '- "7:50"\n'
+                      '- "8:30"\n'
+                      '- "5:02"\n'
+                      '- "6:42 (audio)\\n8:18 (video)"\n'
+                      '\n'
+                      '### Step 5: Convert Lengths to Comparable Format\n'
+                      'To compare, we need to convert these lengths into just '
+                      "minutes or seconds. For simplicity, we'll directly "
+                      'compare the minutes and seconds where necessary.\n'
+                      '\n'
+                      '### Step 6: Compare Lengths\n'
+                      '- "4:30" is less than 7 minutes.\n'
+                      '- "3:55" is less than 7 minutes.\n'
+                      '- "4:32" is less than 7 minutes.\n'
+                      '- "5:20" is less than 7 minutes.\n'
+                      '- "7:50" is greater than 7 minutes.\n'
+                      '- "8:30" is greater than 7 minutes.\n'
+                      '- "5:02" is less than 7 minutes.\n'
+                      '- "6:42 (audio)\\n8:18 (video)" has two lengths; "6:42" '
+                      'is less than 7 minutes, but "8:18" is greater than 7 '
+                      'minutes.\n'
+                      '\n'
+                      '### Step 7: Count Versions at Least 7 Minutes Long\n'
+                      'From the given data:\n'
+                      '- "7:50" is one version.\n'
+                      '- "8:30" is one version.\n'
+                      '- "8:18" (from the live version video length) is one '
+                      'version.\n'
+                      '\n'
+                      '### Step 8: Provide Factual Answer\n'
+                      'There are 3 versions that are at least 7 minutes long.\n'
+                      '\n'
+                      '**Data Analysis**: The table lists different versions '
+                      'of a song along with their lengths. The "Length" column '
+                      'was analyzed to identify versions that are at least 7 '
+                      'minutes long.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: The "Length" column in the provided table.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question asks to determine the '
+                       'number of versions that are at least 7 minutes long '
+                       'from the given table. The relevant information is '
+                       'contained in the "Length" column of the table.',
+                'result': '**Data Support**: The "Length" column contains the '
+                          'durations of various versions of the song. The '
+                          'lengths are given in the format "minutes:seconds". '
+                          'The relevant entries in the "Length" column are:\n'
+                          '- "4:30"\n'
+                          '- "3:55"\n'
+                          '- "4:32"\n'
+                          '- "5:20"\n'
+                          '- "7:50"\n'
+                          '- "8:30"\n'
+                          '- "5:02"\n'
+                          '- "6:42 (audio)\\n8:18 (video)"\n'
+                          '\n'
+                          '**Factual Answer**: 3\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The analysis directly compares the lengths given in '
+                          'the "Length" column to identify versions that are '
+                          'at least 7 minutes long. The versions "7:50", '
+                          '"8:30", and "8:18" (from the live version video '
+                          'length) meet this criterion, totaling 3 versions. '
+                          'The information is directly obtained from the '
+                          'structured data, ensuring high confidence in the '
+                          'answer.',
+                'raw': '**Text Analysis**: The question asks to determine the '
+                       'number of versions that are at least 7 minutes long '
+                       'from the given table. The relevant information is '
+                       'contained in the "Length" column of the table.\n'
+                       '\n'
+                       '**Data Support**: The "Length" column contains the '
+                       'durations of various versions of the song. The lengths '
+                       'are given in the format "minutes:seconds". The '
+                       'relevant entries in the "Length" column are:\n'
+                       '- "4:30"\n'
+                       '- "3:55"\n'
+                       '- "4:32"\n'
+                       '- "5:20"\n'
+                       '- "7:50"\n'
+                       '- "8:30"\n'
+                       '- "5:02"\n'
+                       '- "6:42 (audio)\\n8:18 (video)"\n'
+                       '\n'
+                       '**Factual Answer**: 3\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The analysis directly compares the lengths given in '
+                       'the "Length" column to identify versions that are at '
+                       'least 7 minutes long. The versions "7:50", "8:30", and '
+                       '"8:18" (from the live version video length) meet this '
+                       'criterion, totaling 3 versions. The information is '
+                       'directly obtained from the structured data, ensuring '
+                       'high confidence in the answer.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many versions are at least 7 '
+                          'minutes long?",\n'
+                          '  "Factual Answer": "3",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- "4:30"\n'
+                          '- "3:55"\n'
+                          '- "4:32"\n'
+                          '- "5:20"\n'
+                          '- "7:50"\n'
+                          '- "8:30"\n'
+                          '- "5:02"\n'
+                          '- "6:42 (audio)\\n8:18 (video)"\n'
+                          '- "4:30" is less than 7 minutes.\n'
+                          '- "3:55" is less than 7 minutes.\n'
+                          '- "4:32" is less than 7 minutes.\n'
+                          '- "5:20" is less than 7 minutes.\n'
+                          '- "7:50" is greater than 7 minutes.\n'
+                          '- "8:30" is greater than 7 minutes.\n'
+                          '- "5:02" is less than 7 minutes.\n'
+                          '- "6:42 (audio)\\n8:18 (video)" has two lengths; '
+                          '"6:42" is less than 7 minutes, but "8:18" is '
+                          'greater than 7 minutes.\n'
+                          '- "7:50" is one version.\n'
+                          '- "8:30" is one version.\n'
+                          '- "8:18" (from the live version video length) is '
+                          'one version.\n'
+                          '- "4:30"\n'
+                          '- "3:55"\n'
+                          '- "4:32"\n'
+                          '- "5:20"\n'
+                          '- "7:50"\n'
+                          '- "8:30"\n'
+                          '- "5:02"\n'
+                          '- "6:42 (audio)\\n8:18 (video)"',
+                'raw': '{\n'
+                       '  "Question": "how many versions are at least 7 '
+                       'minutes long?",\n'
+                       '  "Factual Answer": "3",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

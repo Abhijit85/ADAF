@@ -1,0 +1,464 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-11359.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "which year had the most stamps issued?",
+  "Factual Answer": "1973",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- For each row, extract the year from 'Stamp issue date'.
+- Extract 'Qty. Issued'.
+- ['16 May 1973', 'County Cricket, 1873–1973', 'one', 'PHQ 1', '20,000']
+- ['15 August 1973', '400th Anniversary, birth of Inigo Jones', 'one', 'PHQ 2', '20,000']
+- ['12 September 1973', '19th Commonwealth Parliamentary Conference', 'one', 'PHQ 3', '15,200']
+- ['14 November 1973', 'Royal Wedding (The Princess Anne)', 'one', 'PHQ 4', '290,000']
+- ['27 February 1974', 'British Trees', 'one', 'PHQ 5', '16,750']
+- ['24 April 1974', 'Fire Service Anniversary', 'one', 'PHQ 6', '30,000']
+- ['10 July 1974', 'Medieval Warriors', 'four', 'PHQ 7', '31,750']
+- ['9 October 1974', 'Winston Churchill Centenary', 'one', 'PHQ 8', '114,430']
+- ['19 February 1975', 'Bicentenary, birth J. M. W. Turner', 'one', 'PHQ 9', '46,250']
+- ['23 April 1975', 'European Architectural Year', 'three', 'PHQ 10', '51,000']
+- ['11 June 1975', 'Sailing', 'one', 'PHQ 11', '41,350']
+- ['13 August 1975', '150th Anniversary of Public Railways', 'four', 'PHQ 12', '47,500']
+- ['22 October 1975', 'Jane Austen Bicentenary', 'four', 'PHQ 13', '27,330']
+- ['28 April 1976', 'Social Reformers', 'one', 'PHQ 14', '38,350']
+- ['2 June 1976', 'American Bicentenary', 'one', 'PHQ 15', '60,950']
+- ['30 June 1976', 'Roses', 'four', 'PHQ 16', '34,250']
+- 1973: 20,000 + 20,000 + 15,200 + 290,000 = 345,200
+- 1974: 16,750 + 30,000 + 31,750 + 114,430 = 192,930
+- 1975: 46,250 + 51,000 + 41,350 + 47,500 + 27,330 = 213,430
+- 1976: 38,350 + 60,950 + 34,250 = 133,550
+- 1973: 345,200
+- 1974: 192,930
+- 1975: 213,430
+- 1976: 133,550
+- 1973: 345,200
+- 1974: 192,930
+- 1975: 213,430
+- 1976: 133,550
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks for the year with the most stamps '
+                      'issued. This requires analyzing the data provided to '
+                      'determine the total number of stamps issued per year '
+                      'and identifying the year with the highest total.\n'
+                      '\n'
+                      '### Step 2: Analyze the Data\n'
+                      'The data provided is in a table format with columns for '
+                      "'Stamp issue date', 'Stamp set', '#cards', 'Card set "
+                      "ref', and 'Qty. Issued'. To answer the question, we "
+                      "need to focus on 'Stamp issue date' and 'Qty. Issued'.\n"
+                      '\n'
+                      '1. **Extract Relevant Information**: We need to extract '
+                      "the year from 'Stamp issue date' and the quantity from "
+                      "'Qty. Issued'.\n"
+                      "2. **Convert 'Stamp issue date' to Year**: The dates "
+                      "are in the format 'day month year'. We need to extract "
+                      'the year.\n'
+                      "3. **Sum 'Qty. Issued' by Year**: Group the data by "
+                      "year and sum the 'Qty. Issued' for each year.\n"
+                      '\n'
+                      '### Step 3: Perform Analysis\n'
+                      "Let's analyze the data:\n"
+                      '\n'
+                      '1. **Extract Year and Quantity Issued**:\n'
+                      "   - For each row, extract the year from 'Stamp issue "
+                      "date'.\n"
+                      "   - Extract 'Qty. Issued'.\n"
+                      '\n'
+                      '2. **Data Rows**:\n'
+                      "   - ['16 May 1973', 'County Cricket, 1873–1973', "
+                      "'one', 'PHQ 1', '20,000']\n"
+                      "   - ['15 August 1973', '400th Anniversary, birth of "
+                      "Inigo Jones', 'one', 'PHQ 2', '20,000']\n"
+                      "   - ['12 September 1973', '19th Commonwealth "
+                      "Parliamentary Conference', 'one', 'PHQ 3', '15,200']\n"
+                      "   - ['14 November 1973', 'Royal Wedding (The Princess "
+                      "Anne)', 'one', 'PHQ 4', '290,000']\n"
+                      "   - ['27 February 1974', 'British Trees', 'one', 'PHQ "
+                      "5', '16,750']\n"
+                      "   - ['24 April 1974', 'Fire Service Anniversary', "
+                      "'one', 'PHQ 6', '30,000']\n"
+                      "   - ['10 July 1974', 'Medieval Warriors', 'four', 'PHQ "
+                      "7', '31,750']\n"
+                      "   - ['9 October 1974', 'Winston Churchill Centenary', "
+                      "'one', 'PHQ 8', '114,430']\n"
+                      "   - ['19 February 1975', 'Bicentenary, birth J. M. W. "
+                      "Turner', 'one', 'PHQ 9', '46,250']\n"
+                      "   - ['23 April 1975', 'European Architectural Year', "
+                      "'three', 'PHQ 10', '51,000']\n"
+                      "   - ['11 June 1975', 'Sailing', 'one', 'PHQ 11', "
+                      "'41,350']\n"
+                      "   - ['13 August 1975', '150th Anniversary of Public "
+                      "Railways', 'four', 'PHQ 12', '47,500']\n"
+                      "   - ['22 October 1975', 'Jane Austen Bicentenary', "
+                      "'four', 'PHQ 13', '27,330']\n"
+                      "   - ['28 April 1976', 'Social Reformers', 'one', 'PHQ "
+                      "14', '38,350']\n"
+                      "   - ['2 June 1976', 'American Bicentenary', 'one', "
+                      "'PHQ 15', '60,950']\n"
+                      "   - ['30 June 1976', 'Roses', 'four', 'PHQ 16', "
+                      "'34,250']\n"
+                      '\n'
+                      "3. **Group by Year and Sum 'Qty. Issued'**:\n"
+                      '   - 1973: 20,000 + 20,000 + 15,200 + 290,000 = '
+                      '345,200\n'
+                      '   - 1974: 16,750 + 30,000 + 31,750 + 114,430 = '
+                      '192,930\n'
+                      '   - 1975: 46,250 + 51,000 + 41,350 + 47,500 + 27,330 = '
+                      '213,430\n'
+                      '   - 1976: 38,350 + 60,950 + 34,250 = 133,550\n'
+                      '\n'
+                      '### Step 4: Identify the Year with the Most Stamps '
+                      'Issued\n'
+                      '- 1973: 345,200\n'
+                      '- 1974: 192,930\n'
+                      '- 1975: 213,430\n'
+                      '- 1976: 133,550\n'
+                      '\n'
+                      '**Year with the most stamps issued**: 1973\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The data contains stamp issue dates '
+                      'and quantities issued. By grouping the quantities by '
+                      'year, we found the total stamps issued per year.\n'
+                      '**Factual Answer**: 1973\n'
+                      '**Source**: Stamp issue data showing quantities issued '
+                      'per stamp set.',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks for the year with the most stamps '
+                         'issued. This requires analyzing the data provided to '
+                         'determine the total number of stamps issued per year '
+                         'and identifying the year with the highest total.\n'
+                         '\n'
+                         '### Step 2: Analyze the Data\n'
+                         'The data provided is in a table format with columns '
+                         "for 'Stamp issue date', 'Stamp set', '#cards', 'Card "
+                         "set ref', and 'Qty. Issued'. To answer the question, "
+                         "we need to focus on 'Stamp issue date' and 'Qty. "
+                         "Issued'.\n"
+                         '\n'
+                         '1. **Extract Relevant Information**: We need to '
+                         "extract the year from 'Stamp issue date' and the "
+                         "quantity from 'Qty. Issued'.\n"
+                         "2. **Convert 'Stamp issue date' to Year**: The dates "
+                         "are in the format 'day month year'. We need to "
+                         'extract the year.\n'
+                         "3. **Sum 'Qty. Issued' by Year**: Group the data by "
+                         "year and sum the 'Qty. Issued' for each year.\n"
+                         '\n'
+                         '### Step 3: Perform Analysis\n'
+                         "Let's analyze the data:\n"
+                         '\n'
+                         '1. **Extract Year and Quantity Issued**:\n'
+                         "   - For each row, extract the year from 'Stamp "
+                         "issue date'.\n"
+                         "   - Extract 'Qty. Issued'.\n"
+                         '\n'
+                         '2. **Data Rows**:\n'
+                         "   - ['16 May 1973', 'County Cricket, 1873–1973', "
+                         "'one', 'PHQ 1', '20,000']\n"
+                         "   - ['15 August 1973', '400th Anniversary, birth of "
+                         "Inigo Jones', 'one', 'PHQ 2', '20,000']\n"
+                         "   - ['12 September 1973', '19th Commonwealth "
+                         "Parliamentary Conference', 'one', 'PHQ 3', "
+                         "'15,200']\n"
+                         "   - ['14 November 1973', 'Royal Wedding (The "
+                         "Princess Anne)', 'one', 'PHQ 4', '290,000']\n"
+                         "   - ['27 February 1974', 'British Trees', 'one', "
+                         "'PHQ 5', '16,750']\n"
+                         "   - ['24 April 1974', 'Fire Service Anniversary', "
+                         "'one', 'PHQ 6', '30,000']\n"
+                         "   - ['10 July 1974', 'Medieval Warriors', 'four', "
+                         "'PHQ 7', '31,750']\n"
+                         "   - ['9 October 1974', 'Winston Churchill "
+                         "Centenary', 'one', 'PHQ 8', '114,430']\n"
+                         "   - ['19 February 1975', 'Bicentenary, birth J. M. "
+                         "W. Turner', 'one', 'PHQ 9', '46,250']\n"
+                         "   - ['23 April 1975', 'European Architectural "
+                         "Year', 'three', 'PHQ 10', '51,000']\n"
+                         "   - ['11 June 1975', 'Sailing', 'one', 'PHQ 11', "
+                         "'41,350']\n"
+                         "   - ['13 August 1975', '150th Anniversary of Public "
+                         "Railways', 'four', 'PHQ 12', '47,500']\n"
+                         "   - ['22 October 1975', 'Jane Austen Bicentenary', "
+                         "'four', 'PHQ 13', '27,330']\n"
+                         "   - ['28 April 1976', 'Social Reformers', 'one', "
+                         "'PHQ 14', '38,350']\n"
+                         "   - ['2 June 1976', 'American Bicentenary', 'one', "
+                         "'PHQ 15', '60,950']\n"
+                         "   - ['30 June 1976', 'Roses', 'four', 'PHQ 16', "
+                         "'34,250']\n"
+                         '\n'
+                         "3. **Group by Year and Sum 'Qty. Issued'**:\n"
+                         '   - 1973: 20,000 + 20,000 + 15,200 + 290,000 = '
+                         '345,200\n'
+                         '   - 1974: 16,750 + 30,000 + 31,750 + 114,430 = '
+                         '192,930\n'
+                         '   - 1975: 46,250 + 51,000 + 41,350 + 47,500 + '
+                         '27,330 = 213,430\n'
+                         '   - 1976: 38,350 + 60,950 + 34,250 = 133,550\n'
+                         '\n'
+                         '### Step 4: Identify the Year with the Most Stamps '
+                         'Issued\n'
+                         '- 1973: 345,200\n'
+                         '- 1974: 192,930\n'
+                         '- 1975: 213,430\n'
+                         '- 1976: 133,550\n'
+                         '\n'
+                         '**Year with the most stamps issued**: 1973\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The data contains stamp issue '
+                         'dates and quantities issued. By grouping the '
+                         'quantities by year, we found the total stamps issued '
+                         'per year.\n'
+                         '**Factual Answer**: 1973\n'
+                         '**Source**: Stamp issue data showing quantities '
+                         'issued per stamp set.',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks for the year with the most stamps '
+                      'issued. This requires analyzing the data provided to '
+                      'determine the total number of stamps issued per year '
+                      'and identifying the year with the highest total.\n'
+                      '\n'
+                      '### Step 2: Analyze the Data\n'
+                      'The data provided is in a table format with columns for '
+                      "'Stamp issue date', 'Stamp set', '#cards', 'Card set "
+                      "ref', and 'Qty. Issued'. To answer the question, we "
+                      "need to focus on 'Stamp issue date' and 'Qty. Issued'.\n"
+                      '\n'
+                      '1. **Extract Relevant Information**: We need to extract '
+                      "the year from 'Stamp issue date' and the quantity from "
+                      "'Qty. Issued'.\n"
+                      "2. **Convert 'Stamp issue date' to Year**: The dates "
+                      "are in the format 'day month year'. We need to extract "
+                      'the year.\n'
+                      "3. **Sum 'Qty. Issued' by Year**: Group the data by "
+                      "year and sum the 'Qty. Issued' for each year.\n"
+                      '\n'
+                      '### Step 3: Perform Analysis\n'
+                      "Let's analyze the data:\n"
+                      '\n'
+                      '1. **Extract Year and Quantity Issued**:\n'
+                      "   - For each row, extract the year from 'Stamp issue "
+                      "date'.\n"
+                      "   - Extract 'Qty. Issued'.\n"
+                      '\n'
+                      '2. **Data Rows**:\n'
+                      "   - ['16 May 1973', 'County Cricket, 1873–1973', "
+                      "'one', 'PHQ 1', '20,000']\n"
+                      "   - ['15 August 1973', '400th Anniversary, birth of "
+                      "Inigo Jones', 'one', 'PHQ 2', '20,000']\n"
+                      "   - ['12 September 1973', '19th Commonwealth "
+                      "Parliamentary Conference', 'one', 'PHQ 3', '15,200']\n"
+                      "   - ['14 November 1973', 'Royal Wedding (The Princess "
+                      "Anne)', 'one', 'PHQ 4', '290,000']\n"
+                      "   - ['27 February 1974', 'British Trees', 'one', 'PHQ "
+                      "5', '16,750']\n"
+                      "   - ['24 April 1974', 'Fire Service Anniversary', "
+                      "'one', 'PHQ 6', '30,000']\n"
+                      "   - ['10 July 1974', 'Medieval Warriors', 'four', 'PHQ "
+                      "7', '31,750']\n"
+                      "   - ['9 October 1974', 'Winston Churchill Centenary', "
+                      "'one', 'PHQ 8', '114,430']\n"
+                      "   - ['19 February 1975', 'Bicentenary, birth J. M. W. "
+                      "Turner', 'one', 'PHQ 9', '46,250']\n"
+                      "   - ['23 April 1975', 'European Architectural Year', "
+                      "'three', 'PHQ 10', '51,000']\n"
+                      "   - ['11 June 1975', 'Sailing', 'one', 'PHQ 11', "
+                      "'41,350']\n"
+                      "   - ['13 August 1975', '150th Anniversary of Public "
+                      "Railways', 'four', 'PHQ 12', '47,500']\n"
+                      "   - ['22 October 1975', 'Jane Austen Bicentenary', "
+                      "'four', 'PHQ 13', '27,330']\n"
+                      "   - ['28 April 1976', 'Social Reformers', 'one', 'PHQ "
+                      "14', '38,350']\n"
+                      "   - ['2 June 1976', 'American Bicentenary', 'one', "
+                      "'PHQ 15', '60,950']\n"
+                      "   - ['30 June 1976', 'Roses', 'four', 'PHQ 16', "
+                      "'34,250']\n"
+                      '\n'
+                      "3. **Group by Year and Sum 'Qty. Issued'**:\n"
+                      '   - 1973: 20,000 + 20,000 + 15,200 + 290,000 = '
+                      '345,200\n'
+                      '   - 1974: 16,750 + 30,000 + 31,750 + 114,430 = '
+                      '192,930\n'
+                      '   - 1975: 46,250 + 51,000 + 41,350 + 47,500 + 27,330 = '
+                      '213,430\n'
+                      '   - 1976: 38,350 + 60,950 + 34,250 = 133,550\n'
+                      '\n'
+                      '### Step 4: Identify the Year with the Most Stamps '
+                      'Issued\n'
+                      '- 1973: 345,200\n'
+                      '- 1974: 192,930\n'
+                      '- 1975: 213,430\n'
+                      '- 1976: 133,550\n'
+                      '\n'
+                      '**Year with the most stamps issued**: 1973\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The data contains stamp issue dates '
+                      'and quantities issued. By grouping the quantities by '
+                      'year, we found the total stamps issued per year.\n'
+                      '**Factual Answer**: 1973\n'
+                      '**Source**: Stamp issue data showing quantities issued '
+                      'per stamp set.'},
+ 'Contextron': {'cot': '**Text Analysis**: The text context indicates that the '
+                       'data is related to stamp issues, including dates and '
+                       'quantities issued. The question asks for the year with '
+                       'the most stamps issued.',
+                'result': '**Data Support**: The structured data provides a '
+                          'list of stamp issues with their respective dates '
+                          "and quantities issued. By analyzing the 'Stamp "
+                          "issue date' and 'Qty. Issued' columns, we can "
+                          'determine the total quantity of stamps issued per '
+                          'year.\n'
+                          '\n'
+                          '**Step-by-Step Analysis**:\n'
+                          "1. Extracted the year from 'Stamp issue date' for "
+                          'each stamp issue.\n'
+                          "2. Summed the 'Qty. Issued' for each year.\n"
+                          '3. Compared the total quantities issued for each '
+                          'year to identify the year with the highest total.\n'
+                          '\n'
+                          '**Data Analysis**: \n'
+                          '- 1973: 345,200\n'
+                          '- 1974: 192,930\n'
+                          '- 1975: 213,430\n'
+                          '- 1976: 133,550\n'
+                          '\n'
+                          '**Factual Answer**: 1973\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The year 1973 had the most stamps issued, with a '
+                          'total of 345,200 stamps. This conclusion is based '
+                          'on the analysis of the structured data provided, '
+                          'which lists the quantities of stamps issued for '
+                          'various stamp sets across different years. The '
+                          'total quantity issued in 1973 was significantly '
+                          'higher than in the other years listed.',
+                'raw': '**Text Analysis**: The text context indicates that the '
+                       'data is related to stamp issues, including dates and '
+                       'quantities issued. The question asks for the year with '
+                       'the most stamps issued.\n'
+                       '\n'
+                       '**Data Support**: The structured data provides a list '
+                       'of stamp issues with their respective dates and '
+                       "quantities issued. By analyzing the 'Stamp issue date' "
+                       "and 'Qty. Issued' columns, we can determine the total "
+                       'quantity of stamps issued per year.\n'
+                       '\n'
+                       '**Step-by-Step Analysis**:\n'
+                       "1. Extracted the year from 'Stamp issue date' for each "
+                       'stamp issue.\n'
+                       "2. Summed the 'Qty. Issued' for each year.\n"
+                       '3. Compared the total quantities issued for each year '
+                       'to identify the year with the highest total.\n'
+                       '\n'
+                       '**Data Analysis**: \n'
+                       '- 1973: 345,200\n'
+                       '- 1974: 192,930\n'
+                       '- 1975: 213,430\n'
+                       '- 1976: 133,550\n'
+                       '\n'
+                       '**Factual Answer**: 1973\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The year 1973 had the most stamps issued, with a total '
+                       'of 345,200 stamps. This conclusion is based on the '
+                       'analysis of the structured data provided, which lists '
+                       'the quantities of stamps issued for various stamp sets '
+                       'across different years. The total quantity issued in '
+                       '1973 was significantly higher than in the other years '
+                       'listed.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "which year had the most stamps '
+                          'issued?",\n'
+                          '  "Factual Answer": "1973",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "- For each row, extract the year from 'Stamp issue "
+                          "date'.\n"
+                          "- Extract 'Qty. Issued'.\n"
+                          "- ['16 May 1973', 'County Cricket, 1873–1973', "
+                          "'one', 'PHQ 1', '20,000']\n"
+                          "- ['15 August 1973', '400th Anniversary, birth of "
+                          "Inigo Jones', 'one', 'PHQ 2', '20,000']\n"
+                          "- ['12 September 1973', '19th Commonwealth "
+                          "Parliamentary Conference', 'one', 'PHQ 3', "
+                          "'15,200']\n"
+                          "- ['14 November 1973', 'Royal Wedding (The Princess "
+                          "Anne)', 'one', 'PHQ 4', '290,000']\n"
+                          "- ['27 February 1974', 'British Trees', 'one', 'PHQ "
+                          "5', '16,750']\n"
+                          "- ['24 April 1974', 'Fire Service Anniversary', "
+                          "'one', 'PHQ 6', '30,000']\n"
+                          "- ['10 July 1974', 'Medieval Warriors', 'four', "
+                          "'PHQ 7', '31,750']\n"
+                          "- ['9 October 1974', 'Winston Churchill Centenary', "
+                          "'one', 'PHQ 8', '114,430']\n"
+                          "- ['19 February 1975', 'Bicentenary, birth J. M. W. "
+                          "Turner', 'one', 'PHQ 9', '46,250']\n"
+                          "- ['23 April 1975', 'European Architectural Year', "
+                          "'three', 'PHQ 10', '51,000']\n"
+                          "- ['11 June 1975', 'Sailing', 'one', 'PHQ 11', "
+                          "'41,350']\n"
+                          "- ['13 August 1975', '150th Anniversary of Public "
+                          "Railways', 'four', 'PHQ 12', '47,500']\n"
+                          "- ['22 October 1975', 'Jane Austen Bicentenary', "
+                          "'four', 'PHQ 13', '27,330']\n"
+                          "- ['28 April 1976', 'Social Reformers', 'one', 'PHQ "
+                          "14', '38,350']\n"
+                          "- ['2 June 1976', 'American Bicentenary', 'one', "
+                          "'PHQ 15', '60,950']\n"
+                          "- ['30 June 1976', 'Roses', 'four', 'PHQ 16', "
+                          "'34,250']\n"
+                          '- 1973: 20,000 + 20,000 + 15,200 + 290,000 = '
+                          '345,200\n'
+                          '- 1974: 16,750 + 30,000 + 31,750 + 114,430 = '
+                          '192,930\n'
+                          '- 1975: 46,250 + 51,000 + 41,350 + 47,500 + 27,330 '
+                          '= 213,430\n'
+                          '- 1976: 38,350 + 60,950 + 34,250 = 133,550\n'
+                          '- 1973: 345,200\n'
+                          '- 1974: 192,930\n'
+                          '- 1975: 213,430\n'
+                          '- 1976: 133,550\n'
+                          '- 1973: 345,200\n'
+                          '- 1974: 192,930\n'
+                          '- 1975: 213,430\n'
+                          '- 1976: 133,550',
+                'raw': '{\n'
+                       '  "Question": "which year had the most stamps '
+                       'issued?",\n'
+                       '  "Factual Answer": "1973",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

@@ -1,0 +1,520 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-3302.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "which country had the most plants start after 1990?",
+  "Factual Answer": "Indonesia, Qatar",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- Iterate through the "Startup Date" column and extract the year.
+- Match the extracted year with the corresponding "Country".
+- Relevant startup dates after 1990: 1994, 1996, 1997, 1998, 1999, 2003, 2004, 2005, 2007, 2008, 2009, 2010, 2013.
+- For each country, count how many plants started after 1990.
+- Rows with startup dates after 1990 are:
+- 'Arzew GL1Z', 'Algeria', 1997
+- 'Skikda GL1K', 'Algeria', 1999
+- 'Angola LNG', 'Angola', 2013
+- 'Badak A-G', 'Indonesia', 1998
+- 'Badak NGL A-H', 'Indonesia', 1999
+- 'Tangguh LNG Project', 'Indonesia', 2009
+- 'Atlantic LNG', 'Trinidad and Tobago', 1999
+- '[Atlantic LNG]', 'Trinidad and Tobago', 2003
+- 'Damietta', 'Egypt', 2004
+- 'Idku', 'Egypt', 2005
+- 'Bintulu MLNG 2', 'Malaysia', 1994
+- 'Bintulu MLNG 3', 'Malaysia', 2003
+- 'Nigeria LNG', 'Nigeria', 1999
+- 'Northwest Shelf Venture', 'Australia', 2009
+- 'Qatargas II', 'Qatar', 2009
+- 'Sakhalin II', 'Russia', 2009
+- 'Yemen LNG', 'Yemen', 2008
+- 'Qatargas I', 'Qatar', 2005
+- 'Qatargas III', 'Qatar', 2010
+- 'Melkøya', 'Norway', 2007
+- 'Algeria': 2
+- 'Angola': 1
+- 'Indonesia': 3
+- 'Trinidad and Tobago': 2
+- 'Egypt': 2
+- 'Malaysia': 2
+- 'Nigeria': 1
+- 'Australia': 1
+- 'Qatar': 3
+- 'Russia': 1
+- 'Yemen': 1
+- 'Norway': 1
+- **Indonesia** and **Qatar** are tied for the highest count with 3 plants each.
+- 'Algeria': 2
+- 'Angola': 1
+- 'Indonesia': 3
+- 'Trinidad and Tobago': 2
+- 'Egypt': 2
+- 'Malaysia': 2
+- 'Nigeria': 1
+- 'Australia': 1
+- 'Qatar': 3
+- 'Russia': 1
+- 'Yemen': 1
+- 'Norway': 1
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks to identify the country with the most '
+                      'plants that started operations after 1990.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Data\n'
+                      'To answer this question, we need to:\n'
+                      '1. Identify the "Startup Date" column in the table.\n'
+                      '2. Filter the data to include only rows where the '
+                      '"Startup Date" is after 1990.\n'
+                      '3. Count the number of plants for each country in the '
+                      'filtered data.\n'
+                      '4. Determine which country has the highest count.\n'
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      '1. **Identify the "Startup Date" column**: It\'s the '
+                      '4th column in the table.\n'
+                      '2. **Filter the data**: We will go through the "Startup '
+                      'Date" column and include rows with a year greater than '
+                      '1990.\n'
+                      '3. **Count plants per country**: For the filtered data, '
+                      'count how many rows exist for each country.\n'
+                      '\n'
+                      '### Step 4: Perform the Analysis\n'
+                      "Let's analyze the data step by step:\n"
+                      '\n'
+                      '1. **Extract Startup Dates and Countries**:\n'
+                      '   - Iterate through the "Startup Date" column and '
+                      'extract the year.\n'
+                      '   - Match the extracted year with the corresponding '
+                      '"Country".\n'
+                      '\n'
+                      '2. **Filter Dates After 1990**:\n'
+                      '   - Relevant startup dates after 1990: 1994, 1996, '
+                      '1997, 1998, 1999, 2003, 2004, 2005, 2007, 2008, 2009, '
+                      '2010, 2013.\n'
+                      '\n'
+                      '3. **Count Plants Per Country**:\n'
+                      '   - For each country, count how many plants started '
+                      'after 1990.\n'
+                      '\n'
+                      '### Step 5: Execution\n'
+                      "Let's execute the plan on the given data:\n"
+                      '\n'
+                      '1. **Filter Relevant Rows**:\n'
+                      '   - Rows with startup dates after 1990 are:\n'
+                      "     - 'Arzew GL1Z', 'Algeria', 1997\n"
+                      "     - 'Skikda GL1K', 'Algeria', 1999\n"
+                      "     - 'Angola LNG', 'Angola', 2013\n"
+                      "     - 'Badak A-G', 'Indonesia', 1998\n"
+                      "     - 'Badak NGL A-H', 'Indonesia', 1999\n"
+                      "     - 'Tangguh LNG Project', 'Indonesia', 2009\n"
+                      "     - 'Atlantic LNG', 'Trinidad and Tobago', 1999\n"
+                      "     - '[Atlantic LNG]', 'Trinidad and Tobago', 2003\n"
+                      "     - 'Damietta', 'Egypt', 2004\n"
+                      "     - 'Idku', 'Egypt', 2005\n"
+                      "     - 'Bintulu MLNG 2', 'Malaysia', 1994\n"
+                      "     - 'Bintulu MLNG 3', 'Malaysia', 2003\n"
+                      "     - 'Nigeria LNG', 'Nigeria', 1999\n"
+                      "     - 'Northwest Shelf Venture', 'Australia', 2009\n"
+                      "     - 'Qatargas II', 'Qatar', 2009\n"
+                      "     - 'Sakhalin II', 'Russia', 2009\n"
+                      "     - 'Yemen LNG', 'Yemen', 2008\n"
+                      "     - 'Qatargas I', 'Qatar', 2005\n"
+                      "     - 'Qatargas III', 'Qatar', 2010\n"
+                      "     - 'Melkøya', 'Norway', 2007\n"
+                      '\n'
+                      '2. **Count Plants Per Country**:\n'
+                      "   - 'Algeria': 2\n"
+                      "   - 'Angola': 1\n"
+                      "   - 'Indonesia': 3\n"
+                      "   - 'Trinidad and Tobago': 2\n"
+                      "   - 'Egypt': 2\n"
+                      "   - 'Malaysia': 2\n"
+                      "   - 'Nigeria': 1\n"
+                      "   - 'Australia': 1\n"
+                      "   - 'Qatar': 3\n"
+                      "   - 'Russia': 1\n"
+                      "   - 'Yemen': 1\n"
+                      "   - 'Norway': 1\n"
+                      '\n'
+                      '### Step 6: Determine the Country with the Most Plants\n'
+                      '- **Indonesia** and **Qatar** are tied for the highest '
+                      'count with 3 plants each.\n'
+                      '\n'
+                      '### Step 7: Provide the Answer\n'
+                      'Since both Indonesia and Qatar have the same highest '
+                      'number of plants (3) that started after 1990, they are '
+                      'tied.\n'
+                      '\n'
+                      '**Data Analysis**: The data contains information about '
+                      'LNG plants worldwide, including their startup dates and '
+                      'countries. After filtering for plants that started '
+                      'after 1990, the countries with the most plants were '
+                      'identified.\n'
+                      '**Factual Answer**: Indonesia and Qatar are tied for '
+                      'the most plants with 3 each.\n'
+                      '**Source**: The provided table data on LNG plants.\n'
+                      '\n'
+                      'If unable to answer from data alone:\n'
+                      '**Additional Context Required**: None needed for this '
+                      'analysis.',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks to identify the country with the '
+                         'most plants that started operations after 1990.\n'
+                         '\n'
+                         '### Step 2: Extract Relevant Data\n'
+                         'To answer this question, we need to:\n'
+                         '1. Identify the "Startup Date" column in the table.\n'
+                         '2. Filter the data to include only rows where the '
+                         '"Startup Date" is after 1990.\n'
+                         '3. Count the number of plants for each country in '
+                         'the filtered data.\n'
+                         '4. Determine which country has the highest count.\n'
+                         '\n'
+                         '### Step 3: Analyze the Data\n'
+                         '1. **Identify the "Startup Date" column**: It\'s the '
+                         '4th column in the table.\n'
+                         '2. **Filter the data**: We will go through the '
+                         '"Startup Date" column and include rows with a year '
+                         'greater than 1990.\n'
+                         '3. **Count plants per country**: For the filtered '
+                         'data, count how many rows exist for each country.\n'
+                         '\n'
+                         '### Step 4: Perform the Analysis\n'
+                         "Let's analyze the data step by step:\n"
+                         '\n'
+                         '1. **Extract Startup Dates and Countries**:\n'
+                         '   - Iterate through the "Startup Date" column and '
+                         'extract the year.\n'
+                         '   - Match the extracted year with the corresponding '
+                         '"Country".\n'
+                         '\n'
+                         '2. **Filter Dates After 1990**:\n'
+                         '   - Relevant startup dates after 1990: 1994, 1996, '
+                         '1997, 1998, 1999, 2003, 2004, 2005, 2007, 2008, '
+                         '2009, 2010, 2013.\n'
+                         '\n'
+                         '3. **Count Plants Per Country**:\n'
+                         '   - For each country, count how many plants started '
+                         'after 1990.\n'
+                         '\n'
+                         '### Step 5: Execution\n'
+                         "Let's execute the plan on the given data:\n"
+                         '\n'
+                         '1. **Filter Relevant Rows**:\n'
+                         '   - Rows with startup dates after 1990 are:\n'
+                         "     - 'Arzew GL1Z', 'Algeria', 1997\n"
+                         "     - 'Skikda GL1K', 'Algeria', 1999\n"
+                         "     - 'Angola LNG', 'Angola', 2013\n"
+                         "     - 'Badak A-G', 'Indonesia', 1998\n"
+                         "     - 'Badak NGL A-H', 'Indonesia', 1999\n"
+                         "     - 'Tangguh LNG Project', 'Indonesia', 2009\n"
+                         "     - 'Atlantic LNG', 'Trinidad and Tobago', 1999\n"
+                         "     - '[Atlantic LNG]', 'Trinidad and Tobago', "
+                         '2003\n'
+                         "     - 'Damietta', 'Egypt', 2004\n"
+                         "     - 'Idku', 'Egypt', 2005\n"
+                         "     - 'Bintulu MLNG 2', 'Malaysia', 1994\n"
+                         "     - 'Bintulu MLNG 3', 'Malaysia', 2003\n"
+                         "     - 'Nigeria LNG', 'Nigeria', 1999\n"
+                         "     - 'Northwest Shelf Venture', 'Australia', 2009\n"
+                         "     - 'Qatargas II', 'Qatar', 2009\n"
+                         "     - 'Sakhalin II', 'Russia', 2009\n"
+                         "     - 'Yemen LNG', 'Yemen', 2008\n"
+                         "     - 'Qatargas I', 'Qatar', 2005\n"
+                         "     - 'Qatargas III', 'Qatar', 2010\n"
+                         "     - 'Melkøya', 'Norway', 2007\n"
+                         '\n'
+                         '2. **Count Plants Per Country**:\n'
+                         "   - 'Algeria': 2\n"
+                         "   - 'Angola': 1\n"
+                         "   - 'Indonesia': 3\n"
+                         "   - 'Trinidad and Tobago': 2\n"
+                         "   - 'Egypt': 2\n"
+                         "   - 'Malaysia': 2\n"
+                         "   - 'Nigeria': 1\n"
+                         "   - 'Australia': 1\n"
+                         "   - 'Qatar': 3\n"
+                         "   - 'Russia': 1\n"
+                         "   - 'Yemen': 1\n"
+                         "   - 'Norway': 1\n"
+                         '\n'
+                         '### Step 6: Determine the Country with the Most '
+                         'Plants\n'
+                         '- **Indonesia** and **Qatar** are tied for the '
+                         'highest count with 3 plants each.\n'
+                         '\n'
+                         '### Step 7: Provide the Answer\n'
+                         'Since both Indonesia and Qatar have the same highest '
+                         'number of plants (3) that started after 1990, they '
+                         'are tied.\n'
+                         '\n'
+                         '**Data Analysis**: The data contains information '
+                         'about LNG plants worldwide, including their startup '
+                         'dates and countries. After filtering for plants that '
+                         'started after 1990, the countries with the most '
+                         'plants were identified.\n'
+                         '**Factual Answer**: Indonesia and Qatar are tied for '
+                         'the most plants with 3 each.\n'
+                         '**Source**: The provided table data on LNG plants.\n'
+                         '\n'
+                         'If unable to answer from data alone:\n'
+                         '**Additional Context Required**: None needed for '
+                         'this analysis.',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks to identify the country with the most '
+                      'plants that started operations after 1990.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Data\n'
+                      'To answer this question, we need to:\n'
+                      '1. Identify the "Startup Date" column in the table.\n'
+                      '2. Filter the data to include only rows where the '
+                      '"Startup Date" is after 1990.\n'
+                      '3. Count the number of plants for each country in the '
+                      'filtered data.\n'
+                      '4. Determine which country has the highest count.\n'
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      '1. **Identify the "Startup Date" column**: It\'s the '
+                      '4th column in the table.\n'
+                      '2. **Filter the data**: We will go through the "Startup '
+                      'Date" column and include rows with a year greater than '
+                      '1990.\n'
+                      '3. **Count plants per country**: For the filtered data, '
+                      'count how many rows exist for each country.\n'
+                      '\n'
+                      '### Step 4: Perform the Analysis\n'
+                      "Let's analyze the data step by step:\n"
+                      '\n'
+                      '1. **Extract Startup Dates and Countries**:\n'
+                      '   - Iterate through the "Startup Date" column and '
+                      'extract the year.\n'
+                      '   - Match the extracted year with the corresponding '
+                      '"Country".\n'
+                      '\n'
+                      '2. **Filter Dates After 1990**:\n'
+                      '   - Relevant startup dates after 1990: 1994, 1996, '
+                      '1997, 1998, 1999, 2003, 2004, 2005, 2007, 2008, 2009, '
+                      '2010, 2013.\n'
+                      '\n'
+                      '3. **Count Plants Per Country**:\n'
+                      '   - For each country, count how many plants started '
+                      'after 1990.\n'
+                      '\n'
+                      '### Step 5: Execution\n'
+                      "Let's execute the plan on the given data:\n"
+                      '\n'
+                      '1. **Filter Relevant Rows**:\n'
+                      '   - Rows with startup dates after 1990 are:\n'
+                      "     - 'Arzew GL1Z', 'Algeria', 1997\n"
+                      "     - 'Skikda GL1K', 'Algeria', 1999\n"
+                      "     - 'Angola LNG', 'Angola', 2013\n"
+                      "     - 'Badak A-G', 'Indonesia', 1998\n"
+                      "     - 'Badak NGL A-H', 'Indonesia', 1999\n"
+                      "     - 'Tangguh LNG Project', 'Indonesia', 2009\n"
+                      "     - 'Atlantic LNG', 'Trinidad and Tobago', 1999\n"
+                      "     - '[Atlantic LNG]', 'Trinidad and Tobago', 2003\n"
+                      "     - 'Damietta', 'Egypt', 2004\n"
+                      "     - 'Idku', 'Egypt', 2005\n"
+                      "     - 'Bintulu MLNG 2', 'Malaysia', 1994\n"
+                      "     - 'Bintulu MLNG 3', 'Malaysia', 2003\n"
+                      "     - 'Nigeria LNG', 'Nigeria', 1999\n"
+                      "     - 'Northwest Shelf Venture', 'Australia', 2009\n"
+                      "     - 'Qatargas II', 'Qatar', 2009\n"
+                      "     - 'Sakhalin II', 'Russia', 2009\n"
+                      "     - 'Yemen LNG', 'Yemen', 2008\n"
+                      "     - 'Qatargas I', 'Qatar', 2005\n"
+                      "     - 'Qatargas III', 'Qatar', 2010\n"
+                      "     - 'Melkøya', 'Norway', 2007\n"
+                      '\n'
+                      '2. **Count Plants Per Country**:\n'
+                      "   - 'Algeria': 2\n"
+                      "   - 'Angola': 1\n"
+                      "   - 'Indonesia': 3\n"
+                      "   - 'Trinidad and Tobago': 2\n"
+                      "   - 'Egypt': 2\n"
+                      "   - 'Malaysia': 2\n"
+                      "   - 'Nigeria': 1\n"
+                      "   - 'Australia': 1\n"
+                      "   - 'Qatar': 3\n"
+                      "   - 'Russia': 1\n"
+                      "   - 'Yemen': 1\n"
+                      "   - 'Norway': 1\n"
+                      '\n'
+                      '### Step 6: Determine the Country with the Most Plants\n'
+                      '- **Indonesia** and **Qatar** are tied for the highest '
+                      'count with 3 plants each.\n'
+                      '\n'
+                      '### Step 7: Provide the Answer\n'
+                      'Since both Indonesia and Qatar have the same highest '
+                      'number of plants (3) that started after 1990, they are '
+                      'tied.\n'
+                      '\n'
+                      '**Data Analysis**: The data contains information about '
+                      'LNG plants worldwide, including their startup dates and '
+                      'countries. After filtering for plants that started '
+                      'after 1990, the countries with the most plants were '
+                      'identified.\n'
+                      '**Factual Answer**: Indonesia and Qatar are tied for '
+                      'the most plants with 3 each.\n'
+                      '**Source**: The provided table data on LNG plants.\n'
+                      '\n'
+                      'If unable to answer from data alone:\n'
+                      '**Additional Context Required**: None needed for this '
+                      'analysis.'},
+ 'Contextron': {'cot': '**Text Analysis**: The text context indicates that the '
+                       'data is related to LNG plants worldwide, including '
+                       'their startup dates and countries. The question asks '
+                       'which country had the most plants start after 1990.',
+                'result': '**Data Support**: The structured data analysis '
+                          'reveals that after filtering for plants that '
+                          'started after 1990, the count of plants per country '
+                          'is as follows:\n'
+                          "- 'Algeria': 2\n"
+                          "- 'Angola': 1\n"
+                          "- 'Indonesia': 3\n"
+                          "- 'Trinidad and Tobago': 2\n"
+                          "- 'Egypt': 2\n"
+                          "- 'Malaysia': 2\n"
+                          "- 'Nigeria': 1\n"
+                          "- 'Australia': 1\n"
+                          "- 'Qatar': 3\n"
+                          "- 'Russia': 1\n"
+                          "- 'Yemen': 1\n"
+                          "- 'Norway': 1\n"
+                          '\n'
+                          '**Factual Answer**: Indonesia and Qatar are tied '
+                          'for the most plants with 3 each that started after '
+                          '1990.\n'
+                          '\n'
+                          '**Confidence**: High, as the analysis is based on '
+                          'the provided structured data and directly answers '
+                          'the question.\n'
+                          '\n'
+                          '**Missing Information**: None needed for this '
+                          'analysis.',
+                'raw': '**Text Analysis**: The text context indicates that the '
+                       'data is related to LNG plants worldwide, including '
+                       'their startup dates and countries. The question asks '
+                       'which country had the most plants start after 1990.\n'
+                       '\n'
+                       '**Data Support**: The structured data analysis reveals '
+                       'that after filtering for plants that started after '
+                       '1990, the count of plants per country is as follows:\n'
+                       "- 'Algeria': 2\n"
+                       "- 'Angola': 1\n"
+                       "- 'Indonesia': 3\n"
+                       "- 'Trinidad and Tobago': 2\n"
+                       "- 'Egypt': 2\n"
+                       "- 'Malaysia': 2\n"
+                       "- 'Nigeria': 1\n"
+                       "- 'Australia': 1\n"
+                       "- 'Qatar': 3\n"
+                       "- 'Russia': 1\n"
+                       "- 'Yemen': 1\n"
+                       "- 'Norway': 1\n"
+                       '\n'
+                       '**Factual Answer**: Indonesia and Qatar are tied for '
+                       'the most plants with 3 each that started after 1990.\n'
+                       '\n'
+                       '**Confidence**: High, as the analysis is based on the '
+                       'provided structured data and directly answers the '
+                       'question.\n'
+                       '\n'
+                       '**Missing Information**: None needed for this '
+                       'analysis.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "which country had the most plants '
+                          'start after 1990?",\n'
+                          '  "Factual Answer": "Indonesia, Qatar",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Iterate through the "Startup Date" column and '
+                          'extract the year.\n'
+                          '- Match the extracted year with the corresponding '
+                          '"Country".\n'
+                          '- Relevant startup dates after 1990: 1994, 1996, '
+                          '1997, 1998, 1999, 2003, 2004, 2005, 2007, 2008, '
+                          '2009, 2010, 2013.\n'
+                          '- For each country, count how many plants started '
+                          'after 1990.\n'
+                          '- Rows with startup dates after 1990 are:\n'
+                          "- 'Arzew GL1Z', 'Algeria', 1997\n"
+                          "- 'Skikda GL1K', 'Algeria', 1999\n"
+                          "- 'Angola LNG', 'Angola', 2013\n"
+                          "- 'Badak A-G', 'Indonesia', 1998\n"
+                          "- 'Badak NGL A-H', 'Indonesia', 1999\n"
+                          "- 'Tangguh LNG Project', 'Indonesia', 2009\n"
+                          "- 'Atlantic LNG', 'Trinidad and Tobago', 1999\n"
+                          "- '[Atlantic LNG]', 'Trinidad and Tobago', 2003\n"
+                          "- 'Damietta', 'Egypt', 2004\n"
+                          "- 'Idku', 'Egypt', 2005\n"
+                          "- 'Bintulu MLNG 2', 'Malaysia', 1994\n"
+                          "- 'Bintulu MLNG 3', 'Malaysia', 2003\n"
+                          "- 'Nigeria LNG', 'Nigeria', 1999\n"
+                          "- 'Northwest Shelf Venture', 'Australia', 2009\n"
+                          "- 'Qatargas II', 'Qatar', 2009\n"
+                          "- 'Sakhalin II', 'Russia', 2009\n"
+                          "- 'Yemen LNG', 'Yemen', 2008\n"
+                          "- 'Qatargas I', 'Qatar', 2005\n"
+                          "- 'Qatargas III', 'Qatar', 2010\n"
+                          "- 'Melkøya', 'Norway', 2007\n"
+                          "- 'Algeria': 2\n"
+                          "- 'Angola': 1\n"
+                          "- 'Indonesia': 3\n"
+                          "- 'Trinidad and Tobago': 2\n"
+                          "- 'Egypt': 2\n"
+                          "- 'Malaysia': 2\n"
+                          "- 'Nigeria': 1\n"
+                          "- 'Australia': 1\n"
+                          "- 'Qatar': 3\n"
+                          "- 'Russia': 1\n"
+                          "- 'Yemen': 1\n"
+                          "- 'Norway': 1\n"
+                          '- **Indonesia** and **Qatar** are tied for the '
+                          'highest count with 3 plants each.\n'
+                          "- 'Algeria': 2\n"
+                          "- 'Angola': 1\n"
+                          "- 'Indonesia': 3\n"
+                          "- 'Trinidad and Tobago': 2\n"
+                          "- 'Egypt': 2\n"
+                          "- 'Malaysia': 2\n"
+                          "- 'Nigeria': 1\n"
+                          "- 'Australia': 1\n"
+                          "- 'Qatar': 3\n"
+                          "- 'Russia': 1\n"
+                          "- 'Yemen': 1\n"
+                          "- 'Norway': 1",
+                'raw': '{\n'
+                       '  "Question": "which country had the most plants start '
+                       'after 1990?",\n'
+                       '  "Factual Answer": "Indonesia, Qatar",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

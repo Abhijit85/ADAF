@@ -1,0 +1,495 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-3888.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "which ambassador served after 1980, more than three years, and lived on the east coast?",
+  "Factual Answer": "Harry G. Barnes, Jr., John Gunther Dean, Frank G. Wisner",
+  "Source": "Combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- Look for ambassadors whose termination date is after 1980 or is blank (still serving).
+- Since the data is sorted by appointment date, we can start checking from the ambassadors appointed after 1980.
+- For each ambassador serving after 1980, calculate the tenure by subtracting the appointment date from the termination date.
+- Check the 'State' column to identify ambassadors from East Coast states.
+- 'Harry G. Barnes, Jr.' (Maryland) - Appointed on Oct 1, 1981, Left post on Jun 27, 1985. Tenure > 3 years.
+- 'John Gunther Dean' (New York) - Appointed on Aug 2, 1985, Left post on Nov 7, 1988. Tenure > 3 years.
+- 'John R. Hubbard' (California) - Not on East Coast.
+- 'William Clark, Jr.' (District of Columbia) - Technically not a state, but considered part of the East Coast region. Appointed on Oct 10, 1989, Left post on Jul 2, 1992. Tenure < 3 years.
+- 'Thomas R. Pickering' (New Jersey) - Appointed on Apr 6, 1992, Left post on Mar 23, 1993. Tenure < 3 years.
+- 'Frank G. Wisner' (District of Columbia) - Appointed on Jun 9, 1994, Left post on July 12, 1997. Tenure > 3 years.
+- 'Richard Frank Celeste' (Ohio) - Not typically considered East Coast in this context, though it's eastern.
+- 'Robert Blackwill' (Kansas) - Not on East Coast.
+- 'David Campbell Mulford' (Illinois) - Not on East Coast.
+- 'Timothy J. Roemer' (Indiana) - Not on East Coast.
+- 'Albert Peter Burleigh' (California) - Not on East Coast.
+- 'Nancy Jo Powell' (Iowa) - Not on East Coast.
+- 'Harry G. Barnes, Jr.' (Maryland) fits the criteria.
+- 'John Gunther Dean' (New York) fits the criteria.
+- 'Frank G. Wisner' (District of Columbia) fits the criteria.
+- **Factual Accuracy**: Verified against the provided data.
+- **Completeness**: All relevant ambassadors identified.
+- **Clarity**: Answer clearly presented.
+- **Relevance**: Focus on the specific criteria provided in the question.
+- 'Harry G. Barnes, Jr.' (Maryland) - Served from Oct 1, 1981, to Jun 27, 1985.
+- 'John Gunther Dean' (New York) - Served from Aug 2, 1985, to Nov 7, 1988.
+- 'Frank G. Wisner' (District of Columbia) - Served from Jun 9, 1994, to July 12, 1997.
+- **Text Analysis**: The question was understood, and the required information was identified.
+- **Data Support**: The structured data was analyzed to filter ambassadors based on the given criteria.
+- **Factual Answer**: Provided based on the combined analysis of text context and structured data.
+- **Confidence**: High, as the answer is supported by the data and meets all the specified conditions.
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks to identify an ambassador who served '
+                      'after 1980, for more than three years, and lived on the '
+                      'East Coast.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Information from the Data\n'
+                      'From the provided table, we need to extract the '
+                      'following information:\n'
+                      '1. **Appointment/Termination Dates**: To determine who '
+                      'served after 1980 and for how long.\n'
+                      '2. **State**: To infer if the ambassador lived on the '
+                      'East Coast.\n'
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      '1. **Filter Ambassadors Serving After 1980**:\n'
+                      '   - Look for ambassadors whose termination date is '
+                      'after 1980 or is blank (still serving).\n'
+                      '   - Since the data is sorted by appointment date, we '
+                      'can start checking from the ambassadors appointed after '
+                      '1980.\n'
+                      '\n'
+                      '2. **Calculate Tenure**:\n'
+                      '   - For each ambassador serving after 1980, calculate '
+                      'the tenure by subtracting the appointment date from the '
+                      'termination date.\n'
+                      '\n'
+                      '3. **Identify East Coast Residency**:\n'
+                      "   - Check the 'State' column to identify ambassadors "
+                      'from East Coast states.\n'
+                      '\n'
+                      '### Step 4: Perform Analysis\n'
+                      "Let's analyze the data step by step:\n"
+                      '\n'
+                      '1. **Ambassadors Appointed After 1980**:\n'
+                      "   - 'Harry G. Barnes, Jr.' (Maryland) - Appointed on "
+                      'Oct 1, 1981, Left post on Jun 27, 1985. Tenure > 3 '
+                      'years.\n'
+                      "   - 'John Gunther Dean' (New York) - Appointed on Aug "
+                      '2, 1985, Left post on Nov 7, 1988. Tenure > 3 years.\n'
+                      "   - 'John R. Hubbard' (California) - Not on East "
+                      'Coast.\n'
+                      "   - 'William Clark, Jr.' (District of Columbia) - "
+                      'Technically not a state, but considered part of the '
+                      'East Coast region. Appointed on Oct 10, 1989, Left post '
+                      'on Jul 2, 1992. Tenure < 3 years.\n'
+                      "   - 'Thomas R. Pickering' (New Jersey) - Appointed on "
+                      'Apr 6, 1992, Left post on Mar 23, 1993. Tenure < 3 '
+                      'years.\n'
+                      "   - 'Frank G. Wisner' (District of Columbia) - "
+                      'Appointed on Jun 9, 1994, Left post on July 12, 1997. '
+                      'Tenure > 3 years.\n'
+                      "   - 'Richard Frank Celeste' (Ohio) - Not typically "
+                      "considered East Coast in this context, though it's "
+                      'eastern.\n'
+                      "   - 'Robert Blackwill' (Kansas) - Not on East Coast.\n"
+                      "   - 'David Campbell Mulford' (Illinois) - Not on East "
+                      'Coast.\n'
+                      "   - 'Timothy J. Roemer' (Indiana) - Not on East "
+                      'Coast.\n'
+                      "   - 'Albert Peter Burleigh' (California) - Not on East "
+                      'Coast.\n'
+                      "   - 'Nancy Jo Powell' (Iowa) - Not on East Coast.\n"
+                      '\n'
+                      '2. **East Coast Ambassadors with Tenure > 3 Years**:\n'
+                      "   - 'Harry G. Barnes, Jr.' (Maryland) fits the "
+                      'criteria.\n'
+                      "   - 'John Gunther Dean' (New York) fits the criteria.\n"
+                      "   - 'Frank G. Wisner' (District of Columbia) fits the "
+                      'criteria.\n'
+                      '\n'
+                      '### Step 5: Provide Factual Answer\n'
+                      '**Data Analysis**: Identified ambassadors who served '
+                      'after 1980, for more than three years, and are '
+                      'associated with East Coast states or regions.\n'
+                      '**Factual Answer**: The ambassadors who served after '
+                      '1980, for more than three years, and lived on the East '
+                      "Coast are 'Harry G. Barnes, Jr.' (Maryland), 'John "
+                      "Gunther Dean' (New York), and 'Frank G. Wisner' "
+                      '(District of Columbia).\n'
+                      '**Source**: The table providing details on U.S. '
+                      'Ambassadors to India.\n'
+                      '\n'
+                      '### Quality Assurance\n'
+                      '- **Factual Accuracy**: Verified against the provided '
+                      'data.\n'
+                      '- **Completeness**: All relevant ambassadors '
+                      'identified.\n'
+                      '- **Clarity**: Answer clearly presented.\n'
+                      '- **Relevance**: Focus on the specific criteria '
+                      'provided in the question.',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks to identify an ambassador who '
+                         'served after 1980, for more than three years, and '
+                         'lived on the East Coast.\n'
+                         '\n'
+                         '### Step 2: Extract Relevant Information from the '
+                         'Data\n'
+                         'From the provided table, we need to extract the '
+                         'following information:\n'
+                         '1. **Appointment/Termination Dates**: To determine '
+                         'who served after 1980 and for how long.\n'
+                         '2. **State**: To infer if the ambassador lived on '
+                         'the East Coast.\n'
+                         '\n'
+                         '### Step 3: Analyze the Data\n'
+                         '1. **Filter Ambassadors Serving After 1980**:\n'
+                         '   - Look for ambassadors whose termination date is '
+                         'after 1980 or is blank (still serving).\n'
+                         '   - Since the data is sorted by appointment date, '
+                         'we can start checking from the ambassadors appointed '
+                         'after 1980.\n'
+                         '\n'
+                         '2. **Calculate Tenure**:\n'
+                         '   - For each ambassador serving after 1980, '
+                         'calculate the tenure by subtracting the appointment '
+                         'date from the termination date.\n'
+                         '\n'
+                         '3. **Identify East Coast Residency**:\n'
+                         "   - Check the 'State' column to identify "
+                         'ambassadors from East Coast states.\n'
+                         '\n'
+                         '### Step 4: Perform Analysis\n'
+                         "Let's analyze the data step by step:\n"
+                         '\n'
+                         '1. **Ambassadors Appointed After 1980**:\n'
+                         "   - 'Harry G. Barnes, Jr.' (Maryland) - Appointed "
+                         'on Oct 1, 1981, Left post on Jun 27, 1985. Tenure > '
+                         '3 years.\n'
+                         "   - 'John Gunther Dean' (New York) - Appointed on "
+                         'Aug 2, 1985, Left post on Nov 7, 1988. Tenure > 3 '
+                         'years.\n'
+                         "   - 'John R. Hubbard' (California) - Not on East "
+                         'Coast.\n'
+                         "   - 'William Clark, Jr.' (District of Columbia) - "
+                         'Technically not a state, but considered part of the '
+                         'East Coast region. Appointed on Oct 10, 1989, Left '
+                         'post on Jul 2, 1992. Tenure < 3 years.\n'
+                         "   - 'Thomas R. Pickering' (New Jersey) - Appointed "
+                         'on Apr 6, 1992, Left post on Mar 23, 1993. Tenure < '
+                         '3 years.\n'
+                         "   - 'Frank G. Wisner' (District of Columbia) - "
+                         'Appointed on Jun 9, 1994, Left post on July 12, '
+                         '1997. Tenure > 3 years.\n'
+                         "   - 'Richard Frank Celeste' (Ohio) - Not typically "
+                         "considered East Coast in this context, though it's "
+                         'eastern.\n'
+                         "   - 'Robert Blackwill' (Kansas) - Not on East "
+                         'Coast.\n'
+                         "   - 'David Campbell Mulford' (Illinois) - Not on "
+                         'East Coast.\n'
+                         "   - 'Timothy J. Roemer' (Indiana) - Not on East "
+                         'Coast.\n'
+                         "   - 'Albert Peter Burleigh' (California) - Not on "
+                         'East Coast.\n'
+                         "   - 'Nancy Jo Powell' (Iowa) - Not on East Coast.\n"
+                         '\n'
+                         '2. **East Coast Ambassadors with Tenure > 3 '
+                         'Years**:\n'
+                         "   - 'Harry G. Barnes, Jr.' (Maryland) fits the "
+                         'criteria.\n'
+                         "   - 'John Gunther Dean' (New York) fits the "
+                         'criteria.\n'
+                         "   - 'Frank G. Wisner' (District of Columbia) fits "
+                         'the criteria.\n'
+                         '\n'
+                         '### Step 5: Provide Factual Answer\n'
+                         '**Data Analysis**: Identified ambassadors who served '
+                         'after 1980, for more than three years, and are '
+                         'associated with East Coast states or regions.\n'
+                         '**Factual Answer**: The ambassadors who served after '
+                         '1980, for more than three years, and lived on the '
+                         "East Coast are 'Harry G. Barnes, Jr.' (Maryland), "
+                         "'John Gunther Dean' (New York), and 'Frank G. "
+                         "Wisner' (District of Columbia).\n"
+                         '**Source**: The table providing details on U.S. '
+                         'Ambassadors to India.\n'
+                         '\n'
+                         '### Quality Assurance\n'
+                         '- **Factual Accuracy**: Verified against the '
+                         'provided data.\n'
+                         '- **Completeness**: All relevant ambassadors '
+                         'identified.\n'
+                         '- **Clarity**: Answer clearly presented.\n'
+                         '- **Relevance**: Focus on the specific criteria '
+                         'provided in the question.',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks to identify an ambassador who served '
+                      'after 1980, for more than three years, and lived on the '
+                      'East Coast.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Information from the Data\n'
+                      'From the provided table, we need to extract the '
+                      'following information:\n'
+                      '1. **Appointment/Termination Dates**: To determine who '
+                      'served after 1980 and for how long.\n'
+                      '2. **State**: To infer if the ambassador lived on the '
+                      'East Coast.\n'
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      '1. **Filter Ambassadors Serving After 1980**:\n'
+                      '   - Look for ambassadors whose termination date is '
+                      'after 1980 or is blank (still serving).\n'
+                      '   - Since the data is sorted by appointment date, we '
+                      'can start checking from the ambassadors appointed after '
+                      '1980.\n'
+                      '\n'
+                      '2. **Calculate Tenure**:\n'
+                      '   - For each ambassador serving after 1980, calculate '
+                      'the tenure by subtracting the appointment date from the '
+                      'termination date.\n'
+                      '\n'
+                      '3. **Identify East Coast Residency**:\n'
+                      "   - Check the 'State' column to identify ambassadors "
+                      'from East Coast states.\n'
+                      '\n'
+                      '### Step 4: Perform Analysis\n'
+                      "Let's analyze the data step by step:\n"
+                      '\n'
+                      '1. **Ambassadors Appointed After 1980**:\n'
+                      "   - 'Harry G. Barnes, Jr.' (Maryland) - Appointed on "
+                      'Oct 1, 1981, Left post on Jun 27, 1985. Tenure > 3 '
+                      'years.\n'
+                      "   - 'John Gunther Dean' (New York) - Appointed on Aug "
+                      '2, 1985, Left post on Nov 7, 1988. Tenure > 3 years.\n'
+                      "   - 'John R. Hubbard' (California) - Not on East "
+                      'Coast.\n'
+                      "   - 'William Clark, Jr.' (District of Columbia) - "
+                      'Technically not a state, but considered part of the '
+                      'East Coast region. Appointed on Oct 10, 1989, Left post '
+                      'on Jul 2, 1992. Tenure < 3 years.\n'
+                      "   - 'Thomas R. Pickering' (New Jersey) - Appointed on "
+                      'Apr 6, 1992, Left post on Mar 23, 1993. Tenure < 3 '
+                      'years.\n'
+                      "   - 'Frank G. Wisner' (District of Columbia) - "
+                      'Appointed on Jun 9, 1994, Left post on July 12, 1997. '
+                      'Tenure > 3 years.\n'
+                      "   - 'Richard Frank Celeste' (Ohio) - Not typically "
+                      "considered East Coast in this context, though it's "
+                      'eastern.\n'
+                      "   - 'Robert Blackwill' (Kansas) - Not on East Coast.\n"
+                      "   - 'David Campbell Mulford' (Illinois) - Not on East "
+                      'Coast.\n'
+                      "   - 'Timothy J. Roemer' (Indiana) - Not on East "
+                      'Coast.\n'
+                      "   - 'Albert Peter Burleigh' (California) - Not on East "
+                      'Coast.\n'
+                      "   - 'Nancy Jo Powell' (Iowa) - Not on East Coast.\n"
+                      '\n'
+                      '2. **East Coast Ambassadors with Tenure > 3 Years**:\n'
+                      "   - 'Harry G. Barnes, Jr.' (Maryland) fits the "
+                      'criteria.\n'
+                      "   - 'John Gunther Dean' (New York) fits the criteria.\n"
+                      "   - 'Frank G. Wisner' (District of Columbia) fits the "
+                      'criteria.\n'
+                      '\n'
+                      '### Step 5: Provide Factual Answer\n'
+                      '**Data Analysis**: Identified ambassadors who served '
+                      'after 1980, for more than three years, and are '
+                      'associated with East Coast states or regions.\n'
+                      '**Factual Answer**: The ambassadors who served after '
+                      '1980, for more than three years, and lived on the East '
+                      "Coast are 'Harry G. Barnes, Jr.' (Maryland), 'John "
+                      "Gunther Dean' (New York), and 'Frank G. Wisner' "
+                      '(District of Columbia).\n'
+                      '**Source**: The table providing details on U.S. '
+                      'Ambassadors to India.\n'
+                      '\n'
+                      '### Quality Assurance\n'
+                      '- **Factual Accuracy**: Verified against the provided '
+                      'data.\n'
+                      '- **Completeness**: All relevant ambassadors '
+                      'identified.\n'
+                      '- **Clarity**: Answer clearly presented.\n'
+                      '- **Relevance**: Focus on the specific criteria '
+                      'provided in the question.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question requires identifying '
+                       'an ambassador who served after 1980, for more than '
+                       'three years, and lived on the East Coast. The text '
+                       'context provides a table from a CSV file related to '
+                       'U.S. Ambassadors.',
+                'result': '**Data Support**: The structured data analysis '
+                          'involves filtering ambassadors based on their '
+                          'appointment and termination dates, calculating '
+                          'their tenure, and checking their state of residence '
+                          "to determine if it's on the East Coast. The "
+                          'relevant ambassadors identified are:\n'
+                          "- 'Harry G. Barnes, Jr.' (Maryland) - Served from "
+                          'Oct 1, 1981, to Jun 27, 1985.\n'
+                          "- 'John Gunther Dean' (New York) - Served from Aug "
+                          '2, 1985, to Nov 7, 1988.\n'
+                          "- 'Frank G. Wisner' (District of Columbia) - Served "
+                          'from Jun 9, 1994, to July 12, 1997.\n'
+                          '\n'
+                          '**Factual Answer**: The ambassadors who served '
+                          'after 1980, for more than three years, and lived on '
+                          "the East Coast are 'Harry G. Barnes, Jr.' "
+                          "(Maryland), 'John Gunther Dean' (New York), and "
+                          "'Frank G. Wisner' (District of Columbia).\n"
+                          '**Confidence**: High\n'
+                          '\n'
+                          '**Output Details**:\n'
+                          '- **Text Analysis**: The question was understood, '
+                          'and the required information was identified.\n'
+                          '- **Data Support**: The structured data was '
+                          'analyzed to filter ambassadors based on the given '
+                          'criteria.\n'
+                          '- **Factual Answer**: Provided based on the '
+                          'combined analysis of text context and structured '
+                          'data.\n'
+                          '- **Confidence**: High, as the answer is supported '
+                          'by the data and meets all the specified conditions.',
+                'raw': '**Text Analysis**: The question requires identifying '
+                       'an ambassador who served after 1980, for more than '
+                       'three years, and lived on the East Coast. The text '
+                       'context provides a table from a CSV file related to '
+                       'U.S. Ambassadors.\n'
+                       '\n'
+                       '**Data Support**: The structured data analysis '
+                       'involves filtering ambassadors based on their '
+                       'appointment and termination dates, calculating their '
+                       'tenure, and checking their state of residence to '
+                       "determine if it's on the East Coast. The relevant "
+                       'ambassadors identified are:\n'
+                       "- 'Harry G. Barnes, Jr.' (Maryland) - Served from Oct "
+                       '1, 1981, to Jun 27, 1985.\n'
+                       "- 'John Gunther Dean' (New York) - Served from Aug 2, "
+                       '1985, to Nov 7, 1988.\n'
+                       "- 'Frank G. Wisner' (District of Columbia) - Served "
+                       'from Jun 9, 1994, to July 12, 1997.\n'
+                       '\n'
+                       '**Factual Answer**: The ambassadors who served after '
+                       '1980, for more than three years, and lived on the East '
+                       "Coast are 'Harry G. Barnes, Jr.' (Maryland), 'John "
+                       "Gunther Dean' (New York), and 'Frank G. Wisner' "
+                       '(District of Columbia).\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       '**Output Details**:\n'
+                       '- **Text Analysis**: The question was understood, and '
+                       'the required information was identified.\n'
+                       '- **Data Support**: The structured data was analyzed '
+                       'to filter ambassadors based on the given criteria.\n'
+                       '- **Factual Answer**: Provided based on the combined '
+                       'analysis of text context and structured data.\n'
+                       '- **Confidence**: High, as the answer is supported by '
+                       'the data and meets all the specified conditions.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "which ambassador served after 1980, '
+                          'more than three years, and lived on the east '
+                          'coast?",\n'
+                          '  "Factual Answer": "Harry G. Barnes, Jr., John '
+                          'Gunther Dean, Frank G. Wisner",\n'
+                          '  "Source": "Combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Look for ambassadors whose termination date is '
+                          'after 1980 or is blank (still serving).\n'
+                          '- Since the data is sorted by appointment date, we '
+                          'can start checking from the ambassadors appointed '
+                          'after 1980.\n'
+                          '- For each ambassador serving after 1980, calculate '
+                          'the tenure by subtracting the appointment date from '
+                          'the termination date.\n'
+                          "- Check the 'State' column to identify ambassadors "
+                          'from East Coast states.\n'
+                          "- 'Harry G. Barnes, Jr.' (Maryland) - Appointed on "
+                          'Oct 1, 1981, Left post on Jun 27, 1985. Tenure > 3 '
+                          'years.\n'
+                          "- 'John Gunther Dean' (New York) - Appointed on Aug "
+                          '2, 1985, Left post on Nov 7, 1988. Tenure > 3 '
+                          'years.\n'
+                          "- 'John R. Hubbard' (California) - Not on East "
+                          'Coast.\n'
+                          "- 'William Clark, Jr.' (District of Columbia) - "
+                          'Technically not a state, but considered part of the '
+                          'East Coast region. Appointed on Oct 10, 1989, Left '
+                          'post on Jul 2, 1992. Tenure < 3 years.\n'
+                          "- 'Thomas R. Pickering' (New Jersey) - Appointed on "
+                          'Apr 6, 1992, Left post on Mar 23, 1993. Tenure < 3 '
+                          'years.\n'
+                          "- 'Frank G. Wisner' (District of Columbia) - "
+                          'Appointed on Jun 9, 1994, Left post on July 12, '
+                          '1997. Tenure > 3 years.\n'
+                          "- 'Richard Frank Celeste' (Ohio) - Not typically "
+                          "considered East Coast in this context, though it's "
+                          'eastern.\n'
+                          "- 'Robert Blackwill' (Kansas) - Not on East Coast.\n"
+                          "- 'David Campbell Mulford' (Illinois) - Not on East "
+                          'Coast.\n'
+                          "- 'Timothy J. Roemer' (Indiana) - Not on East "
+                          'Coast.\n'
+                          "- 'Albert Peter Burleigh' (California) - Not on "
+                          'East Coast.\n'
+                          "- 'Nancy Jo Powell' (Iowa) - Not on East Coast.\n"
+                          "- 'Harry G. Barnes, Jr.' (Maryland) fits the "
+                          'criteria.\n'
+                          "- 'John Gunther Dean' (New York) fits the "
+                          'criteria.\n'
+                          "- 'Frank G. Wisner' (District of Columbia) fits the "
+                          'criteria.\n'
+                          '- **Factual Accuracy**: Verified against the '
+                          'provided data.\n'
+                          '- **Completeness**: All relevant ambassadors '
+                          'identified.\n'
+                          '- **Clarity**: Answer clearly presented.\n'
+                          '- **Relevance**: Focus on the specific criteria '
+                          'provided in the question.\n'
+                          "- 'Harry G. Barnes, Jr.' (Maryland) - Served from "
+                          'Oct 1, 1981, to Jun 27, 1985.\n'
+                          "- 'John Gunther Dean' (New York) - Served from Aug "
+                          '2, 1985, to Nov 7, 1988.\n'
+                          "- 'Frank G. Wisner' (District of Columbia) - Served "
+                          'from Jun 9, 1994, to July 12, 1997.\n'
+                          '- **Text Analysis**: The question was understood, '
+                          'and the required information was identified.\n'
+                          '- **Data Support**: The structured data was '
+                          'analyzed to filter ambassadors based on the given '
+                          'criteria.\n'
+                          '- **Factual Answer**: Provided based on the '
+                          'combined analysis of text context and structured '
+                          'data.\n'
+                          '- **Confidence**: High, as the answer is supported '
+                          'by the data and meets all the specified conditions.',
+                'raw': '{\n'
+                       '  "Question": "which ambassador served after 1980, '
+                       'more than three years, and lived on the east coast?",\n'
+                       '  "Factual Answer": "Harry G. Barnes, Jr., John '
+                       'Gunther Dean, Frank G. Wisner",\n'
+                       '  "Source": "Combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

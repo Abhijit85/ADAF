@@ -1,0 +1,611 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-13255.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "most prevalent school",
+  "Factual Answer": "Pennsylvania, Notre Dame, Dartmouth, West Virginia",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- Pennsylvania
+- Notre Dame
+- Rutgers
+- Georgia Tech
+- San Francisco
+- Notre Dame
+- Michigan State
+- Clemson
+- Cornell
+- Dartmouth
+- West Virginia
+- Mississippi
+- Dartmouth
+- Illinois
+- Tennessee
+- Vanderbilt
+- West Virginia
+- Pittsburgh
+- Muhlenberg
+- Rollins
+- Missouri
+- USC
+- Colorado Mines
+- Oklahoma City
+- Nevada-Reno
+- Pennsylvania
+- Pennsylvania: 3
+- Notre Dame: 2
+- Rutgers: 1
+- Georgia Tech: 1
+- San Francisco: 1
+- Michigan State: 1
+- Clemson: 1
+- Cornell: 1
+- Dartmouth: 2
+- West Virginia: 2
+- Mississippi: 1
+- Illinois: 1
+- Tennessee: 1
+- Vanderbilt: 1
+- Pittsburgh: 1
+- Muhlenberg: 1
+- Rollins: 1
+- Missouri: 1
+- USC: 1
+- Colorado Mines: 1
+- Oklahoma City: 1
+- Nevada-Reno: 1
+- The "School" column was extracted from the provided table.
+- The occurrences of each school were counted.
+- The counts are as follows:
+- Pennsylvania: 2 (not 3, upon re-checking the data)
+- Notre Dame: 2
+- Dartmouth: 2
+- West Virginia: 2
+- Other schools: 1 each
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "most prevalent school" is a categorical '
+                      'question as it asks for the category (school) that '
+                      'appears most frequently.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      '"School" column from the given table and count the '
+                      'occurrences of each school. The school with the highest '
+                      'count will be the most prevalent.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract School Column**: Identify the "School" '
+                      'column in the table.\n'
+                      '2. **Count School Occurrences**: Count how many times '
+                      'each school appears in the "School" column.\n'
+                      '3. **Identify Most Prevalent School**: Determine which '
+                      'school has the highest count.\n'
+                      '\n'
+                      '### Step 4: Perform Analysis\n'
+                      'Given table: \n'
+                      '```python\n'
+                      '[\n'
+                      "    ['Rd', 'Pick', 'Player', 'Position', 'School'], \n"
+                      "    [1, 1, 'Chuck Bednarik\\n(Lottery bonus pick)', "
+                      "'Center', 'Pennsylvania'], \n"
+                      "    [1, 9, 'Frank Tripucka', 'Quarterback', 'Notre "
+                      "Dame'], \n"
+                      "    [2, 19, 'Frank Burns', 'Back', 'Rutgers'], \n"
+                      "    [3, 29, 'Frank Ziegler', 'Back', 'Georgia Tech'], \n"
+                      "    [4, 41, 'Don Panciera', 'Back', 'San Francisco'], \n"
+                      "    [5, 51, 'Terry Brennan', 'Back', 'Notre Dame'], \n"
+                      "    [6, 58, 'Warren Huey', 'End', 'Michigan State'], \n"
+                      "    [7, 71, 'Frank Gillespie', 'Guard', 'Clemson'], \n"
+                      "    [8, 81, 'Bob Dean', 'Back', 'Cornell'], \n"
+                      "    [9, 91, 'Jonathan Jenkins', 'Tackle', "
+                      "'Dartmouth'], \n"
+                      "    [10, 101, 'Roy Lester', 'End', 'West Virginia'], \n"
+                      "    [11, 111, 'Bobby Wilson', 'Back', 'Mississippi'], \n"
+                      "    [12, 121, 'Dale Armstrong', 'End', 'Dartmouth'], \n"
+                      "    [13, 131, 'Lyle Button', 'Tackle', 'Illinois'], \n"
+                      "    [14, 141, 'Bobby Lund', 'Back', 'Tennessee'], \n"
+                      "    [15, 151, 'Carl Copp', 'Tackle', 'Vanderbilt'], \n"
+                      "    [16, 161, 'Frank Reno', 'End', 'West Virginia'], \n"
+                      "    [17, 171, 'Leo Skladany', 'End', 'Pittsburgh'], \n"
+                      "    [18, 181, 'Russ Strait', 'Back', 'Muhlenberg'], \n"
+                      "    [19, 191, 'Paul Odom', 'Guard', 'Rollins'], \n"
+                      "    [20, 201, 'Lloyd Brinkman', 'Back', 'Missouri'], \n"
+                      "    [21, 211, 'Lou Futrell', 'Back', 'USC'], \n"
+                      "    [22, 221, 'Harvey Kingry', 'Back', 'Colorado "
+                      "Mines'], \n"
+                      "    [23, 231, 'Hank Kalver', 'Tackle', 'Oklahoma "
+                      "City'], \n"
+                      "    [24, 241, 'Fred Leon', 'Tackle', 'Nevada-Reno'], \n"
+                      '    [25, 251, \'John \\\\Bull\\\\" Schweder"\', '
+                      "'Guard', 'Pennsylvania']\n"
+                      ']\n'
+                      '```\n'
+                      '\n'
+                      'Extracting the "School" column:\n'
+                      '- Pennsylvania\n'
+                      '- Notre Dame\n'
+                      '- Rutgers\n'
+                      '- Georgia Tech\n'
+                      '- San Francisco\n'
+                      '- Notre Dame\n'
+                      '- Michigan State\n'
+                      '- Clemson\n'
+                      '- Cornell\n'
+                      '- Dartmouth\n'
+                      '- West Virginia\n'
+                      '- Mississippi\n'
+                      '- Dartmouth\n'
+                      '- Illinois\n'
+                      '- Tennessee\n'
+                      '- Vanderbilt\n'
+                      '- West Virginia\n'
+                      '- Pittsburgh\n'
+                      '- Muhlenberg\n'
+                      '- Rollins\n'
+                      '- Missouri\n'
+                      '- USC\n'
+                      '- Colorado Mines\n'
+                      '- Oklahoma City\n'
+                      '- Nevada-Reno\n'
+                      '- Pennsylvania\n'
+                      '\n'
+                      'Counting occurrences:\n'
+                      '- Pennsylvania: 3\n'
+                      '- Notre Dame: 2\n'
+                      '- Rutgers: 1\n'
+                      '- Georgia Tech: 1\n'
+                      '- San Francisco: 1\n'
+                      '- Michigan State: 1\n'
+                      '- Clemson: 1\n'
+                      '- Cornell: 1\n'
+                      '- Dartmouth: 2\n'
+                      '- West Virginia: 2\n'
+                      '- Mississippi: 1\n'
+                      '- Illinois: 1\n'
+                      '- Tennessee: 1\n'
+                      '- Vanderbilt: 1\n'
+                      '- Pittsburgh: 1\n'
+                      '- Muhlenberg: 1\n'
+                      '- Rollins: 1\n'
+                      '- Missouri: 1\n'
+                      '- USC: 1\n'
+                      '- Colorado Mines: 1\n'
+                      '- Oklahoma City: 1\n'
+                      '- Nevada-Reno: 1\n'
+                      '\n'
+                      '### Step 5: Answer\n'
+                      '**Data Analysis**: The "School" column was extracted '
+                      'and the occurrences of each school were counted. '
+                      'Pennsylvania appears 3 times, which is the highest '
+                      'count.\n'
+                      '**Factual Answer**: Pennsylvania\n'
+                      '**Source**: School column in the provided table\n'
+                      '\n'
+                      'The final answer is Pennsylvania.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "most prevalent school" is a '
+                         'categorical question as it asks for the category '
+                         '(school) that appears most frequently.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         '"School" column from the given table and count the '
+                         'occurrences of each school. The school with the '
+                         'highest count will be the most prevalent.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract School Column**: Identify the "School" '
+                         'column in the table.\n'
+                         '2. **Count School Occurrences**: Count how many '
+                         'times each school appears in the "School" column.\n'
+                         '3. **Identify Most Prevalent School**: Determine '
+                         'which school has the highest count.\n'
+                         '\n'
+                         '### Step 4: Perform Analysis\n'
+                         'Given table: \n'
+                         '```python\n'
+                         '[\n'
+                         "    ['Rd', 'Pick', 'Player', 'Position', "
+                         "'School'], \n"
+                         "    [1, 1, 'Chuck Bednarik\\n(Lottery bonus pick)', "
+                         "'Center', 'Pennsylvania'], \n"
+                         "    [1, 9, 'Frank Tripucka', 'Quarterback', 'Notre "
+                         "Dame'], \n"
+                         "    [2, 19, 'Frank Burns', 'Back', 'Rutgers'], \n"
+                         "    [3, 29, 'Frank Ziegler', 'Back', 'Georgia "
+                         "Tech'], \n"
+                         "    [4, 41, 'Don Panciera', 'Back', 'San "
+                         "Francisco'], \n"
+                         "    [5, 51, 'Terry Brennan', 'Back', 'Notre "
+                         "Dame'], \n"
+                         "    [6, 58, 'Warren Huey', 'End', 'Michigan "
+                         "State'], \n"
+                         "    [7, 71, 'Frank Gillespie', 'Guard', "
+                         "'Clemson'], \n"
+                         "    [8, 81, 'Bob Dean', 'Back', 'Cornell'], \n"
+                         "    [9, 91, 'Jonathan Jenkins', 'Tackle', "
+                         "'Dartmouth'], \n"
+                         "    [10, 101, 'Roy Lester', 'End', 'West "
+                         "Virginia'], \n"
+                         "    [11, 111, 'Bobby Wilson', 'Back', "
+                         "'Mississippi'], \n"
+                         "    [12, 121, 'Dale Armstrong', 'End', "
+                         "'Dartmouth'], \n"
+                         "    [13, 131, 'Lyle Button', 'Tackle', "
+                         "'Illinois'], \n"
+                         "    [14, 141, 'Bobby Lund', 'Back', 'Tennessee'], \n"
+                         "    [15, 151, 'Carl Copp', 'Tackle', "
+                         "'Vanderbilt'], \n"
+                         "    [16, 161, 'Frank Reno', 'End', 'West "
+                         "Virginia'], \n"
+                         "    [17, 171, 'Leo Skladany', 'End', "
+                         "'Pittsburgh'], \n"
+                         "    [18, 181, 'Russ Strait', 'Back', "
+                         "'Muhlenberg'], \n"
+                         "    [19, 191, 'Paul Odom', 'Guard', 'Rollins'], \n"
+                         "    [20, 201, 'Lloyd Brinkman', 'Back', "
+                         "'Missouri'], \n"
+                         "    [21, 211, 'Lou Futrell', 'Back', 'USC'], \n"
+                         "    [22, 221, 'Harvey Kingry', 'Back', 'Colorado "
+                         "Mines'], \n"
+                         "    [23, 231, 'Hank Kalver', 'Tackle', 'Oklahoma "
+                         "City'], \n"
+                         "    [24, 241, 'Fred Leon', 'Tackle', "
+                         "'Nevada-Reno'], \n"
+                         '    [25, 251, \'John \\\\Bull\\\\" Schweder"\', '
+                         "'Guard', 'Pennsylvania']\n"
+                         ']\n'
+                         '```\n'
+                         '\n'
+                         'Extracting the "School" column:\n'
+                         '- Pennsylvania\n'
+                         '- Notre Dame\n'
+                         '- Rutgers\n'
+                         '- Georgia Tech\n'
+                         '- San Francisco\n'
+                         '- Notre Dame\n'
+                         '- Michigan State\n'
+                         '- Clemson\n'
+                         '- Cornell\n'
+                         '- Dartmouth\n'
+                         '- West Virginia\n'
+                         '- Mississippi\n'
+                         '- Dartmouth\n'
+                         '- Illinois\n'
+                         '- Tennessee\n'
+                         '- Vanderbilt\n'
+                         '- West Virginia\n'
+                         '- Pittsburgh\n'
+                         '- Muhlenberg\n'
+                         '- Rollins\n'
+                         '- Missouri\n'
+                         '- USC\n'
+                         '- Colorado Mines\n'
+                         '- Oklahoma City\n'
+                         '- Nevada-Reno\n'
+                         '- Pennsylvania\n'
+                         '\n'
+                         'Counting occurrences:\n'
+                         '- Pennsylvania: 3\n'
+                         '- Notre Dame: 2\n'
+                         '- Rutgers: 1\n'
+                         '- Georgia Tech: 1\n'
+                         '- San Francisco: 1\n'
+                         '- Michigan State: 1\n'
+                         '- Clemson: 1\n'
+                         '- Cornell: 1\n'
+                         '- Dartmouth: 2\n'
+                         '- West Virginia: 2\n'
+                         '- Mississippi: 1\n'
+                         '- Illinois: 1\n'
+                         '- Tennessee: 1\n'
+                         '- Vanderbilt: 1\n'
+                         '- Pittsburgh: 1\n'
+                         '- Muhlenberg: 1\n'
+                         '- Rollins: 1\n'
+                         '- Missouri: 1\n'
+                         '- USC: 1\n'
+                         '- Colorado Mines: 1\n'
+                         '- Oklahoma City: 1\n'
+                         '- Nevada-Reno: 1\n'
+                         '\n'
+                         '### Step 5: Answer\n'
+                         '**Data Analysis**: The "School" column was extracted '
+                         'and the occurrences of each school were counted. '
+                         'Pennsylvania appears 3 times, which is the highest '
+                         'count.\n'
+                         '**Factual Answer**: Pennsylvania\n'
+                         '**Source**: School column in the provided table\n'
+                         '\n'
+                         'The final answer is Pennsylvania.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "most prevalent school" is a categorical '
+                      'question as it asks for the category (school) that '
+                      'appears most frequently.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      '"School" column from the given table and count the '
+                      'occurrences of each school. The school with the highest '
+                      'count will be the most prevalent.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract School Column**: Identify the "School" '
+                      'column in the table.\n'
+                      '2. **Count School Occurrences**: Count how many times '
+                      'each school appears in the "School" column.\n'
+                      '3. **Identify Most Prevalent School**: Determine which '
+                      'school has the highest count.\n'
+                      '\n'
+                      '### Step 4: Perform Analysis\n'
+                      'Given table: \n'
+                      '```python\n'
+                      '[\n'
+                      "    ['Rd', 'Pick', 'Player', 'Position', 'School'], \n"
+                      "    [1, 1, 'Chuck Bednarik\\n(Lottery bonus pick)', "
+                      "'Center', 'Pennsylvania'], \n"
+                      "    [1, 9, 'Frank Tripucka', 'Quarterback', 'Notre "
+                      "Dame'], \n"
+                      "    [2, 19, 'Frank Burns', 'Back', 'Rutgers'], \n"
+                      "    [3, 29, 'Frank Ziegler', 'Back', 'Georgia Tech'], \n"
+                      "    [4, 41, 'Don Panciera', 'Back', 'San Francisco'], \n"
+                      "    [5, 51, 'Terry Brennan', 'Back', 'Notre Dame'], \n"
+                      "    [6, 58, 'Warren Huey', 'End', 'Michigan State'], \n"
+                      "    [7, 71, 'Frank Gillespie', 'Guard', 'Clemson'], \n"
+                      "    [8, 81, 'Bob Dean', 'Back', 'Cornell'], \n"
+                      "    [9, 91, 'Jonathan Jenkins', 'Tackle', "
+                      "'Dartmouth'], \n"
+                      "    [10, 101, 'Roy Lester', 'End', 'West Virginia'], \n"
+                      "    [11, 111, 'Bobby Wilson', 'Back', 'Mississippi'], \n"
+                      "    [12, 121, 'Dale Armstrong', 'End', 'Dartmouth'], \n"
+                      "    [13, 131, 'Lyle Button', 'Tackle', 'Illinois'], \n"
+                      "    [14, 141, 'Bobby Lund', 'Back', 'Tennessee'], \n"
+                      "    [15, 151, 'Carl Copp', 'Tackle', 'Vanderbilt'], \n"
+                      "    [16, 161, 'Frank Reno', 'End', 'West Virginia'], \n"
+                      "    [17, 171, 'Leo Skladany', 'End', 'Pittsburgh'], \n"
+                      "    [18, 181, 'Russ Strait', 'Back', 'Muhlenberg'], \n"
+                      "    [19, 191, 'Paul Odom', 'Guard', 'Rollins'], \n"
+                      "    [20, 201, 'Lloyd Brinkman', 'Back', 'Missouri'], \n"
+                      "    [21, 211, 'Lou Futrell', 'Back', 'USC'], \n"
+                      "    [22, 221, 'Harvey Kingry', 'Back', 'Colorado "
+                      "Mines'], \n"
+                      "    [23, 231, 'Hank Kalver', 'Tackle', 'Oklahoma "
+                      "City'], \n"
+                      "    [24, 241, 'Fred Leon', 'Tackle', 'Nevada-Reno'], \n"
+                      '    [25, 251, \'John \\\\Bull\\\\" Schweder"\', '
+                      "'Guard', 'Pennsylvania']\n"
+                      ']\n'
+                      '```\n'
+                      '\n'
+                      'Extracting the "School" column:\n'
+                      '- Pennsylvania\n'
+                      '- Notre Dame\n'
+                      '- Rutgers\n'
+                      '- Georgia Tech\n'
+                      '- San Francisco\n'
+                      '- Notre Dame\n'
+                      '- Michigan State\n'
+                      '- Clemson\n'
+                      '- Cornell\n'
+                      '- Dartmouth\n'
+                      '- West Virginia\n'
+                      '- Mississippi\n'
+                      '- Dartmouth\n'
+                      '- Illinois\n'
+                      '- Tennessee\n'
+                      '- Vanderbilt\n'
+                      '- West Virginia\n'
+                      '- Pittsburgh\n'
+                      '- Muhlenberg\n'
+                      '- Rollins\n'
+                      '- Missouri\n'
+                      '- USC\n'
+                      '- Colorado Mines\n'
+                      '- Oklahoma City\n'
+                      '- Nevada-Reno\n'
+                      '- Pennsylvania\n'
+                      '\n'
+                      'Counting occurrences:\n'
+                      '- Pennsylvania: 3\n'
+                      '- Notre Dame: 2\n'
+                      '- Rutgers: 1\n'
+                      '- Georgia Tech: 1\n'
+                      '- San Francisco: 1\n'
+                      '- Michigan State: 1\n'
+                      '- Clemson: 1\n'
+                      '- Cornell: 1\n'
+                      '- Dartmouth: 2\n'
+                      '- West Virginia: 2\n'
+                      '- Mississippi: 1\n'
+                      '- Illinois: 1\n'
+                      '- Tennessee: 1\n'
+                      '- Vanderbilt: 1\n'
+                      '- Pittsburgh: 1\n'
+                      '- Muhlenberg: 1\n'
+                      '- Rollins: 1\n'
+                      '- Missouri: 1\n'
+                      '- USC: 1\n'
+                      '- Colorado Mines: 1\n'
+                      '- Oklahoma City: 1\n'
+                      '- Nevada-Reno: 1\n'
+                      '\n'
+                      '### Step 5: Answer\n'
+                      '**Data Analysis**: The "School" column was extracted '
+                      'and the occurrences of each school were counted. '
+                      'Pennsylvania appears 3 times, which is the highest '
+                      'count.\n'
+                      '**Factual Answer**: Pennsylvania\n'
+                      '**Source**: School column in the provided table\n'
+                      '\n'
+                      'The final answer is Pennsylvania.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "most prevalent '
+                       'school" requires identifying the school that appears '
+                       'most frequently in the given structured data. The text '
+                       'context mentions that the table is from '
+                       '"csv/203-csv/735.csv", but it does not provide '
+                       'additional relevant information.',
+                'result': '**Data Support**: The structured data provided is a '
+                          'table with various columns, including "School". By '
+                          'extracting the "School" column and counting the '
+                          'occurrences of each school, we can determine the '
+                          'most prevalent school.\n'
+                          '\n'
+                          '**Data Analysis**: \n'
+                          '- The "School" column was extracted from the '
+                          'provided table.\n'
+                          '- The occurrences of each school were counted.\n'
+                          '- The counts are as follows:\n'
+                          '  - Pennsylvania: 2 (not 3, upon re-checking the '
+                          'data)\n'
+                          '  - Notre Dame: 2\n'
+                          '  - Dartmouth: 2\n'
+                          '  - West Virginia: 2\n'
+                          '  - Other schools: 1 each\n'
+                          '\n'
+                          '**Factual Answer**: The most prevalent schools are '
+                          'Pennsylvania, Notre Dame, Dartmouth, and West '
+                          'Virginia, all appearing 2 times. Since there are '
+                          'multiple schools tied for the highest count, the '
+                          'answer should reflect this.\n'
+                          '\n'
+                          '**Confidence**: High (based on the structured data '
+                          'provided)\n'
+                          '\n'
+                          '**Output**: \n'
+                          'The most prevalent schools are Pennsylvania, Notre '
+                          'Dame, Dartmouth, and West Virginia.',
+                'raw': '**Text Analysis**: The question "most prevalent '
+                       'school" requires identifying the school that appears '
+                       'most frequently in the given structured data. The text '
+                       'context mentions that the table is from '
+                       '"csv/203-csv/735.csv", but it does not provide '
+                       'additional relevant information.\n'
+                       '\n'
+                       '**Data Support**: The structured data provided is a '
+                       'table with various columns, including "School". By '
+                       'extracting the "School" column and counting the '
+                       'occurrences of each school, we can determine the most '
+                       'prevalent school.\n'
+                       '\n'
+                       '**Data Analysis**: \n'
+                       '- The "School" column was extracted from the provided '
+                       'table.\n'
+                       '- The occurrences of each school were counted.\n'
+                       '- The counts are as follows:\n'
+                       '  - Pennsylvania: 2 (not 3, upon re-checking the '
+                       'data)\n'
+                       '  - Notre Dame: 2\n'
+                       '  - Dartmouth: 2\n'
+                       '  - West Virginia: 2\n'
+                       '  - Other schools: 1 each\n'
+                       '\n'
+                       '**Factual Answer**: The most prevalent schools are '
+                       'Pennsylvania, Notre Dame, Dartmouth, and West '
+                       'Virginia, all appearing 2 times. Since there are '
+                       'multiple schools tied for the highest count, the '
+                       'answer should reflect this.\n'
+                       '\n'
+                       '**Confidence**: High (based on the structured data '
+                       'provided)\n'
+                       '\n'
+                       '**Output**: \n'
+                       'The most prevalent schools are Pennsylvania, Notre '
+                       'Dame, Dartmouth, and West Virginia.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "most prevalent school",\n'
+                          '  "Factual Answer": "Pennsylvania, Notre Dame, '
+                          'Dartmouth, West Virginia",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Pennsylvania\n'
+                          '- Notre Dame\n'
+                          '- Rutgers\n'
+                          '- Georgia Tech\n'
+                          '- San Francisco\n'
+                          '- Notre Dame\n'
+                          '- Michigan State\n'
+                          '- Clemson\n'
+                          '- Cornell\n'
+                          '- Dartmouth\n'
+                          '- West Virginia\n'
+                          '- Mississippi\n'
+                          '- Dartmouth\n'
+                          '- Illinois\n'
+                          '- Tennessee\n'
+                          '- Vanderbilt\n'
+                          '- West Virginia\n'
+                          '- Pittsburgh\n'
+                          '- Muhlenberg\n'
+                          '- Rollins\n'
+                          '- Missouri\n'
+                          '- USC\n'
+                          '- Colorado Mines\n'
+                          '- Oklahoma City\n'
+                          '- Nevada-Reno\n'
+                          '- Pennsylvania\n'
+                          '- Pennsylvania: 3\n'
+                          '- Notre Dame: 2\n'
+                          '- Rutgers: 1\n'
+                          '- Georgia Tech: 1\n'
+                          '- San Francisco: 1\n'
+                          '- Michigan State: 1\n'
+                          '- Clemson: 1\n'
+                          '- Cornell: 1\n'
+                          '- Dartmouth: 2\n'
+                          '- West Virginia: 2\n'
+                          '- Mississippi: 1\n'
+                          '- Illinois: 1\n'
+                          '- Tennessee: 1\n'
+                          '- Vanderbilt: 1\n'
+                          '- Pittsburgh: 1\n'
+                          '- Muhlenberg: 1\n'
+                          '- Rollins: 1\n'
+                          '- Missouri: 1\n'
+                          '- USC: 1\n'
+                          '- Colorado Mines: 1\n'
+                          '- Oklahoma City: 1\n'
+                          '- Nevada-Reno: 1\n'
+                          '- The "School" column was extracted from the '
+                          'provided table.\n'
+                          '- The occurrences of each school were counted.\n'
+                          '- The counts are as follows:\n'
+                          '- Pennsylvania: 2 (not 3, upon re-checking the '
+                          'data)\n'
+                          '- Notre Dame: 2\n'
+                          '- Dartmouth: 2\n'
+                          '- West Virginia: 2\n'
+                          '- Other schools: 1 each',
+                'raw': '{\n'
+                       '  "Question": "most prevalent school",\n'
+                       '  "Factual Answer": "Pennsylvania, Notre Dame, '
+                       'Dartmouth, West Virginia",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

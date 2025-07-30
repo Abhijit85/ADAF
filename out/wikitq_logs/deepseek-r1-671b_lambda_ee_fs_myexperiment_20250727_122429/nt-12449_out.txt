@@ -1,0 +1,66 @@
+[RUN_AMAF] provider=lambda | model=deepseek-r1-671b
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent Contextron with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent Visura with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=deepseek-r1-671b
+DEBUG: Initializing agent MCP with provider=lambda, model=deepseek-r1-671b
+Attempt 1/5 for examples/wikitq/nt-12449.json
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=deepseek-r1-671b
+DEBUG: Using OpenAI client.chat.completions.create() with model=deepseek-r1-671b
+Traceback (most recent call last):
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/run_amaf.py", line 126, in <module>
+    main()
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/run_amaf.py", line 93, in main
+    summary = controller.run(data, logs)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/amaf/agents/mcp_controller.py", line 38, in run
+    out: AgentOutput = self.registry[agent_name].run(data, logs)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/amaf/agents/summa_craft.py", line 110, in run
+    raw_resp = self._chat(prompt, temperature=0).strip()
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/amaf/agents/base.py", line 74, in _chat
+    response = self.client.chat.completions.create(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 925, in create
+    return self._post(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/openai/_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/openai/_base_client.py", line 972, in request
+    response = self._client.send(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+  File "/Users/ashishrajshekhar/Desktop/CORAL LAB/ADAF/venv/lib/python3.10/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ssl.py", line 1259, in recv
+    return self.read(buflen)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ssl.py", line 1132, in read
+    return self._sslobj.read(len)
+KeyboardInterrupt

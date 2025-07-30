@@ -1,0 +1,368 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-13732.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many employers listed have less than 250 employees?",
+  "Factual Answer": "4",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- 1,200 is greater than 250.
+- 422 is greater than 250.
+- 350 is greater than 250.
+- 287 is greater than 250.
+- 220 is less than 250.
+- 213 is less than 250.
+- 211 is less than 250.
+- 183 is less than 250.
+- University of Saint Mary of the Lake (220)
+- Mundelein Elementary School District 75 (213)
+- Mundelein High School (211)
+- Village of Mundelein (183)
+- Medline: 1,200
+- Mundelein Park District: 422
+- Amcor: 350
+- Fremont School District 79: 287
+- University of Saint Mary of the Lake: 220
+- Mundelein Elementary School District 75: 213
+- Mundelein High School: 211
+- Village of Mundelein: 183
+- University of Saint Mary of the Lake (220)
+- Mundelein Elementary School District 75 (213)
+- Mundelein High School (211)
+- Village of Mundelein (183)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many employers listed have less than '
+                      '250 employees?" is classified as a **Numerical '
+                      'Question** because it asks for a count based on a '
+                      'specific condition.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the number '
+                      'of employees for each employer listed in the table and '
+                      'count how many have less than 250 employees.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Numbers**: We need to extract the number '
+                      "of employees for each employer from the '# of "
+                      "Employees' column.\n"
+                      '2. **Compare to Threshold**: We compare each extracted '
+                      'number to the threshold of 250 employees.\n'
+                      '3. **Count**: We count the number of employers with '
+                      'less than 250 employees.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      '| # | Employer | # of Employees |\n'
+                      '|---|----------|----------------|\n'
+                      '| 1 | Medline | 1,200 |\n'
+                      '| 2 | Mundelein Park District | 422 |\n'
+                      '| 3 | Amcor | 350 |\n'
+                      '| 4 | Fremont School District 79 | 287 |\n'
+                      '| 5 | University of Saint Mary of the Lake | 220 |\n'
+                      '| 6 | Mundelein Elementary School District 75 | 213 |\n'
+                      '| 7 | Mundelein High School | 211 |\n'
+                      '| 8 | Village of Mundelein | 183 |\n'
+                      '\n'
+                      "1. **Extract Numbers**: The '# of Employees' column "
+                      'contains: 1,200, 422, 350, 287, 220, 213, 211, 183.\n'
+                      '2. **Compare to Threshold**: We need to identify '
+                      'numbers less than 250.\n'
+                      '   - 1,200 is greater than 250.\n'
+                      '   - 422 is greater than 250.\n'
+                      '   - 350 is greater than 250.\n'
+                      '   - 287 is greater than 250.\n'
+                      '   - 220 is less than 250.\n'
+                      '   - 213 is less than 250.\n'
+                      '   - 211 is less than 250.\n'
+                      '   - 183 is less than 250.\n'
+                      '3. **Count**: The employers with less than 250 '
+                      'employees are:\n'
+                      '   - University of Saint Mary of the Lake (220)\n'
+                      '   - Mundelein Elementary School District 75 (213)\n'
+                      '   - Mundelein High School (211)\n'
+                      '   - Village of Mundelein (183)\n'
+                      '   There are 4 employers with less than 250 employees.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table lists employers and their '
+                      'number of employees. We extracted the number of '
+                      'employees for each employer and compared them to the '
+                      'threshold of 250.\n'
+                      '**Factual Answer**: 4\n'
+                      "**Source**: The '# of Employees' column in the provided "
+                      'table.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many employers listed have less '
+                         'than 250 employees?" is classified as a **Numerical '
+                         'Question** because it asks for a count based on a '
+                         'specific condition.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         'number of employees for each employer listed in the '
+                         'table and count how many have less than 250 '
+                         'employees.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract Numbers**: We need to extract the '
+                         "number of employees for each employer from the '# of "
+                         "Employees' column.\n"
+                         '2. **Compare to Threshold**: We compare each '
+                         'extracted number to the threshold of 250 employees.\n'
+                         '3. **Count**: We count the number of employers with '
+                         'less than 250 employees.\n'
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given the table:\n'
+                         '| # | Employer | # of Employees |\n'
+                         '|---|----------|----------------|\n'
+                         '| 1 | Medline | 1,200 |\n'
+                         '| 2 | Mundelein Park District | 422 |\n'
+                         '| 3 | Amcor | 350 |\n'
+                         '| 4 | Fremont School District 79 | 287 |\n'
+                         '| 5 | University of Saint Mary of the Lake | 220 |\n'
+                         '| 6 | Mundelein Elementary School District 75 | 213 '
+                         '|\n'
+                         '| 7 | Mundelein High School | 211 |\n'
+                         '| 8 | Village of Mundelein | 183 |\n'
+                         '\n'
+                         "1. **Extract Numbers**: The '# of Employees' column "
+                         'contains: 1,200, 422, 350, 287, 220, 213, 211, 183.\n'
+                         '2. **Compare to Threshold**: We need to identify '
+                         'numbers less than 250.\n'
+                         '   - 1,200 is greater than 250.\n'
+                         '   - 422 is greater than 250.\n'
+                         '   - 350 is greater than 250.\n'
+                         '   - 287 is greater than 250.\n'
+                         '   - 220 is less than 250.\n'
+                         '   - 213 is less than 250.\n'
+                         '   - 211 is less than 250.\n'
+                         '   - 183 is less than 250.\n'
+                         '3. **Count**: The employers with less than 250 '
+                         'employees are:\n'
+                         '   - University of Saint Mary of the Lake (220)\n'
+                         '   - Mundelein Elementary School District 75 (213)\n'
+                         '   - Mundelein High School (211)\n'
+                         '   - Village of Mundelein (183)\n'
+                         '   There are 4 employers with less than 250 '
+                         'employees.\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The table lists employers and '
+                         'their number of employees. We extracted the number '
+                         'of employees for each employer and compared them to '
+                         'the threshold of 250.\n'
+                         '**Factual Answer**: 4\n'
+                         "**Source**: The '# of Employees' column in the "
+                         'provided table.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many employers listed have less than '
+                      '250 employees?" is classified as a **Numerical '
+                      'Question** because it asks for a count based on a '
+                      'specific condition.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the number '
+                      'of employees for each employer listed in the table and '
+                      'count how many have less than 250 employees.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Numbers**: We need to extract the number '
+                      "of employees for each employer from the '# of "
+                      "Employees' column.\n"
+                      '2. **Compare to Threshold**: We compare each extracted '
+                      'number to the threshold of 250 employees.\n'
+                      '3. **Count**: We count the number of employers with '
+                      'less than 250 employees.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      '| # | Employer | # of Employees |\n'
+                      '|---|----------|----------------|\n'
+                      '| 1 | Medline | 1,200 |\n'
+                      '| 2 | Mundelein Park District | 422 |\n'
+                      '| 3 | Amcor | 350 |\n'
+                      '| 4 | Fremont School District 79 | 287 |\n'
+                      '| 5 | University of Saint Mary of the Lake | 220 |\n'
+                      '| 6 | Mundelein Elementary School District 75 | 213 |\n'
+                      '| 7 | Mundelein High School | 211 |\n'
+                      '| 8 | Village of Mundelein | 183 |\n'
+                      '\n'
+                      "1. **Extract Numbers**: The '# of Employees' column "
+                      'contains: 1,200, 422, 350, 287, 220, 213, 211, 183.\n'
+                      '2. **Compare to Threshold**: We need to identify '
+                      'numbers less than 250.\n'
+                      '   - 1,200 is greater than 250.\n'
+                      '   - 422 is greater than 250.\n'
+                      '   - 350 is greater than 250.\n'
+                      '   - 287 is greater than 250.\n'
+                      '   - 220 is less than 250.\n'
+                      '   - 213 is less than 250.\n'
+                      '   - 211 is less than 250.\n'
+                      '   - 183 is less than 250.\n'
+                      '3. **Count**: The employers with less than 250 '
+                      'employees are:\n'
+                      '   - University of Saint Mary of the Lake (220)\n'
+                      '   - Mundelein Elementary School District 75 (213)\n'
+                      '   - Mundelein High School (211)\n'
+                      '   - Village of Mundelein (183)\n'
+                      '   There are 4 employers with less than 250 employees.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table lists employers and their '
+                      'number of employees. We extracted the number of '
+                      'employees for each employer and compared them to the '
+                      'threshold of 250.\n'
+                      '**Factual Answer**: 4\n'
+                      "**Source**: The '# of Employees' column in the provided "
+                      'table.'},
+ 'Contextron': {'cot': '**Text Analysis**: The text context indicates that the '
+                       'table contains information about employers and their '
+                       'number of employees. The specific employers and their '
+                       'employee counts are listed in the structured data.',
+                'result': '**Data Support**: The structured data provides a '
+                          'list of employers along with their respective '
+                          'number of employees:\n'
+                          '- Medline: 1,200\n'
+                          '- Mundelein Park District: 422\n'
+                          '- Amcor: 350\n'
+                          '- Fremont School District 79: 287\n'
+                          '- University of Saint Mary of the Lake: 220\n'
+                          '- Mundelein Elementary School District 75: 213\n'
+                          '- Mundelein High School: 211\n'
+                          '- Village of Mundelein: 183\n'
+                          '\n'
+                          '**Factual Analysis**: To determine how many '
+                          'employers have less than 250 employees, we examine '
+                          "the '# of Employees' column:\n"
+                          '1. Medline: 1,200 (greater than 250)\n'
+                          '2. Mundelein Park District: 422 (greater than 250)\n'
+                          '3. Amcor: 350 (greater than 250)\n'
+                          '4. Fremont School District 79: 287 (greater than '
+                          '250)\n'
+                          '5. University of Saint Mary of the Lake: 220 (less '
+                          'than 250)\n'
+                          '6. Mundelein Elementary School District 75: 213 '
+                          '(less than 250)\n'
+                          '7. Mundelein High School: 211 (less than 250)\n'
+                          '8. Village of Mundelein: 183 (less than 250)\n'
+                          '\n'
+                          '**Factual Answer**: 4\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The employers with less than 250 employees are:\n'
+                          '- University of Saint Mary of the Lake (220)\n'
+                          '- Mundelein Elementary School District 75 (213)\n'
+                          '- Mundelein High School (211)\n'
+                          '- Village of Mundelein (183)\n'
+                          '\n'
+                          'This analysis directly answers the question by '
+                          'combining the information from the structured data '
+                          'with the context provided by the text.',
+                'raw': '**Text Analysis**: The text context indicates that the '
+                       'table contains information about employers and their '
+                       'number of employees. The specific employers and their '
+                       'employee counts are listed in the structured data.\n'
+                       '\n'
+                       '**Data Support**: The structured data provides a list '
+                       'of employers along with their respective number of '
+                       'employees:\n'
+                       '- Medline: 1,200\n'
+                       '- Mundelein Park District: 422\n'
+                       '- Amcor: 350\n'
+                       '- Fremont School District 79: 287\n'
+                       '- University of Saint Mary of the Lake: 220\n'
+                       '- Mundelein Elementary School District 75: 213\n'
+                       '- Mundelein High School: 211\n'
+                       '- Village of Mundelein: 183\n'
+                       '\n'
+                       '**Factual Analysis**: To determine how many employers '
+                       "have less than 250 employees, we examine the '# of "
+                       "Employees' column:\n"
+                       '1. Medline: 1,200 (greater than 250)\n'
+                       '2. Mundelein Park District: 422 (greater than 250)\n'
+                       '3. Amcor: 350 (greater than 250)\n'
+                       '4. Fremont School District 79: 287 (greater than 250)\n'
+                       '5. University of Saint Mary of the Lake: 220 (less '
+                       'than 250)\n'
+                       '6. Mundelein Elementary School District 75: 213 (less '
+                       'than 250)\n'
+                       '7. Mundelein High School: 211 (less than 250)\n'
+                       '8. Village of Mundelein: 183 (less than 250)\n'
+                       '\n'
+                       '**Factual Answer**: 4\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The employers with less than 250 employees are:\n'
+                       '- University of Saint Mary of the Lake (220)\n'
+                       '- Mundelein Elementary School District 75 (213)\n'
+                       '- Mundelein High School (211)\n'
+                       '- Village of Mundelein (183)\n'
+                       '\n'
+                       'This analysis directly answers the question by '
+                       'combining the information from the structured data '
+                       'with the context provided by the text.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many employers listed have less '
+                          'than 250 employees?",\n'
+                          '  "Factual Answer": "4",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- 1,200 is greater than 250.\n'
+                          '- 422 is greater than 250.\n'
+                          '- 350 is greater than 250.\n'
+                          '- 287 is greater than 250.\n'
+                          '- 220 is less than 250.\n'
+                          '- 213 is less than 250.\n'
+                          '- 211 is less than 250.\n'
+                          '- 183 is less than 250.\n'
+                          '- University of Saint Mary of the Lake (220)\n'
+                          '- Mundelein Elementary School District 75 (213)\n'
+                          '- Mundelein High School (211)\n'
+                          '- Village of Mundelein (183)\n'
+                          '- Medline: 1,200\n'
+                          '- Mundelein Park District: 422\n'
+                          '- Amcor: 350\n'
+                          '- Fremont School District 79: 287\n'
+                          '- University of Saint Mary of the Lake: 220\n'
+                          '- Mundelein Elementary School District 75: 213\n'
+                          '- Mundelein High School: 211\n'
+                          '- Village of Mundelein: 183\n'
+                          '- University of Saint Mary of the Lake (220)\n'
+                          '- Mundelein Elementary School District 75 (213)\n'
+                          '- Mundelein High School (211)\n'
+                          '- Village of Mundelein (183)',
+                'raw': '{\n'
+                       '  "Question": "how many employers listed have less '
+                       'than 250 employees?",\n'
+                       '  "Factual Answer": "4",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

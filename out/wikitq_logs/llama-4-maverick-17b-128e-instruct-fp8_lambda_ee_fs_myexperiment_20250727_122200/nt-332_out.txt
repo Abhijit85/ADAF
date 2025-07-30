@@ -1,0 +1,527 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-332.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many stars have a magnitude greater than zero?",
+  "Factual Answer": "14",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- Epsilon Canis Majoris: 1.5
+- Beta Canis Majoris: 1.99
+- Canopus (first time): -0.72
+- Zeta Sagittarii: 2.6
+- Zeta Leporis: 3.55
+- Canopus (second time): -0.72
+- Aldebaran: 0.85
+- Capella: 0.08
+- Canopus (third time): -0.72
+- Sirius (current): -1.46
+- Vega: 0.03
+- Canopus (fourth time): -0.72
+- Beta Aurigae: 1.9
+- Delta Scuti: 4.72
+- Gamma Draconis: 2.36
+- Upsilon Librae: 3.6
+- NR Canis Majoris: 5.6
+- Omicron Herculis: 3.83
+- Beta Cygni: 3.18
+- Epsilon Canis Majoris: 1.5
+- Beta Canis Majoris: 1.99
+- Zeta Sagittarii: 2.6
+- Zeta Leporis: 3.55
+- Aldebaran: 0.85
+- Capella: 0.08
+- Vega: 0.03
+- Beta Aurigae: 1.9
+- Delta Scuti: 4.72
+- Gamma Draconis: 2.36
+- Upsilon Librae: 3.6
+- NR Canis Majoris: 5.6
+- Omicron Herculis: 3.83
+- Beta Cygni: 3.18
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many stars have a magnitude greater '
+                      'than zero?" is a **Numerical Question** as it asks for '
+                      'a count based on a specific condition.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      'relevant numerical information from the structured data '
+                      'provided, specifically focusing on the "Current '
+                      'magnitude" column.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      'For the given numerical question:\n'
+                      '1. **Extract Numbers**: We need to examine the "Current '
+                      'magnitude" column in the provided table.\n'
+                      '2. **Perform Comparison**: Identify which stars have a '
+                      '"Current magnitude" greater than zero.\n'
+                      '3. **Count**: Sum up the number of stars that meet this '
+                      'condition.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      "{'table': [['Star', 'Start\\nyear', 'End\\nyear', "
+                      "'Maximum\\nyear', 'Maximum\\nmagnitude', 'Distance "
+                      "at\\nmaximum (LY)', 'Current\\ndistance', "
+                      "'Current\\nmagnitude'], \n"
+                      "           ['Epsilon Canis Majoris', '...', "
+                      "'-4,460,000', '-4,700,000', -3.99, 34.0, 430.0, 1.5], \n"
+                      "           ['Beta Canis Majoris', '-4,460,000', "
+                      "'-3,700,000', '-4,420,000', -3.65, 37.0, 500.0, "
+                      '1.99], \n'
+                      "           ['Canopus (first time)', '-3,700,000', "
+                      "'-1,370,000', '-3,110,000', -1.86, 177.0, 310.0, "
+                      '-0.72], \n'
+                      "           ['Zeta Sagittarii', '-1,370,000', "
+                      "'-1,080,000', '-1,200,000', -2.74, 8.0, 89.1, 2.6], \n"
+                      "           ['Zeta Leporis', '-1,080,000', '-950,000', "
+                      "'-1,050,000', -2.05, 5.3, 70.0, 3.55], \n"
+                      "           ['Canopus (second time)', '-950,000', "
+                      "'-420,000', '-950,000', -1.09, 252.0, 310.0, -0.72], \n"
+                      "           ['Aldebaran', '-420,000', '-210,000', "
+                      "'-320,000', -1.54, 21.5, 65.0, 0.85], \n"
+                      "           ['Capella', '-210,000', '-160,000', "
+                      "'-240,000', -0.82, 27.9, 42.2, 0.08], \n"
+                      "           ['Canopus (third time)', '-160,000', "
+                      "'-90,000', '-160,000', -0.7, 302.0, 310.0, -0.72], \n"
+                      "           ['Sirius (current)', '-90,000', '+210,000', "
+                      "'+60,000', -1.64, 7.8, 8.6, -1.46], \n"
+                      "           ['Vega', '+210,000', '+480,000', '+290,000', "
+                      '-0.81, 17.2, 25.04, 0.03], \n'
+                      "           ['Canopus (fourth time)', '+480,000', "
+                      "'+990,000', '+480,000', -0.4, 346.0, 310.0, -0.72], \n"
+                      "           ['Beta Aurigae', '+990,000', '+1,150,000', "
+                      "'+1,190,000', -0.4, 28.5, 82.1, 1.9], \n"
+                      "           ['Delta Scuti', '+1,150,000', '+1,330,000', "
+                      "'+1,250,000', -1.84, 9.2, 187.0, 4.72], \n"
+                      "           ['Gamma Draconis', '+1,330,000', "
+                      "'+2,030,000', '+1,550,000', -1.39, 27.7, 154.0, "
+                      '2.36], \n'
+                      "           ['Upsilon Librae', '+2,030,000', "
+                      "'+2,670,000', '+2,290,000', -0.46, 30.0, 195.0, 3.6], \n"
+                      "           ['NR Canis Majoris', '+2,670,000', "
+                      "'+3,050,000', '+2,870,000', -0.88, 14.0, 280.0, 5.6], \n"
+                      "           ['Omicron Herculis', '+3,050,000', "
+                      "'+3,870,000', '+3,470,000', -0.63, 44.0, 346.0, "
+                      '3.83], \n'
+                      "           ['Beta Cygni', '+3,870,000', '...', "
+                      "'+4,610,000', -0.52, 80.0, 390.0, 3.18]], \n"
+                      " 'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      'Let\'s examine the "Current magnitude" column:\n'
+                      '- Epsilon Canis Majoris: 1.5\n'
+                      '- Beta Canis Majoris: 1.99\n'
+                      '- Canopus (first time): -0.72\n'
+                      '- Zeta Sagittarii: 2.6\n'
+                      '- Zeta Leporis: 3.55\n'
+                      '- Canopus (second time): -0.72\n'
+                      '- Aldebaran: 0.85\n'
+                      '- Capella: 0.08\n'
+                      '- Canopus (third time): -0.72\n'
+                      '- Sirius (current): -1.46\n'
+                      '- Vega: 0.03\n'
+                      '- Canopus (fourth time): -0.72\n'
+                      '- Beta Aurigae: 1.9\n'
+                      '- Delta Scuti: 4.72\n'
+                      '- Gamma Draconis: 2.36\n'
+                      '- Upsilon Librae: 3.6\n'
+                      '- NR Canis Majoris: 5.6\n'
+                      '- Omicron Herculis: 3.83\n'
+                      '- Beta Cygni: 3.18\n'
+                      '\n'
+                      'Stars with "Current magnitude" greater than zero:\n'
+                      '- Epsilon Canis Majoris: 1.5\n'
+                      '- Beta Canis Majoris: 1.99\n'
+                      '- Zeta Sagittarii: 2.6\n'
+                      '- Zeta Leporis: 3.55\n'
+                      '- Aldebaran: 0.85\n'
+                      '- Capella: 0.08\n'
+                      '- Vega: 0.03\n'
+                      '- Beta Aurigae: 1.9\n'
+                      '- Delta Scuti: 4.72\n'
+                      '- Gamma Draconis: 2.36\n'
+                      '- Upsilon Librae: 3.6\n'
+                      '- NR Canis Majoris: 5.6\n'
+                      '- Omicron Herculis: 3.83\n'
+                      '- Beta Cygni: 3.18\n'
+                      '\n'
+                      '### Step 5: Count the Stars\n'
+                      'Counting the stars with "Current magnitude" greater '
+                      'than zero gives us a total of 14 stars.\n'
+                      '\n'
+                      '**Data Analysis**: The "Current magnitude" column was '
+                      'analyzed to identify stars with a magnitude greater '
+                      'than zero.\n'
+                      '**Factual Answer**: 14\n'
+                      '**Source**: The table provided containing star data, '
+                      'specifically the "Current magnitude" column.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many stars have a magnitude '
+                         'greater than zero?" is a **Numerical Question** as '
+                         'it asks for a count based on a specific condition.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         'relevant numerical information from the structured '
+                         'data provided, specifically focusing on the "Current '
+                         'magnitude" column.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         'For the given numerical question:\n'
+                         '1. **Extract Numbers**: We need to examine the '
+                         '"Current magnitude" column in the provided table.\n'
+                         '2. **Perform Comparison**: Identify which stars have '
+                         'a "Current magnitude" greater than zero.\n'
+                         '3. **Count**: Sum up the number of stars that meet '
+                         'this condition.\n'
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given the table:\n'
+                         '```python\n'
+                         "{'table': [['Star', 'Start\\nyear', 'End\\nyear', "
+                         "'Maximum\\nyear', 'Maximum\\nmagnitude', 'Distance "
+                         "at\\nmaximum (LY)', 'Current\\ndistance', "
+                         "'Current\\nmagnitude'], \n"
+                         "           ['Epsilon Canis Majoris', '...', "
+                         "'-4,460,000', '-4,700,000', -3.99, 34.0, 430.0, "
+                         '1.5], \n'
+                         "           ['Beta Canis Majoris', '-4,460,000', "
+                         "'-3,700,000', '-4,420,000', -3.65, 37.0, 500.0, "
+                         '1.99], \n'
+                         "           ['Canopus (first time)', '-3,700,000', "
+                         "'-1,370,000', '-3,110,000', -1.86, 177.0, 310.0, "
+                         '-0.72], \n'
+                         "           ['Zeta Sagittarii', '-1,370,000', "
+                         "'-1,080,000', '-1,200,000', -2.74, 8.0, 89.1, "
+                         '2.6], \n'
+                         "           ['Zeta Leporis', '-1,080,000', "
+                         "'-950,000', '-1,050,000', -2.05, 5.3, 70.0, 3.55], \n"
+                         "           ['Canopus (second time)', '-950,000', "
+                         "'-420,000', '-950,000', -1.09, 252.0, 310.0, "
+                         '-0.72], \n'
+                         "           ['Aldebaran', '-420,000', '-210,000', "
+                         "'-320,000', -1.54, 21.5, 65.0, 0.85], \n"
+                         "           ['Capella', '-210,000', '-160,000', "
+                         "'-240,000', -0.82, 27.9, 42.2, 0.08], \n"
+                         "           ['Canopus (third time)', '-160,000', "
+                         "'-90,000', '-160,000', -0.7, 302.0, 310.0, -0.72], \n"
+                         "           ['Sirius (current)', '-90,000', "
+                         "'+210,000', '+60,000', -1.64, 7.8, 8.6, -1.46], \n"
+                         "           ['Vega', '+210,000', '+480,000', "
+                         "'+290,000', -0.81, 17.2, 25.04, 0.03], \n"
+                         "           ['Canopus (fourth time)', '+480,000', "
+                         "'+990,000', '+480,000', -0.4, 346.0, 310.0, "
+                         '-0.72], \n'
+                         "           ['Beta Aurigae', '+990,000', "
+                         "'+1,150,000', '+1,190,000', -0.4, 28.5, 82.1, "
+                         '1.9], \n'
+                         "           ['Delta Scuti', '+1,150,000', "
+                         "'+1,330,000', '+1,250,000', -1.84, 9.2, 187.0, "
+                         '4.72], \n'
+                         "           ['Gamma Draconis', '+1,330,000', "
+                         "'+2,030,000', '+1,550,000', -1.39, 27.7, 154.0, "
+                         '2.36], \n'
+                         "           ['Upsilon Librae', '+2,030,000', "
+                         "'+2,670,000', '+2,290,000', -0.46, 30.0, 195.0, "
+                         '3.6], \n'
+                         "           ['NR Canis Majoris', '+2,670,000', "
+                         "'+3,050,000', '+2,870,000', -0.88, 14.0, 280.0, "
+                         '5.6], \n'
+                         "           ['Omicron Herculis', '+3,050,000', "
+                         "'+3,870,000', '+3,470,000', -0.63, 44.0, 346.0, "
+                         '3.83], \n'
+                         "           ['Beta Cygni', '+3,870,000', '...', "
+                         "'+4,610,000', -0.52, 80.0, 390.0, 3.18]], \n"
+                         " 'highlighted_cells': []}\n"
+                         '```\n'
+                         '\n'
+                         'Let\'s examine the "Current magnitude" column:\n'
+                         '- Epsilon Canis Majoris: 1.5\n'
+                         '- Beta Canis Majoris: 1.99\n'
+                         '- Canopus (first time): -0.72\n'
+                         '- Zeta Sagittarii: 2.6\n'
+                         '- Zeta Leporis: 3.55\n'
+                         '- Canopus (second time): -0.72\n'
+                         '- Aldebaran: 0.85\n'
+                         '- Capella: 0.08\n'
+                         '- Canopus (third time): -0.72\n'
+                         '- Sirius (current): -1.46\n'
+                         '- Vega: 0.03\n'
+                         '- Canopus (fourth time): -0.72\n'
+                         '- Beta Aurigae: 1.9\n'
+                         '- Delta Scuti: 4.72\n'
+                         '- Gamma Draconis: 2.36\n'
+                         '- Upsilon Librae: 3.6\n'
+                         '- NR Canis Majoris: 5.6\n'
+                         '- Omicron Herculis: 3.83\n'
+                         '- Beta Cygni: 3.18\n'
+                         '\n'
+                         'Stars with "Current magnitude" greater than zero:\n'
+                         '- Epsilon Canis Majoris: 1.5\n'
+                         '- Beta Canis Majoris: 1.99\n'
+                         '- Zeta Sagittarii: 2.6\n'
+                         '- Zeta Leporis: 3.55\n'
+                         '- Aldebaran: 0.85\n'
+                         '- Capella: 0.08\n'
+                         '- Vega: 0.03\n'
+                         '- Beta Aurigae: 1.9\n'
+                         '- Delta Scuti: 4.72\n'
+                         '- Gamma Draconis: 2.36\n'
+                         '- Upsilon Librae: 3.6\n'
+                         '- NR Canis Majoris: 5.6\n'
+                         '- Omicron Herculis: 3.83\n'
+                         '- Beta Cygni: 3.18\n'
+                         '\n'
+                         '### Step 5: Count the Stars\n'
+                         'Counting the stars with "Current magnitude" greater '
+                         'than zero gives us a total of 14 stars.\n'
+                         '\n'
+                         '**Data Analysis**: The "Current magnitude" column '
+                         'was analyzed to identify stars with a magnitude '
+                         'greater than zero.\n'
+                         '**Factual Answer**: 14\n'
+                         '**Source**: The table provided containing star data, '
+                         'specifically the "Current magnitude" column.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many stars have a magnitude greater '
+                      'than zero?" is a **Numerical Question** as it asks for '
+                      'a count based on a specific condition.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      'relevant numerical information from the structured data '
+                      'provided, specifically focusing on the "Current '
+                      'magnitude" column.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      'For the given numerical question:\n'
+                      '1. **Extract Numbers**: We need to examine the "Current '
+                      'magnitude" column in the provided table.\n'
+                      '2. **Perform Comparison**: Identify which stars have a '
+                      '"Current magnitude" greater than zero.\n'
+                      '3. **Count**: Sum up the number of stars that meet this '
+                      'condition.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      "{'table': [['Star', 'Start\\nyear', 'End\\nyear', "
+                      "'Maximum\\nyear', 'Maximum\\nmagnitude', 'Distance "
+                      "at\\nmaximum (LY)', 'Current\\ndistance', "
+                      "'Current\\nmagnitude'], \n"
+                      "           ['Epsilon Canis Majoris', '...', "
+                      "'-4,460,000', '-4,700,000', -3.99, 34.0, 430.0, 1.5], \n"
+                      "           ['Beta Canis Majoris', '-4,460,000', "
+                      "'-3,700,000', '-4,420,000', -3.65, 37.0, 500.0, "
+                      '1.99], \n'
+                      "           ['Canopus (first time)', '-3,700,000', "
+                      "'-1,370,000', '-3,110,000', -1.86, 177.0, 310.0, "
+                      '-0.72], \n'
+                      "           ['Zeta Sagittarii', '-1,370,000', "
+                      "'-1,080,000', '-1,200,000', -2.74, 8.0, 89.1, 2.6], \n"
+                      "           ['Zeta Leporis', '-1,080,000', '-950,000', "
+                      "'-1,050,000', -2.05, 5.3, 70.0, 3.55], \n"
+                      "           ['Canopus (second time)', '-950,000', "
+                      "'-420,000', '-950,000', -1.09, 252.0, 310.0, -0.72], \n"
+                      "           ['Aldebaran', '-420,000', '-210,000', "
+                      "'-320,000', -1.54, 21.5, 65.0, 0.85], \n"
+                      "           ['Capella', '-210,000', '-160,000', "
+                      "'-240,000', -0.82, 27.9, 42.2, 0.08], \n"
+                      "           ['Canopus (third time)', '-160,000', "
+                      "'-90,000', '-160,000', -0.7, 302.0, 310.0, -0.72], \n"
+                      "           ['Sirius (current)', '-90,000', '+210,000', "
+                      "'+60,000', -1.64, 7.8, 8.6, -1.46], \n"
+                      "           ['Vega', '+210,000', '+480,000', '+290,000', "
+                      '-0.81, 17.2, 25.04, 0.03], \n'
+                      "           ['Canopus (fourth time)', '+480,000', "
+                      "'+990,000', '+480,000', -0.4, 346.0, 310.0, -0.72], \n"
+                      "           ['Beta Aurigae', '+990,000', '+1,150,000', "
+                      "'+1,190,000', -0.4, 28.5, 82.1, 1.9], \n"
+                      "           ['Delta Scuti', '+1,150,000', '+1,330,000', "
+                      "'+1,250,000', -1.84, 9.2, 187.0, 4.72], \n"
+                      "           ['Gamma Draconis', '+1,330,000', "
+                      "'+2,030,000', '+1,550,000', -1.39, 27.7, 154.0, "
+                      '2.36], \n'
+                      "           ['Upsilon Librae', '+2,030,000', "
+                      "'+2,670,000', '+2,290,000', -0.46, 30.0, 195.0, 3.6], \n"
+                      "           ['NR Canis Majoris', '+2,670,000', "
+                      "'+3,050,000', '+2,870,000', -0.88, 14.0, 280.0, 5.6], \n"
+                      "           ['Omicron Herculis', '+3,050,000', "
+                      "'+3,870,000', '+3,470,000', -0.63, 44.0, 346.0, "
+                      '3.83], \n'
+                      "           ['Beta Cygni', '+3,870,000', '...', "
+                      "'+4,610,000', -0.52, 80.0, 390.0, 3.18]], \n"
+                      " 'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      'Let\'s examine the "Current magnitude" column:\n'
+                      '- Epsilon Canis Majoris: 1.5\n'
+                      '- Beta Canis Majoris: 1.99\n'
+                      '- Canopus (first time): -0.72\n'
+                      '- Zeta Sagittarii: 2.6\n'
+                      '- Zeta Leporis: 3.55\n'
+                      '- Canopus (second time): -0.72\n'
+                      '- Aldebaran: 0.85\n'
+                      '- Capella: 0.08\n'
+                      '- Canopus (third time): -0.72\n'
+                      '- Sirius (current): -1.46\n'
+                      '- Vega: 0.03\n'
+                      '- Canopus (fourth time): -0.72\n'
+                      '- Beta Aurigae: 1.9\n'
+                      '- Delta Scuti: 4.72\n'
+                      '- Gamma Draconis: 2.36\n'
+                      '- Upsilon Librae: 3.6\n'
+                      '- NR Canis Majoris: 5.6\n'
+                      '- Omicron Herculis: 3.83\n'
+                      '- Beta Cygni: 3.18\n'
+                      '\n'
+                      'Stars with "Current magnitude" greater than zero:\n'
+                      '- Epsilon Canis Majoris: 1.5\n'
+                      '- Beta Canis Majoris: 1.99\n'
+                      '- Zeta Sagittarii: 2.6\n'
+                      '- Zeta Leporis: 3.55\n'
+                      '- Aldebaran: 0.85\n'
+                      '- Capella: 0.08\n'
+                      '- Vega: 0.03\n'
+                      '- Beta Aurigae: 1.9\n'
+                      '- Delta Scuti: 4.72\n'
+                      '- Gamma Draconis: 2.36\n'
+                      '- Upsilon Librae: 3.6\n'
+                      '- NR Canis Majoris: 5.6\n'
+                      '- Omicron Herculis: 3.83\n'
+                      '- Beta Cygni: 3.18\n'
+                      '\n'
+                      '### Step 5: Count the Stars\n'
+                      'Counting the stars with "Current magnitude" greater '
+                      'than zero gives us a total of 14 stars.\n'
+                      '\n'
+                      '**Data Analysis**: The "Current magnitude" column was '
+                      'analyzed to identify stars with a magnitude greater '
+                      'than zero.\n'
+                      '**Factual Answer**: 14\n'
+                      '**Source**: The table provided containing star data, '
+                      'specifically the "Current magnitude" column.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how many stars have a '
+                       'magnitude greater than zero?" requires analyzing the '
+                       '"Current magnitude" column from the provided table.',
+                'result': '**Data Support**: The structured data provided '
+                          'contains a table with various columns related to '
+                          'stars, including their "Current magnitude". Upon '
+                          'examining the "Current magnitude" column, we '
+                          'identified the relevant numerical values.\n'
+                          '\n'
+                          '**Factual Analysis Process**:\n'
+                          '1. Extracted the "Current magnitude" values for all '
+                          'stars.\n'
+                          '2. Compared these values to zero to identify stars '
+                          'with a magnitude greater than zero.\n'
+                          '3. Counted the number of stars meeting this '
+                          'condition.\n'
+                          '\n'
+                          '**Factual Answer**: 14\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The analysis directly answers the question by '
+                          'counting the stars with a "Current magnitude" '
+                          'greater than zero from the provided structured '
+                          'data.',
+                'raw': '**Text Analysis**: The question "how many stars have a '
+                       'magnitude greater than zero?" requires analyzing the '
+                       '"Current magnitude" column from the provided table.\n'
+                       '\n'
+                       '**Data Support**: The structured data provided '
+                       'contains a table with various columns related to '
+                       'stars, including their "Current magnitude". Upon '
+                       'examining the "Current magnitude" column, we '
+                       'identified the relevant numerical values.\n'
+                       '\n'
+                       '**Factual Analysis Process**:\n'
+                       '1. Extracted the "Current magnitude" values for all '
+                       'stars.\n'
+                       '2. Compared these values to zero to identify stars '
+                       'with a magnitude greater than zero.\n'
+                       '3. Counted the number of stars meeting this '
+                       'condition.\n'
+                       '\n'
+                       '**Factual Answer**: 14\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The analysis directly answers the question by counting '
+                       'the stars with a "Current magnitude" greater than zero '
+                       'from the provided structured data.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many stars have a magnitude '
+                          'greater than zero?",\n'
+                          '  "Factual Answer": "14",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Epsilon Canis Majoris: 1.5\n'
+                          '- Beta Canis Majoris: 1.99\n'
+                          '- Canopus (first time): -0.72\n'
+                          '- Zeta Sagittarii: 2.6\n'
+                          '- Zeta Leporis: 3.55\n'
+                          '- Canopus (second time): -0.72\n'
+                          '- Aldebaran: 0.85\n'
+                          '- Capella: 0.08\n'
+                          '- Canopus (third time): -0.72\n'
+                          '- Sirius (current): -1.46\n'
+                          '- Vega: 0.03\n'
+                          '- Canopus (fourth time): -0.72\n'
+                          '- Beta Aurigae: 1.9\n'
+                          '- Delta Scuti: 4.72\n'
+                          '- Gamma Draconis: 2.36\n'
+                          '- Upsilon Librae: 3.6\n'
+                          '- NR Canis Majoris: 5.6\n'
+                          '- Omicron Herculis: 3.83\n'
+                          '- Beta Cygni: 3.18\n'
+                          '- Epsilon Canis Majoris: 1.5\n'
+                          '- Beta Canis Majoris: 1.99\n'
+                          '- Zeta Sagittarii: 2.6\n'
+                          '- Zeta Leporis: 3.55\n'
+                          '- Aldebaran: 0.85\n'
+                          '- Capella: 0.08\n'
+                          '- Vega: 0.03\n'
+                          '- Beta Aurigae: 1.9\n'
+                          '- Delta Scuti: 4.72\n'
+                          '- Gamma Draconis: 2.36\n'
+                          '- Upsilon Librae: 3.6\n'
+                          '- NR Canis Majoris: 5.6\n'
+                          '- Omicron Herculis: 3.83\n'
+                          '- Beta Cygni: 3.18',
+                'raw': '{\n'
+                       '  "Question": "how many stars have a magnitude greater '
+                       'than zero?",\n'
+                       '  "Factual Answer": "14",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

@@ -13,9 +13,11 @@ from pathlib import Path
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", required=True, choices=["tatqa", "finqa", "fetaqa", "mmqa"], help="Dataset name")
+    ap.add_argument("--dataset", required=True, choices=["tatqa", "finqa", "fetaqa", "fetaqa_perturbed", "mmqa"], help="Dataset name")
     ap.add_argument("--run_dir", required=True, help="Path to AMAF run directory containing *_out.txt files")
     ap.add_argument("--quiet", action="store_true", help="Suppress warnings")
+    ap.add_argument("--perturbation_class", help="Perturbation class for fetaqa_perturbed dataset")
+    ap.add_argument("--perturbation_type", help="Perturbation type for fetaqa_perturbed dataset")
     args = ap.parse_args(argv)
 
     if args.quiet:
@@ -34,7 +36,12 @@ def main(argv=None):
         from datasets import DATASETS  # type: ignore
 
     ds_class = DATASETS[args.dataset]
-    ds = ds_class()
+    
+    # Pass perturbation parameters for fetaqa_perturbed dataset
+    if args.dataset == "fetaqa_perturbed":
+        ds = ds_class(perturbation_class=args.perturbation_class, perturbation_type=args.perturbation_type)
+    else:
+        ds = ds_class()
 
     print("[CONSOLIDATE] Loading gold answers …", file=sys.stderr)
     gold = ds.load_gold()

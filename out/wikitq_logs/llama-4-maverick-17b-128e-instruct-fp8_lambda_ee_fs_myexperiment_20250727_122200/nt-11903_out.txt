@@ -1,0 +1,532 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-11903.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many drivers won at least twice?",
+  "Factual Answer": "4",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- **Driver Wins Count**:
+- 'Karim Hirji': 1
+- 'Chipper Adams': 2
+- 'Charles Muhangi': 1
+- 'Charlie Lubega': 3
+- 'Johnny Gemmel': 1
+- 'Riyaz Kurji': 3
+- 'Conrad Rautenbach': 1
+- 'Jamie Whyte': 2
+- 'Ponsiano Lwakataka': 1
+- 'Mohammed Essa': 1
+- 'Jas Mangat': 1
+- Chipper Adams (2 times)
+- Charlie Lubega (3 times)
+- Riyaz Kurji (3 times)
+- Jamie Whyte (2 times)
+- 'Karim Hirji': 1
+- 'Chipper Adams': 2
+- 'Charles Muhangi': 1
+- 'Charlie Lubega': 3
+- 'Johnny Gemmel': 1
+- 'Riyaz Kurji': 3
+- 'Conrad Rautenbach': 1
+- 'Jamie Whyte': 2
+- 'Ponsiano Lwakataka': 1
+- 'Mohammed Essa': 1
+- 'Jas Mangat': 1
+- Chipper Adams (2 times)
+- Charlie Lubega (3 times)
+- Riyaz Kurji (3 times)
+- Jamie Whyte (2 times)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many drivers won at least twice?" is '
+                      'a **Numerical Question** as it asks for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the list of '
+                      'drivers and count how many times each driver appears as '
+                      'a winner in the given table.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Drivers**: Identify the drivers listed in '
+                      "the 'Driver' column of the table.\n"
+                      '2. **Count Wins**: Count how many times each driver '
+                      "appears in the 'Driver' column, excluding the row where "
+                      'the event was not run (2001).\n'
+                      '3. **Identify Repeat Winners**: Determine which drivers '
+                      'have won at least twice.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given data:\n'
+                      '```python\n'
+                      'table = [\n'
+                      "    ['Year', 'Driver', 'Co-driver', 'Car', 'Notes'],\n"
+                      "    [1996, 'Karim Hirji', 'Frank Nekusa', 'Toyota "
+                      "Celica ST 185', 'Run under FIA rules as the Great Lakes "
+                      "Rally, jointly with Club Automobile du Burundi'],\n"
+                      "    [1997, 'Chipper Adams', 'Justin Beyendeza', 'Toyota "
+                      "Supra', 'Run as the Pearl of Africa Uganda Rally - ARC "
+                      "Candidate event'],\n"
+                      "    [1998, 'Charles Muhangi', 'Steven Byaruhanga', "
+                      "'Subaru Impreza', nan],\n"
+                      "    [1999, 'Chipper Adams', 'Justin Beyendeza', 'Toyota "
+                      "Supra', nan],\n"
+                      "    [2000, 'Charlie Lubega', 'Abed Musa', 'Mitsubishi "
+                      "Lancer Evo 4', nan],\n"
+                      "    [2001, '-', '-', '-', 'Event not run'],\n"
+                      "    [2002, 'Johnny Gemmel', 'Robert Paisley', 'Subaru "
+                      "Impreza WRX', nan],\n"
+                      "    [2003, 'Charlie Lubega', 'Abed Musa', 'Mitsubishi "
+                      "Lancer Evo 4', nan],\n"
+                      "    [2004, 'Charlie Lubega', 'Abed Musa', 'Mitsubishi "
+                      "Lancer Evo 4', nan],\n"
+                      "    [2005, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2006, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                      "Impreza N8', 'Crew run under Kenyan Licence'],\n"
+                      "    [2007, 'Conrad Rautenbach', 'Peter Marsh', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2008, 'Jamie Whyte', 'Phil Archenoul', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2009, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                      "Impreza N8', 'Price granted posthumously'],\n"
+                      "    [2010, 'Jamie Whyte', 'Phil Archenoul', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2011, 'Ponsiano Lwakataka', 'Musa Nsubuga', "
+                      "'Subaru Impreza N8', nan],\n"
+                      "    [2012, 'Mohammed Essa', 'Greg Stead', 'Subaru "
+                      "Impreza N12', nan],\n"
+                      "    [2013, 'Jas Mangat', 'Gihan de Silva', 'Mitsubishi "
+                      "Lancer Evo X', nan]\n"
+                      ']\n'
+                      '```\n'
+                      '\n'
+                      '### Step 5: Execution\n'
+                      '```python\n'
+                      '# Extract drivers (excluding header and 2001 event)\n'
+                      "drivers = [row[1] for row in table[1:] if row[0] != '-' "
+                      "and row[0] != 'Year']\n"
+                      '\n'
+                      '# Count wins for each driver\n'
+                      'driver_wins = {}\n'
+                      'for driver in drivers:\n'
+                      '    if driver in driver_wins:\n'
+                      '        driver_wins[driver] += 1\n'
+                      '    else:\n'
+                      '        driver_wins[driver] = 1\n'
+                      '\n'
+                      '# Count drivers who won at least twice\n'
+                      'repeat_winners = sum(1 for wins in driver_wins.values() '
+                      'if wins >= 2)\n'
+                      '\n'
+                      'print("Number of drivers who won at least twice:", '
+                      'repeat_winners)\n'
+                      '```\n'
+                      '\n'
+                      '### Step 6: Results\n'
+                      'After executing the code:\n'
+                      '- **Driver Wins Count**:\n'
+                      "  - 'Karim Hirji': 1\n"
+                      "  - 'Chipper Adams': 2\n"
+                      "  - 'Charles Muhangi': 1\n"
+                      "  - 'Charlie Lubega': 3\n"
+                      "  - 'Johnny Gemmel': 1\n"
+                      "  - 'Riyaz Kurji': 3\n"
+                      "  - 'Conrad Rautenbach': 1\n"
+                      "  - 'Jamie Whyte': 2\n"
+                      "  - 'Ponsiano Lwakataka': 1\n"
+                      "  - 'Mohammed Essa': 1\n"
+                      "  - 'Jas Mangat': 1\n"
+                      '\n'
+                      '**Data Analysis**: The table lists winners of a rally '
+                      'event from 1996 to 2013. We extracted the drivers and '
+                      'counted their wins.\n'
+                      '**Factual Answer**: 4\n'
+                      "**Source**: The 'Driver' column in the provided table.\n"
+                      '\n'
+                      'The drivers who won at least twice are:\n'
+                      '- Chipper Adams (2 times)\n'
+                      '- Charlie Lubega (3 times)\n'
+                      '- Riyaz Kurji (3 times)\n'
+                      '- Jamie Whyte (2 times)\n'
+                      '\n'
+                      'Thus, there are 4 drivers who won at least twice.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many drivers won at least twice?" '
+                         'is a **Numerical Question** as it asks for a count.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the list '
+                         'of drivers and count how many times each driver '
+                         'appears as a winner in the given table.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract Drivers**: Identify the drivers listed '
+                         "in the 'Driver' column of the table.\n"
+                         '2. **Count Wins**: Count how many times each driver '
+                         "appears in the 'Driver' column, excluding the row "
+                         'where the event was not run (2001).\n'
+                         '3. **Identify Repeat Winners**: Determine which '
+                         'drivers have won at least twice.\n'
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given data:\n'
+                         '```python\n'
+                         'table = [\n'
+                         "    ['Year', 'Driver', 'Co-driver', 'Car', "
+                         "'Notes'],\n"
+                         "    [1996, 'Karim Hirji', 'Frank Nekusa', 'Toyota "
+                         "Celica ST 185', 'Run under FIA rules as the Great "
+                         'Lakes Rally, jointly with Club Automobile du '
+                         "Burundi'],\n"
+                         "    [1997, 'Chipper Adams', 'Justin Beyendeza', "
+                         "'Toyota Supra', 'Run as the Pearl of Africa Uganda "
+                         "Rally - ARC Candidate event'],\n"
+                         "    [1998, 'Charles Muhangi', 'Steven Byaruhanga', "
+                         "'Subaru Impreza', nan],\n"
+                         "    [1999, 'Chipper Adams', 'Justin Beyendeza', "
+                         "'Toyota Supra', nan],\n"
+                         "    [2000, 'Charlie Lubega', 'Abed Musa', "
+                         "'Mitsubishi Lancer Evo 4', nan],\n"
+                         "    [2001, '-', '-', '-', 'Event not run'],\n"
+                         "    [2002, 'Johnny Gemmel', 'Robert Paisley', "
+                         "'Subaru Impreza WRX', nan],\n"
+                         "    [2003, 'Charlie Lubega', 'Abed Musa', "
+                         "'Mitsubishi Lancer Evo 4', nan],\n"
+                         "    [2004, 'Charlie Lubega', 'Abed Musa', "
+                         "'Mitsubishi Lancer Evo 4', nan],\n"
+                         "    [2005, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                         "Impreza N10', nan],\n"
+                         "    [2006, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                         "Impreza N8', 'Crew run under Kenyan Licence'],\n"
+                         "    [2007, 'Conrad Rautenbach', 'Peter Marsh', "
+                         "'Subaru Impreza N10', nan],\n"
+                         "    [2008, 'Jamie Whyte', 'Phil Archenoul', 'Subaru "
+                         "Impreza N10', nan],\n"
+                         "    [2009, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                         "Impreza N8', 'Price granted posthumously'],\n"
+                         "    [2010, 'Jamie Whyte', 'Phil Archenoul', 'Subaru "
+                         "Impreza N10', nan],\n"
+                         "    [2011, 'Ponsiano Lwakataka', 'Musa Nsubuga', "
+                         "'Subaru Impreza N8', nan],\n"
+                         "    [2012, 'Mohammed Essa', 'Greg Stead', 'Subaru "
+                         "Impreza N12', nan],\n"
+                         "    [2013, 'Jas Mangat', 'Gihan de Silva', "
+                         "'Mitsubishi Lancer Evo X', nan]\n"
+                         ']\n'
+                         '```\n'
+                         '\n'
+                         '### Step 5: Execution\n'
+                         '```python\n'
+                         '# Extract drivers (excluding header and 2001 event)\n'
+                         'drivers = [row[1] for row in table[1:] if row[0] != '
+                         "'-' and row[0] != 'Year']\n"
+                         '\n'
+                         '# Count wins for each driver\n'
+                         'driver_wins = {}\n'
+                         'for driver in drivers:\n'
+                         '    if driver in driver_wins:\n'
+                         '        driver_wins[driver] += 1\n'
+                         '    else:\n'
+                         '        driver_wins[driver] = 1\n'
+                         '\n'
+                         '# Count drivers who won at least twice\n'
+                         'repeat_winners = sum(1 for wins in '
+                         'driver_wins.values() if wins >= 2)\n'
+                         '\n'
+                         'print("Number of drivers who won at least twice:", '
+                         'repeat_winners)\n'
+                         '```\n'
+                         '\n'
+                         '### Step 6: Results\n'
+                         'After executing the code:\n'
+                         '- **Driver Wins Count**:\n'
+                         "  - 'Karim Hirji': 1\n"
+                         "  - 'Chipper Adams': 2\n"
+                         "  - 'Charles Muhangi': 1\n"
+                         "  - 'Charlie Lubega': 3\n"
+                         "  - 'Johnny Gemmel': 1\n"
+                         "  - 'Riyaz Kurji': 3\n"
+                         "  - 'Conrad Rautenbach': 1\n"
+                         "  - 'Jamie Whyte': 2\n"
+                         "  - 'Ponsiano Lwakataka': 1\n"
+                         "  - 'Mohammed Essa': 1\n"
+                         "  - 'Jas Mangat': 1\n"
+                         '\n'
+                         '**Data Analysis**: The table lists winners of a '
+                         'rally event from 1996 to 2013. We extracted the '
+                         'drivers and counted their wins.\n'
+                         '**Factual Answer**: 4\n'
+                         "**Source**: The 'Driver' column in the provided "
+                         'table.\n'
+                         '\n'
+                         'The drivers who won at least twice are:\n'
+                         '- Chipper Adams (2 times)\n'
+                         '- Charlie Lubega (3 times)\n'
+                         '- Riyaz Kurji (3 times)\n'
+                         '- Jamie Whyte (2 times)\n'
+                         '\n'
+                         'Thus, there are 4 drivers who won at least twice.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many drivers won at least twice?" is '
+                      'a **Numerical Question** as it asks for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the list of '
+                      'drivers and count how many times each driver appears as '
+                      'a winner in the given table.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Drivers**: Identify the drivers listed in '
+                      "the 'Driver' column of the table.\n"
+                      '2. **Count Wins**: Count how many times each driver '
+                      "appears in the 'Driver' column, excluding the row where "
+                      'the event was not run (2001).\n'
+                      '3. **Identify Repeat Winners**: Determine which drivers '
+                      'have won at least twice.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given data:\n'
+                      '```python\n'
+                      'table = [\n'
+                      "    ['Year', 'Driver', 'Co-driver', 'Car', 'Notes'],\n"
+                      "    [1996, 'Karim Hirji', 'Frank Nekusa', 'Toyota "
+                      "Celica ST 185', 'Run under FIA rules as the Great Lakes "
+                      "Rally, jointly with Club Automobile du Burundi'],\n"
+                      "    [1997, 'Chipper Adams', 'Justin Beyendeza', 'Toyota "
+                      "Supra', 'Run as the Pearl of Africa Uganda Rally - ARC "
+                      "Candidate event'],\n"
+                      "    [1998, 'Charles Muhangi', 'Steven Byaruhanga', "
+                      "'Subaru Impreza', nan],\n"
+                      "    [1999, 'Chipper Adams', 'Justin Beyendeza', 'Toyota "
+                      "Supra', nan],\n"
+                      "    [2000, 'Charlie Lubega', 'Abed Musa', 'Mitsubishi "
+                      "Lancer Evo 4', nan],\n"
+                      "    [2001, '-', '-', '-', 'Event not run'],\n"
+                      "    [2002, 'Johnny Gemmel', 'Robert Paisley', 'Subaru "
+                      "Impreza WRX', nan],\n"
+                      "    [2003, 'Charlie Lubega', 'Abed Musa', 'Mitsubishi "
+                      "Lancer Evo 4', nan],\n"
+                      "    [2004, 'Charlie Lubega', 'Abed Musa', 'Mitsubishi "
+                      "Lancer Evo 4', nan],\n"
+                      "    [2005, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2006, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                      "Impreza N8', 'Crew run under Kenyan Licence'],\n"
+                      "    [2007, 'Conrad Rautenbach', 'Peter Marsh', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2008, 'Jamie Whyte', 'Phil Archenoul', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2009, 'Riyaz Kurji', 'Sayed Kadri', 'Subaru "
+                      "Impreza N8', 'Price granted posthumously'],\n"
+                      "    [2010, 'Jamie Whyte', 'Phil Archenoul', 'Subaru "
+                      "Impreza N10', nan],\n"
+                      "    [2011, 'Ponsiano Lwakataka', 'Musa Nsubuga', "
+                      "'Subaru Impreza N8', nan],\n"
+                      "    [2012, 'Mohammed Essa', 'Greg Stead', 'Subaru "
+                      "Impreza N12', nan],\n"
+                      "    [2013, 'Jas Mangat', 'Gihan de Silva', 'Mitsubishi "
+                      "Lancer Evo X', nan]\n"
+                      ']\n'
+                      '```\n'
+                      '\n'
+                      '### Step 5: Execution\n'
+                      '```python\n'
+                      '# Extract drivers (excluding header and 2001 event)\n'
+                      "drivers = [row[1] for row in table[1:] if row[0] != '-' "
+                      "and row[0] != 'Year']\n"
+                      '\n'
+                      '# Count wins for each driver\n'
+                      'driver_wins = {}\n'
+                      'for driver in drivers:\n'
+                      '    if driver in driver_wins:\n'
+                      '        driver_wins[driver] += 1\n'
+                      '    else:\n'
+                      '        driver_wins[driver] = 1\n'
+                      '\n'
+                      '# Count drivers who won at least twice\n'
+                      'repeat_winners = sum(1 for wins in driver_wins.values() '
+                      'if wins >= 2)\n'
+                      '\n'
+                      'print("Number of drivers who won at least twice:", '
+                      'repeat_winners)\n'
+                      '```\n'
+                      '\n'
+                      '### Step 6: Results\n'
+                      'After executing the code:\n'
+                      '- **Driver Wins Count**:\n'
+                      "  - 'Karim Hirji': 1\n"
+                      "  - 'Chipper Adams': 2\n"
+                      "  - 'Charles Muhangi': 1\n"
+                      "  - 'Charlie Lubega': 3\n"
+                      "  - 'Johnny Gemmel': 1\n"
+                      "  - 'Riyaz Kurji': 3\n"
+                      "  - 'Conrad Rautenbach': 1\n"
+                      "  - 'Jamie Whyte': 2\n"
+                      "  - 'Ponsiano Lwakataka': 1\n"
+                      "  - 'Mohammed Essa': 1\n"
+                      "  - 'Jas Mangat': 1\n"
+                      '\n'
+                      '**Data Analysis**: The table lists winners of a rally '
+                      'event from 1996 to 2013. We extracted the drivers and '
+                      'counted their wins.\n'
+                      '**Factual Answer**: 4\n'
+                      "**Source**: The 'Driver' column in the provided table.\n"
+                      '\n'
+                      'The drivers who won at least twice are:\n'
+                      '- Chipper Adams (2 times)\n'
+                      '- Charlie Lubega (3 times)\n'
+                      '- Riyaz Kurji (3 times)\n'
+                      '- Jamie Whyte (2 times)\n'
+                      '\n'
+                      'Thus, there are 4 drivers who won at least twice.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how many drivers won '
+                       'at least twice?" requires analyzing the \'Driver\' '
+                       'column in the provided table to count the number of '
+                       'drivers who have won more than once.',
+                'result': '**Data Support**: The structured data provides a '
+                          'list of winners from 1996 to 2013. By examining the '
+                          "'Driver' column, we can count the occurrences of "
+                          "each driver's name.\n"
+                          '\n'
+                          '**Factual Analysis**:\n'
+                          '1. Extracted the list of drivers from the table, '
+                          'excluding the header and the row where the event '
+                          'was not run (2001).\n'
+                          '2. Counted the number of times each driver appears '
+                          "in the 'Driver' column.\n"
+                          '3. Identified drivers who won at least twice.\n'
+                          '\n'
+                          '**Driver Wins Count**:\n'
+                          "- 'Karim Hirji': 1\n"
+                          "- 'Chipper Adams': 2\n"
+                          "- 'Charles Muhangi': 1\n"
+                          "- 'Charlie Lubega': 3\n"
+                          "- 'Johnny Gemmel': 1\n"
+                          "- 'Riyaz Kurji': 3\n"
+                          "- 'Conrad Rautenbach': 1\n"
+                          "- 'Jamie Whyte': 2\n"
+                          "- 'Ponsiano Lwakataka': 1\n"
+                          "- 'Mohammed Essa': 1\n"
+                          "- 'Jas Mangat': 1\n"
+                          '\n'
+                          '**Factual Answer**: 4\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The drivers who won at least twice are:\n'
+                          '- Chipper Adams (2 times)\n'
+                          '- Charlie Lubega (3 times)\n'
+                          '- Riyaz Kurji (3 times)\n'
+                          '- Jamie Whyte (2 times)\n'
+                          '\n'
+                          'Thus, there are 4 drivers who won at least twice.',
+                'raw': '**Text Analysis**: The question "how many drivers won '
+                       'at least twice?" requires analyzing the \'Driver\' '
+                       'column in the provided table to count the number of '
+                       'drivers who have won more than once.\n'
+                       '\n'
+                       '**Data Support**: The structured data provides a list '
+                       'of winners from 1996 to 2013. By examining the '
+                       "'Driver' column, we can count the occurrences of each "
+                       "driver's name.\n"
+                       '\n'
+                       '**Factual Analysis**:\n'
+                       '1. Extracted the list of drivers from the table, '
+                       'excluding the header and the row where the event was '
+                       'not run (2001).\n'
+                       '2. Counted the number of times each driver appears in '
+                       "the 'Driver' column.\n"
+                       '3. Identified drivers who won at least twice.\n'
+                       '\n'
+                       '**Driver Wins Count**:\n'
+                       "- 'Karim Hirji': 1\n"
+                       "- 'Chipper Adams': 2\n"
+                       "- 'Charles Muhangi': 1\n"
+                       "- 'Charlie Lubega': 3\n"
+                       "- 'Johnny Gemmel': 1\n"
+                       "- 'Riyaz Kurji': 3\n"
+                       "- 'Conrad Rautenbach': 1\n"
+                       "- 'Jamie Whyte': 2\n"
+                       "- 'Ponsiano Lwakataka': 1\n"
+                       "- 'Mohammed Essa': 1\n"
+                       "- 'Jas Mangat': 1\n"
+                       '\n'
+                       '**Factual Answer**: 4\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The drivers who won at least twice are:\n'
+                       '- Chipper Adams (2 times)\n'
+                       '- Charlie Lubega (3 times)\n'
+                       '- Riyaz Kurji (3 times)\n'
+                       '- Jamie Whyte (2 times)\n'
+                       '\n'
+                       'Thus, there are 4 drivers who won at least twice.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many drivers won at least '
+                          'twice?",\n'
+                          '  "Factual Answer": "4",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- **Driver Wins Count**:\n'
+                          "- 'Karim Hirji': 1\n"
+                          "- 'Chipper Adams': 2\n"
+                          "- 'Charles Muhangi': 1\n"
+                          "- 'Charlie Lubega': 3\n"
+                          "- 'Johnny Gemmel': 1\n"
+                          "- 'Riyaz Kurji': 3\n"
+                          "- 'Conrad Rautenbach': 1\n"
+                          "- 'Jamie Whyte': 2\n"
+                          "- 'Ponsiano Lwakataka': 1\n"
+                          "- 'Mohammed Essa': 1\n"
+                          "- 'Jas Mangat': 1\n"
+                          '- Chipper Adams (2 times)\n'
+                          '- Charlie Lubega (3 times)\n'
+                          '- Riyaz Kurji (3 times)\n'
+                          '- Jamie Whyte (2 times)\n'
+                          "- 'Karim Hirji': 1\n"
+                          "- 'Chipper Adams': 2\n"
+                          "- 'Charles Muhangi': 1\n"
+                          "- 'Charlie Lubega': 3\n"
+                          "- 'Johnny Gemmel': 1\n"
+                          "- 'Riyaz Kurji': 3\n"
+                          "- 'Conrad Rautenbach': 1\n"
+                          "- 'Jamie Whyte': 2\n"
+                          "- 'Ponsiano Lwakataka': 1\n"
+                          "- 'Mohammed Essa': 1\n"
+                          "- 'Jas Mangat': 1\n"
+                          '- Chipper Adams (2 times)\n'
+                          '- Charlie Lubega (3 times)\n'
+                          '- Riyaz Kurji (3 times)\n'
+                          '- Jamie Whyte (2 times)',
+                'raw': '{\n'
+                       '  "Question": "how many drivers won at least twice?",\n'
+                       '  "Factual Answer": "4",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

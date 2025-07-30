@@ -15,7 +15,7 @@ from datetime import datetime
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", required=True, choices=["tatqa", "finqa", "fetaqa", "mmqa"])
+    ap.add_argument("--dataset", required=True, choices=["tatqa", "finqa", "fetaqa", "fetaqa_perturbed", "mmqa"])
     ap.add_argument("--consolidated_file", required=True, help="Path to consolidated JSON")
     args = ap.parse_args(argv)
 

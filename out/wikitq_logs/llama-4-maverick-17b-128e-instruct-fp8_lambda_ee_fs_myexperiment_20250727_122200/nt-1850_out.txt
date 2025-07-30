@@ -1,0 +1,488 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-1850.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "who was the last to win against his opponent?",
+  "Factual Answer": "Michael van Gerwen",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- ['Raymond van Barneveld', 2009, 'Quarter-Final', 'Won', 'Jelle Klaasen']
+- ['Raymond van Barneveld', 2010, '2nd Round', 'Won', 'Brendan Dolan']
+- ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary Anderson']
+- ['Michael van Gerwen', 2013, 'Semi Final', 'Won', 'James Wade']
+- **Temporal Details**: The table contains data from 2009 to 2014.
+- **Categorical Information**: Players, their opponents, match results (won or lost), and the round they played.
+- **Supporting Facts**: The table provides the 'Year', 'Player', 'Result', and 'Opponent' for each match.
+- **Additional Details**: The 'Round' in which the match was played.
+- **Organized Information**: The data is structured by match, allowing for easy filtering and sorting.
+- **Data Primary**: Use the structured data as the main source of information since it contains detailed match results.
+- **Consistency Check**: Ensure that the 'Year' and 'Result' columns are consistent in identifying the most recent win.
+- ['Raymond van Barneveld', 2009, 'Quarter-Final', 'Won', 'Jelle Klaasen']
+- ['Raymond van Barneveld', 2010, '2nd Round', 'Won', 'Brendan Dolan']
+- ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary Anderson']
+- ['Michael van Gerwen', 2013, 'Semi Final', 'Won', 'James Wade']
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "who was the last to win against his '
+                      'opponent?" is a temporal question because it involves '
+                      'identifying the most recent event or instance of a '
+                      'player winning against their opponent.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract temporal '
+                      'information (years) and factual information about the '
+                      'results of matches (who won or lost).\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Identify Relevant Data**: We need to look at the '
+                      "'Year', 'Result', and 'Player' columns to determine who "
+                      'won and when.\n'
+                      '2. **Extract Wins**: Filter the data to show only the '
+                      "rows where the 'Result' is 'Won'.\n"
+                      '3. **Identify the Most Recent Win**: Sort the filtered '
+                      "data by 'Year' in descending order and find the most "
+                      "recent 'Year'.\n"
+                      "4. **Determine the Last Winner**: Identify the 'Player' "
+                      'who won in the most recent year.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      "[['Player', 'Year', 'Round', 'Result', 'Opponent'],\n"
+                      "['Raymond van Barneveld', 2009, 'Quarter-Final', 'Won', "
+                      "'Jelle Klaasen'],\n"
+                      "['Raymond van Barneveld', 2010, '2nd Round', 'Won', "
+                      "'Brendan Dolan'],\n"
+                      "['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                      "Anderson'],\n"
+                      "['Dean Winstanley', 2013, '2nd Round', 'Lost', 'Vincent "
+                      "van der Voort'],\n"
+                      "['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                      "'James Wade'],\n"
+                      "['Terry Jenkins', 2014, '1st Round', 'Lost', 'Per "
+                      "Laursen'],\n"
+                      "['Kyle Anderson', 2014, '1st Round', 'Lost', 'Ian "
+                      "White']]\n"
+                      '\n'
+                      '1. **Filter Wins**:\n'
+                      "   - ['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                      "'Won', 'Jelle Klaasen']\n"
+                      "   - ['Raymond van Barneveld', 2010, '2nd Round', "
+                      "'Won', 'Brendan Dolan']\n"
+                      "   - ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                      "Anderson']\n"
+                      "   - ['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                      "'James Wade']\n"
+                      '\n'
+                      '2. **Most Recent Win**: The most recent year with a win '
+                      'is 2013.\n'
+                      '\n'
+                      '3. **Last Winner**: The player who won in 2013 was '
+                      "'Michael van Gerwen'.\n"
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The data contains information about '
+                      'players, their match results, and the years they '
+                      'played. Filtering for wins and examining the most '
+                      "recent year (2013) shows that 'Michael van Gerwen' was "
+                      "the last to win against his opponent 'James Wade'.\n"
+                      '**Factual Answer**: Michael van Gerwen\n'
+                      '**Source**: The table data showing darts match results '
+                      'from 2009 to 2014.\n'
+                      '\n'
+                      'The final answer is: Michael van Gerwen',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "who was the last to win against his '
+                         'opponent?" is a temporal question because it '
+                         'involves identifying the most recent event or '
+                         'instance of a player winning against their '
+                         'opponent.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract temporal '
+                         'information (years) and factual information about '
+                         'the results of matches (who won or lost).\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Identify Relevant Data**: We need to look at '
+                         "the 'Year', 'Result', and 'Player' columns to "
+                         'determine who won and when.\n'
+                         '2. **Extract Wins**: Filter the data to show only '
+                         "the rows where the 'Result' is 'Won'.\n"
+                         '3. **Identify the Most Recent Win**: Sort the '
+                         "filtered data by 'Year' in descending order and find "
+                         "the most recent 'Year'.\n"
+                         '4. **Determine the Last Winner**: Identify the '
+                         "'Player' who won in the most recent year.\n"
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given the table:\n'
+                         "[['Player', 'Year', 'Round', 'Result', 'Opponent'],\n"
+                         "['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                         "'Won', 'Jelle Klaasen'],\n"
+                         "['Raymond van Barneveld', 2010, '2nd Round', 'Won', "
+                         "'Brendan Dolan'],\n"
+                         "['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                         "Anderson'],\n"
+                         "['Dean Winstanley', 2013, '2nd Round', 'Lost', "
+                         "'Vincent van der Voort'],\n"
+                         "['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                         "'James Wade'],\n"
+                         "['Terry Jenkins', 2014, '1st Round', 'Lost', 'Per "
+                         "Laursen'],\n"
+                         "['Kyle Anderson', 2014, '1st Round', 'Lost', 'Ian "
+                         "White']]\n"
+                         '\n'
+                         '1. **Filter Wins**:\n'
+                         "   - ['Raymond van Barneveld', 2009, "
+                         "'Quarter-Final', 'Won', 'Jelle Klaasen']\n"
+                         "   - ['Raymond van Barneveld', 2010, '2nd Round', "
+                         "'Won', 'Brendan Dolan']\n"
+                         "   - ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                         "Anderson']\n"
+                         "   - ['Michael van Gerwen', 2013, 'Semi Final', "
+                         "'Won', 'James Wade']\n"
+                         '\n'
+                         '2. **Most Recent Win**: The most recent year with a '
+                         'win is 2013.\n'
+                         '\n'
+                         '3. **Last Winner**: The player who won in 2013 was '
+                         "'Michael van Gerwen'.\n"
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The data contains information '
+                         'about players, their match results, and the years '
+                         'they played. Filtering for wins and examining the '
+                         "most recent year (2013) shows that 'Michael van "
+                         "Gerwen' was the last to win against his opponent "
+                         "'James Wade'.\n"
+                         '**Factual Answer**: Michael van Gerwen\n'
+                         '**Source**: The table data showing darts match '
+                         'results from 2009 to 2014.\n'
+                         '\n'
+                         'The final answer is: Michael van Gerwen',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "who was the last to win against his '
+                      'opponent?" is a temporal question because it involves '
+                      'identifying the most recent event or instance of a '
+                      'player winning against their opponent.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract temporal '
+                      'information (years) and factual information about the '
+                      'results of matches (who won or lost).\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Identify Relevant Data**: We need to look at the '
+                      "'Year', 'Result', and 'Player' columns to determine who "
+                      'won and when.\n'
+                      '2. **Extract Wins**: Filter the data to show only the '
+                      "rows where the 'Result' is 'Won'.\n"
+                      '3. **Identify the Most Recent Win**: Sort the filtered '
+                      "data by 'Year' in descending order and find the most "
+                      "recent 'Year'.\n"
+                      "4. **Determine the Last Winner**: Identify the 'Player' "
+                      'who won in the most recent year.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      "[['Player', 'Year', 'Round', 'Result', 'Opponent'],\n"
+                      "['Raymond van Barneveld', 2009, 'Quarter-Final', 'Won', "
+                      "'Jelle Klaasen'],\n"
+                      "['Raymond van Barneveld', 2010, '2nd Round', 'Won', "
+                      "'Brendan Dolan'],\n"
+                      "['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                      "Anderson'],\n"
+                      "['Dean Winstanley', 2013, '2nd Round', 'Lost', 'Vincent "
+                      "van der Voort'],\n"
+                      "['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                      "'James Wade'],\n"
+                      "['Terry Jenkins', 2014, '1st Round', 'Lost', 'Per "
+                      "Laursen'],\n"
+                      "['Kyle Anderson', 2014, '1st Round', 'Lost', 'Ian "
+                      "White']]\n"
+                      '\n'
+                      '1. **Filter Wins**:\n'
+                      "   - ['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                      "'Won', 'Jelle Klaasen']\n"
+                      "   - ['Raymond van Barneveld', 2010, '2nd Round', "
+                      "'Won', 'Brendan Dolan']\n"
+                      "   - ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                      "Anderson']\n"
+                      "   - ['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                      "'James Wade']\n"
+                      '\n'
+                      '2. **Most Recent Win**: The most recent year with a win '
+                      'is 2013.\n'
+                      '\n'
+                      '3. **Last Winner**: The player who won in 2013 was '
+                      "'Michael van Gerwen'.\n"
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The data contains information about '
+                      'players, their match results, and the years they '
+                      'played. Filtering for wins and examining the most '
+                      "recent year (2013) shows that 'Michael van Gerwen' was "
+                      "the last to win against his opponent 'James Wade'.\n"
+                      '**Factual Answer**: Michael van Gerwen\n'
+                      '**Source**: The table data showing darts match results '
+                      'from 2009 to 2014.\n'
+                      '\n'
+                      'The final answer is: Michael van Gerwen'},
+ 'Contextron': {'cot': '### Step 1: Question Understanding\n'
+                       '- **Question Type**: Temporal\n'
+                       '- **Information Needs**: Identify the most recent '
+                       'instance of a player winning against their opponent.\n'
+                       '- **Data Sources**: Structured data (table) containing '
+                       'information about players, their match results, and '
+                       'the years they played.\n'
+                       '- **Reasoning Path**: Filter the data to show wins, '
+                       'identify the most recent year with a win, and '
+                       'determine the player who won in that year.',
+                'result': '### Step 2: Information Synthesis Strategy\n'
+                          '\n'
+                          '#### From Text Context:\n'
+                          '- **Temporal Details**: The table contains data '
+                          'from 2009 to 2014.\n'
+                          '- **Categorical Information**: Players, their '
+                          'opponents, match results (won or lost), and the '
+                          'round they played.\n'
+                          '\n'
+                          '#### From Structured Data:\n'
+                          '- **Supporting Facts**: The table provides the '
+                          "'Year', 'Player', 'Result', and 'Opponent' for each "
+                          'match.\n'
+                          "- **Additional Details**: The 'Round' in which the "
+                          'match was played.\n'
+                          '- **Organized Information**: The data is structured '
+                          'by match, allowing for easy filtering and sorting.\n'
+                          '\n'
+                          '### Step 3: Factual Reasoning Process\n'
+                          '\n'
+                          '#### For Temporal Questions:\n'
+                          '1. **Extract Time Information**: Identify the '
+                          "'Year' of each match.\n"
+                          '2. **Identify Events**: Look for matches where the '
+                          "'Result' is 'Won'.\n"
+                          '3. **Contextualize**: Determine the most recent '
+                          'year with a win.\n'
+                          '4. **Verify Accuracy**: Check that the most recent '
+                          'win is correctly identified.\n'
+                          '\n'
+                          '### Step 4: Multimodal Integration\n'
+                          '- **Data Primary**: Use the structured data as the '
+                          'main source of information since it contains '
+                          'detailed match results.\n'
+                          "- **Consistency Check**: Ensure that the 'Year' and "
+                          "'Result' columns are consistent in identifying the "
+                          'most recent win.\n'
+                          '\n'
+                          '### Analysis\n'
+                          'Given the table:\n'
+                          "[['Player', 'Year', 'Round', 'Result', "
+                          "'Opponent'],\n"
+                          "['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                          "'Won', 'Jelle Klaasen'],\n"
+                          "['Raymond van Barneveld', 2010, '2nd Round', 'Won', "
+                          "'Brendan Dolan'],\n"
+                          "['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                          "Anderson'],\n"
+                          "['Dean Winstanley', 2013, '2nd Round', 'Lost', "
+                          "'Vincent van der Voort'],\n"
+                          "['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                          "'James Wade'],\n"
+                          "['Terry Jenkins', 2014, '1st Round', 'Lost', 'Per "
+                          "Laursen'],\n"
+                          "['Kyle Anderson', 2014, '1st Round', 'Lost', 'Ian "
+                          "White']]\n"
+                          '\n'
+                          '1. **Filter Wins**:\n'
+                          "   - ['Raymond van Barneveld', 2009, "
+                          "'Quarter-Final', 'Won', 'Jelle Klaasen']\n"
+                          "   - ['Raymond van Barneveld', 2010, '2nd Round', "
+                          "'Won', 'Brendan Dolan']\n"
+                          "   - ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                          "Anderson']\n"
+                          "   - ['Michael van Gerwen', 2013, 'Semi Final', "
+                          "'Won', 'James Wade']\n"
+                          '\n'
+                          '2. **Most Recent Win**: The most recent year with a '
+                          'win is 2013.\n'
+                          '\n'
+                          '3. **Last Winner**: The player who won in 2013 was '
+                          "'Michael van Gerwen'.\n"
+                          '\n'
+                          '### Output\n'
+                          '**Data Analysis**: The structured data contains '
+                          'information about darts matches from 2009 to 2014. '
+                          'Filtering for wins and examining the most recent '
+                          "year (2013) shows that 'Michael van Gerwen' was the "
+                          "last to win against his opponent 'James Wade'.\n"
+                          '**Factual Answer**: Michael van Gerwen\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The final answer is: Michael van Gerwen',
+                'raw': '### Step 1: Question Understanding\n'
+                       '- **Question Type**: Temporal\n'
+                       '- **Information Needs**: Identify the most recent '
+                       'instance of a player winning against their opponent.\n'
+                       '- **Data Sources**: Structured data (table) containing '
+                       'information about players, their match results, and '
+                       'the years they played.\n'
+                       '- **Reasoning Path**: Filter the data to show wins, '
+                       'identify the most recent year with a win, and '
+                       'determine the player who won in that year.\n'
+                       '\n'
+                       '### Step 2: Information Synthesis Strategy\n'
+                       '\n'
+                       '#### From Text Context:\n'
+                       '- **Temporal Details**: The table contains data from '
+                       '2009 to 2014.\n'
+                       '- **Categorical Information**: Players, their '
+                       'opponents, match results (won or lost), and the round '
+                       'they played.\n'
+                       '\n'
+                       '#### From Structured Data:\n'
+                       "- **Supporting Facts**: The table provides the 'Year', "
+                       "'Player', 'Result', and 'Opponent' for each match.\n"
+                       "- **Additional Details**: The 'Round' in which the "
+                       'match was played.\n'
+                       '- **Organized Information**: The data is structured by '
+                       'match, allowing for easy filtering and sorting.\n'
+                       '\n'
+                       '### Step 3: Factual Reasoning Process\n'
+                       '\n'
+                       '#### For Temporal Questions:\n'
+                       "1. **Extract Time Information**: Identify the 'Year' "
+                       'of each match.\n'
+                       '2. **Identify Events**: Look for matches where the '
+                       "'Result' is 'Won'.\n"
+                       '3. **Contextualize**: Determine the most recent year '
+                       'with a win.\n'
+                       '4. **Verify Accuracy**: Check that the most recent win '
+                       'is correctly identified.\n'
+                       '\n'
+                       '### Step 4: Multimodal Integration\n'
+                       '- **Data Primary**: Use the structured data as the '
+                       'main source of information since it contains detailed '
+                       'match results.\n'
+                       "- **Consistency Check**: Ensure that the 'Year' and "
+                       "'Result' columns are consistent in identifying the "
+                       'most recent win.\n'
+                       '\n'
+                       '### Analysis\n'
+                       'Given the table:\n'
+                       "[['Player', 'Year', 'Round', 'Result', 'Opponent'],\n"
+                       "['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                       "'Won', 'Jelle Klaasen'],\n"
+                       "['Raymond van Barneveld', 2010, '2nd Round', 'Won', "
+                       "'Brendan Dolan'],\n"
+                       "['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                       "Anderson'],\n"
+                       "['Dean Winstanley', 2013, '2nd Round', 'Lost', "
+                       "'Vincent van der Voort'],\n"
+                       "['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                       "'James Wade'],\n"
+                       "['Terry Jenkins', 2014, '1st Round', 'Lost', 'Per "
+                       "Laursen'],\n"
+                       "['Kyle Anderson', 2014, '1st Round', 'Lost', 'Ian "
+                       "White']]\n"
+                       '\n'
+                       '1. **Filter Wins**:\n'
+                       "   - ['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                       "'Won', 'Jelle Klaasen']\n"
+                       "   - ['Raymond van Barneveld', 2010, '2nd Round', "
+                       "'Won', 'Brendan Dolan']\n"
+                       "   - ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                       "Anderson']\n"
+                       "   - ['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                       "'James Wade']\n"
+                       '\n'
+                       '2. **Most Recent Win**: The most recent year with a '
+                       'win is 2013.\n'
+                       '\n'
+                       '3. **Last Winner**: The player who won in 2013 was '
+                       "'Michael van Gerwen'.\n"
+                       '\n'
+                       '### Output\n'
+                       '**Data Analysis**: The structured data contains '
+                       'information about darts matches from 2009 to 2014. '
+                       'Filtering for wins and examining the most recent year '
+                       "(2013) shows that 'Michael van Gerwen' was the last to "
+                       "win against his opponent 'James Wade'.\n"
+                       '**Factual Answer**: Michael van Gerwen\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The final answer is: Michael van Gerwen'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "who was the last to win against his '
+                          'opponent?",\n'
+                          '  "Factual Answer": "Michael van Gerwen",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "- ['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                          "'Won', 'Jelle Klaasen']\n"
+                          "- ['Raymond van Barneveld', 2010, '2nd Round', "
+                          "'Won', 'Brendan Dolan']\n"
+                          "- ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                          "Anderson']\n"
+                          "- ['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                          "'James Wade']\n"
+                          '- **Temporal Details**: The table contains data '
+                          'from 2009 to 2014.\n'
+                          '- **Categorical Information**: Players, their '
+                          'opponents, match results (won or lost), and the '
+                          'round they played.\n'
+                          '- **Supporting Facts**: The table provides the '
+                          "'Year', 'Player', 'Result', and 'Opponent' for each "
+                          'match.\n'
+                          "- **Additional Details**: The 'Round' in which the "
+                          'match was played.\n'
+                          '- **Organized Information**: The data is structured '
+                          'by match, allowing for easy filtering and sorting.\n'
+                          '- **Data Primary**: Use the structured data as the '
+                          'main source of information since it contains '
+                          'detailed match results.\n'
+                          "- **Consistency Check**: Ensure that the 'Year' and "
+                          "'Result' columns are consistent in identifying the "
+                          'most recent win.\n'
+                          "- ['Raymond van Barneveld', 2009, 'Quarter-Final', "
+                          "'Won', 'Jelle Klaasen']\n"
+                          "- ['Raymond van Barneveld', 2010, '2nd Round', "
+                          "'Won', 'Brendan Dolan']\n"
+                          "- ['Adrian Lewis', 2011, 'Final', 'Won', 'Gary "
+                          "Anderson']\n"
+                          "- ['Michael van Gerwen', 2013, 'Semi Final', 'Won', "
+                          "'James Wade']",
+                'raw': '{\n'
+                       '  "Question": "who was the last to win against his '
+                       'opponent?",\n'
+                       '  "Factual Answer": "Michael van Gerwen",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

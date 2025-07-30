@@ -1,0 +1,414 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-1659.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many songs are less than 4 minutes in length?",
+  "Factual Answer": "7",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- 3:36
+- 3:31
+- 4:24
+- 1:10
+- 4:30
+- 4:07
+- 3:13
+- 4:00
+- 3:33
+- 4:59
+- 4:04
+- 1:22
+- 5:59
+- 4:58
+- 2:29
+- 3:36 = 3.6 minutes
+- 3:31 = 3.51 minutes
+- 4:24 = 4.4 minutes
+- 1:10 = 1.17 minutes
+- 4:30 = 4.5 minutes
+- 4:07 = 4.12 minutes
+- 3:13 = 3.22 minutes
+- 4:00 = 4 minutes
+- 3:33 = 3.55 minutes
+- 4:59 = 4.98 minutes
+- 4:04 = 4.07 minutes
+- 1:22 = 1.37 minutes
+- 5:59 = 5.98 minutes
+- 4:58 = 4.97 minutes
+- 2:29 = 2.48 minutes
+- 3:36 = 3.6 minutes (yes)
+- 3:31 = 3.51 minutes (yes)
+- 4:24 = 4.4 minutes (no)
+- 1:10 = 1.17 minutes (yes)
+- 4:30 = 4.5 minutes (no)
+- 4:07 = 4.12 minutes (no)
+- 3:13 = 3.22 minutes (yes)
+- 4:00 = 4 minutes (no)
+- 3:33 = 3.55 minutes (yes)
+- 4:59 = 4.98 minutes (no)
+- 4:04 = 4.07 minutes (no)
+- 1:22 = 1.37 minutes (yes)
+- 5:59 = 5.98 minutes (no)
+- 4:58 = 4.97 minutes (no)
+- 2:29 = 2.48 minutes (yes)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question is asking to determine the number of songs '
+                      'that are less than 4 minutes in length from the given '
+                      'table.\n'
+                      '\n'
+                      '### Step 2: Identify Relevant Data\n'
+                      'The table contains information about songs, including '
+                      'their titles, producers, featured guests, and time '
+                      "lengths. The 'Time' column is relevant to answering the "
+                      'question.\n'
+                      '\n'
+                      '### Step 3: Extract Time Information\n'
+                      "Extract the time lengths of the songs from the 'Time' "
+                      'column:\n'
+                      '- 3:36\n'
+                      '- 3:31\n'
+                      '- 4:24\n'
+                      '- 1:10\n'
+                      '- 4:30\n'
+                      '- 4:07\n'
+                      '- 3:13\n'
+                      '- 4:00\n'
+                      '- 3:33\n'
+                      '- 4:59\n'
+                      '- 4:04\n'
+                      '- 1:22\n'
+                      '- 5:59\n'
+                      '- 4:58\n'
+                      '- 2:29\n'
+                      '\n'
+                      '### Step 4: Convert Time to Minutes\n'
+                      "Convert the time from 'minutes:seconds' format to just "
+                      'minutes for comparison:\n'
+                      '- 3:36 = 3.6 minutes\n'
+                      '- 3:31 = 3.51 minutes\n'
+                      '- 4:24 = 4.4 minutes\n'
+                      '- 1:10 = 1.17 minutes\n'
+                      '- 4:30 = 4.5 minutes\n'
+                      '- 4:07 = 4.12 minutes\n'
+                      '- 3:13 = 3.22 minutes\n'
+                      '- 4:00 = 4 minutes\n'
+                      '- 3:33 = 3.55 minutes\n'
+                      '- 4:59 = 4.98 minutes\n'
+                      '- 4:04 = 4.07 minutes\n'
+                      '- 1:22 = 1.37 minutes\n'
+                      '- 5:59 = 5.98 minutes\n'
+                      '- 4:58 = 4.97 minutes\n'
+                      '- 2:29 = 2.48 minutes\n'
+                      '\n'
+                      '### Step 5: Count Songs Less Than 4 Minutes\n'
+                      'Count the number of songs with lengths less than 4 '
+                      'minutes:\n'
+                      '- 3:36 = 3.6 minutes (yes)\n'
+                      '- 3:31 = 3.51 minutes (yes)\n'
+                      '- 4:24 = 4.4 minutes (no)\n'
+                      '- 1:10 = 1.17 minutes (yes)\n'
+                      '- 4:30 = 4.5 minutes (no)\n'
+                      '- 4:07 = 4.12 minutes (no)\n'
+                      '- 3:13 = 3.22 minutes (yes)\n'
+                      '- 4:00 = 4 minutes (no)\n'
+                      '- 3:33 = 3.55 minutes (yes)\n'
+                      '- 4:59 = 4.98 minutes (no)\n'
+                      '- 4:04 = 4.07 minutes (no)\n'
+                      '- 1:22 = 1.37 minutes (yes)\n'
+                      '- 5:59 = 5.98 minutes (no)\n'
+                      '- 4:58 = 4.97 minutes (no)\n'
+                      '- 2:29 = 2.48 minutes (yes)\n'
+                      '\n'
+                      '### Step 6: Summarize Findings\n'
+                      'There are 7 songs less than 4 minutes in length.\n'
+                      '\n'
+                      '### Output\n'
+                      "**Data Analysis**: The 'Time' column in the table was "
+                      'analyzed to determine the length of each song. The '
+                      'times were converted to minutes for comparison.\n'
+                      '**Factual Answer**: 7\n'
+                      "**Source**: The 'Time' column in the provided table.",
+               'result': '### Step 1: Understand the Question\n'
+                         'The question is asking to determine the number of '
+                         'songs that are less than 4 minutes in length from '
+                         'the given table.\n'
+                         '\n'
+                         '### Step 2: Identify Relevant Data\n'
+                         'The table contains information about songs, '
+                         'including their titles, producers, featured guests, '
+                         "and time lengths. The 'Time' column is relevant to "
+                         'answering the question.\n'
+                         '\n'
+                         '### Step 3: Extract Time Information\n'
+                         'Extract the time lengths of the songs from the '
+                         "'Time' column:\n"
+                         '- 3:36\n'
+                         '- 3:31\n'
+                         '- 4:24\n'
+                         '- 1:10\n'
+                         '- 4:30\n'
+                         '- 4:07\n'
+                         '- 3:13\n'
+                         '- 4:00\n'
+                         '- 3:33\n'
+                         '- 4:59\n'
+                         '- 4:04\n'
+                         '- 1:22\n'
+                         '- 5:59\n'
+                         '- 4:58\n'
+                         '- 2:29\n'
+                         '\n'
+                         '### Step 4: Convert Time to Minutes\n'
+                         "Convert the time from 'minutes:seconds' format to "
+                         'just minutes for comparison:\n'
+                         '- 3:36 = 3.6 minutes\n'
+                         '- 3:31 = 3.51 minutes\n'
+                         '- 4:24 = 4.4 minutes\n'
+                         '- 1:10 = 1.17 minutes\n'
+                         '- 4:30 = 4.5 minutes\n'
+                         '- 4:07 = 4.12 minutes\n'
+                         '- 3:13 = 3.22 minutes\n'
+                         '- 4:00 = 4 minutes\n'
+                         '- 3:33 = 3.55 minutes\n'
+                         '- 4:59 = 4.98 minutes\n'
+                         '- 4:04 = 4.07 minutes\n'
+                         '- 1:22 = 1.37 minutes\n'
+                         '- 5:59 = 5.98 minutes\n'
+                         '- 4:58 = 4.97 minutes\n'
+                         '- 2:29 = 2.48 minutes\n'
+                         '\n'
+                         '### Step 5: Count Songs Less Than 4 Minutes\n'
+                         'Count the number of songs with lengths less than 4 '
+                         'minutes:\n'
+                         '- 3:36 = 3.6 minutes (yes)\n'
+                         '- 3:31 = 3.51 minutes (yes)\n'
+                         '- 4:24 = 4.4 minutes (no)\n'
+                         '- 1:10 = 1.17 minutes (yes)\n'
+                         '- 4:30 = 4.5 minutes (no)\n'
+                         '- 4:07 = 4.12 minutes (no)\n'
+                         '- 3:13 = 3.22 minutes (yes)\n'
+                         '- 4:00 = 4 minutes (no)\n'
+                         '- 3:33 = 3.55 minutes (yes)\n'
+                         '- 4:59 = 4.98 minutes (no)\n'
+                         '- 4:04 = 4.07 minutes (no)\n'
+                         '- 1:22 = 1.37 minutes (yes)\n'
+                         '- 5:59 = 5.98 minutes (no)\n'
+                         '- 4:58 = 4.97 minutes (no)\n'
+                         '- 2:29 = 2.48 minutes (yes)\n'
+                         '\n'
+                         '### Step 6: Summarize Findings\n'
+                         'There are 7 songs less than 4 minutes in length.\n'
+                         '\n'
+                         '### Output\n'
+                         "**Data Analysis**: The 'Time' column in the table "
+                         'was analyzed to determine the length of each song. '
+                         'The times were converted to minutes for comparison.\n'
+                         '**Factual Answer**: 7\n'
+                         "**Source**: The 'Time' column in the provided table.",
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question is asking to determine the number of songs '
+                      'that are less than 4 minutes in length from the given '
+                      'table.\n'
+                      '\n'
+                      '### Step 2: Identify Relevant Data\n'
+                      'The table contains information about songs, including '
+                      'their titles, producers, featured guests, and time '
+                      "lengths. The 'Time' column is relevant to answering the "
+                      'question.\n'
+                      '\n'
+                      '### Step 3: Extract Time Information\n'
+                      "Extract the time lengths of the songs from the 'Time' "
+                      'column:\n'
+                      '- 3:36\n'
+                      '- 3:31\n'
+                      '- 4:24\n'
+                      '- 1:10\n'
+                      '- 4:30\n'
+                      '- 4:07\n'
+                      '- 3:13\n'
+                      '- 4:00\n'
+                      '- 3:33\n'
+                      '- 4:59\n'
+                      '- 4:04\n'
+                      '- 1:22\n'
+                      '- 5:59\n'
+                      '- 4:58\n'
+                      '- 2:29\n'
+                      '\n'
+                      '### Step 4: Convert Time to Minutes\n'
+                      "Convert the time from 'minutes:seconds' format to just "
+                      'minutes for comparison:\n'
+                      '- 3:36 = 3.6 minutes\n'
+                      '- 3:31 = 3.51 minutes\n'
+                      '- 4:24 = 4.4 minutes\n'
+                      '- 1:10 = 1.17 minutes\n'
+                      '- 4:30 = 4.5 minutes\n'
+                      '- 4:07 = 4.12 minutes\n'
+                      '- 3:13 = 3.22 minutes\n'
+                      '- 4:00 = 4 minutes\n'
+                      '- 3:33 = 3.55 minutes\n'
+                      '- 4:59 = 4.98 minutes\n'
+                      '- 4:04 = 4.07 minutes\n'
+                      '- 1:22 = 1.37 minutes\n'
+                      '- 5:59 = 5.98 minutes\n'
+                      '- 4:58 = 4.97 minutes\n'
+                      '- 2:29 = 2.48 minutes\n'
+                      '\n'
+                      '### Step 5: Count Songs Less Than 4 Minutes\n'
+                      'Count the number of songs with lengths less than 4 '
+                      'minutes:\n'
+                      '- 3:36 = 3.6 minutes (yes)\n'
+                      '- 3:31 = 3.51 minutes (yes)\n'
+                      '- 4:24 = 4.4 minutes (no)\n'
+                      '- 1:10 = 1.17 minutes (yes)\n'
+                      '- 4:30 = 4.5 minutes (no)\n'
+                      '- 4:07 = 4.12 minutes (no)\n'
+                      '- 3:13 = 3.22 minutes (yes)\n'
+                      '- 4:00 = 4 minutes (no)\n'
+                      '- 3:33 = 3.55 minutes (yes)\n'
+                      '- 4:59 = 4.98 minutes (no)\n'
+                      '- 4:04 = 4.07 minutes (no)\n'
+                      '- 1:22 = 1.37 minutes (yes)\n'
+                      '- 5:59 = 5.98 minutes (no)\n'
+                      '- 4:58 = 4.97 minutes (no)\n'
+                      '- 2:29 = 2.48 minutes (yes)\n'
+                      '\n'
+                      '### Step 6: Summarize Findings\n'
+                      'There are 7 songs less than 4 minutes in length.\n'
+                      '\n'
+                      '### Output\n'
+                      "**Data Analysis**: The 'Time' column in the table was "
+                      'analyzed to determine the length of each song. The '
+                      'times were converted to minutes for comparison.\n'
+                      '**Factual Answer**: 7\n'
+                      "**Source**: The 'Time' column in the provided table."},
+ 'Contextron': {'cot': '**Text Analysis**: The text context indicates that the '
+                       'table contains information about songs, including '
+                       'their titles, producers, featured guests, and time '
+                       'lengths.',
+                'result': "**Data Support**: The 'Time' column in the table "
+                          'was analyzed to determine the length of each song. '
+                          'The times were converted to minutes for comparison. '
+                          'The data shows the following song lengths in '
+                          'minutes: 3.6, 3.51, 4.4, 1.17, 4.5, 4.12, 3.22, 4, '
+                          '3.55, 4.98, 4.07, 1.37, 5.98, 4.97, 2.48.\n'
+                          '\n'
+                          '**Factual Answer**: 7\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The analysis involved extracting the time '
+                          "information from the 'Time' column, converting "
+                          'these times to minutes, and counting the number of '
+                          'songs with lengths less than 4 minutes. The count '
+                          'revealed that 7 songs meet this criterion. The '
+                          'information was consistent across the structured '
+                          'data, and the analysis was straightforward, leading '
+                          'to a high confidence level in the answer.',
+                'raw': '**Text Analysis**: The text context indicates that the '
+                       'table contains information about songs, including '
+                       'their titles, producers, featured guests, and time '
+                       'lengths.\n'
+                       '\n'
+                       "**Data Support**: The 'Time' column in the table was "
+                       'analyzed to determine the length of each song. The '
+                       'times were converted to minutes for comparison. The '
+                       'data shows the following song lengths in minutes: 3.6, '
+                       '3.51, 4.4, 1.17, 4.5, 4.12, 3.22, 4, 3.55, 4.98, 4.07, '
+                       '1.37, 5.98, 4.97, 2.48.\n'
+                       '\n'
+                       '**Factual Answer**: 7\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The analysis involved extracting the time information '
+                       "from the 'Time' column, converting these times to "
+                       'minutes, and counting the number of songs with lengths '
+                       'less than 4 minutes. The count revealed that 7 songs '
+                       'meet this criterion. The information was consistent '
+                       'across the structured data, and the analysis was '
+                       'straightforward, leading to a high confidence level in '
+                       'the answer.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many songs are less than 4 '
+                          'minutes in length?",\n'
+                          '  "Factual Answer": "7",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- 3:36\n'
+                          '- 3:31\n'
+                          '- 4:24\n'
+                          '- 1:10\n'
+                          '- 4:30\n'
+                          '- 4:07\n'
+                          '- 3:13\n'
+                          '- 4:00\n'
+                          '- 3:33\n'
+                          '- 4:59\n'
+                          '- 4:04\n'
+                          '- 1:22\n'
+                          '- 5:59\n'
+                          '- 4:58\n'
+                          '- 2:29\n'
+                          '- 3:36 = 3.6 minutes\n'
+                          '- 3:31 = 3.51 minutes\n'
+                          '- 4:24 = 4.4 minutes\n'
+                          '- 1:10 = 1.17 minutes\n'
+                          '- 4:30 = 4.5 minutes\n'
+                          '- 4:07 = 4.12 minutes\n'
+                          '- 3:13 = 3.22 minutes\n'
+                          '- 4:00 = 4 minutes\n'
+                          '- 3:33 = 3.55 minutes\n'
+                          '- 4:59 = 4.98 minutes\n'
+                          '- 4:04 = 4.07 minutes\n'
+                          '- 1:22 = 1.37 minutes\n'
+                          '- 5:59 = 5.98 minutes\n'
+                          '- 4:58 = 4.97 minutes\n'
+                          '- 2:29 = 2.48 minutes\n'
+                          '- 3:36 = 3.6 minutes (yes)\n'
+                          '- 3:31 = 3.51 minutes (yes)\n'
+                          '- 4:24 = 4.4 minutes (no)\n'
+                          '- 1:10 = 1.17 minutes (yes)\n'
+                          '- 4:30 = 4.5 minutes (no)\n'
+                          '- 4:07 = 4.12 minutes (no)\n'
+                          '- 3:13 = 3.22 minutes (yes)\n'
+                          '- 4:00 = 4 minutes (no)\n'
+                          '- 3:33 = 3.55 minutes (yes)\n'
+                          '- 4:59 = 4.98 minutes (no)\n'
+                          '- 4:04 = 4.07 minutes (no)\n'
+                          '- 1:22 = 1.37 minutes (yes)\n'
+                          '- 5:59 = 5.98 minutes (no)\n'
+                          '- 4:58 = 4.97 minutes (no)\n'
+                          '- 2:29 = 2.48 minutes (yes)',
+                'raw': '{\n'
+                       '  "Question": "how many songs are less than 4 minutes '
+                       'in length?",\n'
+                       '  "Factual Answer": "7",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

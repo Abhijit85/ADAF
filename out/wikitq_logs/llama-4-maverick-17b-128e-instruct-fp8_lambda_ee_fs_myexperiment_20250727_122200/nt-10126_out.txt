@@ -1,0 +1,397 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-10126.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many candidates got more than 5% of the votes?",
+  "Factual Answer": "4",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- John McCain: 36%
+- Mitt Romney: 31.03%
+- Rudy Giuliani: 14.68%
+- Mike Huckabee: 13.47%
+- Ron Paul: 3.23%
+- Fred Thompson*: 1.16%
+- Alan Keyes: 0.21%
+- Duncan Hunter*: 0.15%
+- Tom Tancredo*: 0.08%
+- John McCain: 36% (> 5%)
+- Mitt Romney: 31.03% (> 5%)
+- Rudy Giuliani: 14.68% (> 5%)
+- Mike Huckabee: 13.47% (> 5%)
+- Ron Paul: 3.23% (< 5%)
+- Fred Thompson*: 1.16% (< 5%)
+- Alan Keyes: 0.21% (< 5%)
+- Duncan Hunter*: 0.15% (< 5%)
+- Tom Tancredo*: 0.08% (< 5%)
+- John McCain
+- Mitt Romney
+- Rudy Giuliani
+- Mike Huckabee
+- John McCain received 36%
+- Mitt Romney received 31.03%
+- Rudy Giuliani received 14.68%
+- Mike Huckabee received 13.47%
+- Ron Paul received 3.23%
+- Fred Thompson* received 1.16%
+- Alan Keyes received 0.21%
+- Duncan Hunter* received 0.15%
+- Tom Tancredo* received 0.08%
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many candidates got more than 5% of '
+                      'the votes?" is classified as a **Numerical Question** '
+                      'because it requires counting or calculating the number '
+                      'of candidates based on a specific condition (getting '
+                      'more than 5% of the votes).\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      'percentage of votes each candidate received and count '
+                      'how many of them have more than 5%.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to look at the '
+                      "'Percentage' column in the given table.\n"
+                      '2. **Identify Candidates with More Than 5%**: We will '
+                      "check each candidate's percentage to see if it is more "
+                      'than 5%.\n'
+                      '3. **Count Candidates**: Count the number of candidates '
+                      'who meet the criteria.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given table data:\n'
+                      '| Candidate | Votes | Percentage | Counties | Delegates '
+                      '|\n'
+                      '| --- | --- | --- | --- | --- |\n'
+                      '| John McCain | 701,761 | 36% | 45 | 57 |\n'
+                      '| Mitt Romney | 604,932 | 31.03% | 18 | 0 |\n'
+                      '| Rudy Giuliani | 286,089 | 14.68% | 0 | 0 |\n'
+                      '| Mike Huckabee | 262,681 | 13.47% | 4 | 0 |\n'
+                      '| Ron Paul | 62,887 | 3.23% | 0 | 0 |\n'
+                      '| Fred Thompson* | 22,668 | 1.16% | 0 | 0 |\n'
+                      '| Alan Keyes | 4,060 | 0.21% | 0 | 0 |\n'
+                      '| Duncan Hunter* | 2,847 | 0.15% | 0 | 0 |\n'
+                      '| Tom Tancredo* | 1,573 | 0.08% | 0 | 0 |\n'
+                      '| Totals | 1,949,498 | 100% | 67 | 57 |\n'
+                      '\n'
+                      '1. **Extract Percentage Data**:\n'
+                      '   - John McCain: 36%\n'
+                      '   - Mitt Romney: 31.03%\n'
+                      '   - Rudy Giuliani: 14.68%\n'
+                      '   - Mike Huckabee: 13.47%\n'
+                      '   - Ron Paul: 3.23%\n'
+                      '   - Fred Thompson*: 1.16%\n'
+                      '   - Alan Keyes: 0.21%\n'
+                      '   - Duncan Hunter*: 0.15%\n'
+                      '   - Tom Tancredo*: 0.08%\n'
+                      '\n'
+                      '2. **Identify Candidates with More Than 5%**:\n'
+                      '   - John McCain: 36% (> 5%)\n'
+                      '   - Mitt Romney: 31.03% (> 5%)\n'
+                      '   - Rudy Giuliani: 14.68% (> 5%)\n'
+                      '   - Mike Huckabee: 13.47% (> 5%)\n'
+                      '   - Ron Paul: 3.23% (< 5%)\n'
+                      '   - Fred Thompson*: 1.16% (< 5%)\n'
+                      '   - Alan Keyes: 0.21% (< 5%)\n'
+                      '   - Duncan Hunter*: 0.15% (< 5%)\n'
+                      '   - Tom Tancredo*: 0.08% (< 5%)\n'
+                      '\n'
+                      '3. **Count Candidates**:\n'
+                      '   - John McCain\n'
+                      '   - Mitt Romney\n'
+                      '   - Rudy Giuliani\n'
+                      '   - Mike Huckabee\n'
+                      '\n'
+                      'There are 4 candidates who got more than 5% of the '
+                      'votes.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table provides the percentage of '
+                      'votes received by each candidate. By examining the '
+                      "'Percentage' column, we identified the candidates who "
+                      'received more than 5% of the votes.\n'
+                      '**Factual Answer**: 4\n'
+                      "**Source**: The 'Percentage' column in the given table.",
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many candidates got more than 5% '
+                         'of the votes?" is classified as a **Numerical '
+                         'Question** because it requires counting or '
+                         'calculating the number of candidates based on a '
+                         'specific condition (getting more than 5% of the '
+                         'votes).\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         'percentage of votes each candidate received and '
+                         'count how many of them have more than 5%.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract Relevant Data**: We need to look at the '
+                         "'Percentage' column in the given table.\n"
+                         '2. **Identify Candidates with More Than 5%**: We '
+                         "will check each candidate's percentage to see if it "
+                         'is more than 5%.\n'
+                         '3. **Count Candidates**: Count the number of '
+                         'candidates who meet the criteria.\n'
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given table data:\n'
+                         '| Candidate | Votes | Percentage | Counties | '
+                         'Delegates |\n'
+                         '| --- | --- | --- | --- | --- |\n'
+                         '| John McCain | 701,761 | 36% | 45 | 57 |\n'
+                         '| Mitt Romney | 604,932 | 31.03% | 18 | 0 |\n'
+                         '| Rudy Giuliani | 286,089 | 14.68% | 0 | 0 |\n'
+                         '| Mike Huckabee | 262,681 | 13.47% | 4 | 0 |\n'
+                         '| Ron Paul | 62,887 | 3.23% | 0 | 0 |\n'
+                         '| Fred Thompson* | 22,668 | 1.16% | 0 | 0 |\n'
+                         '| Alan Keyes | 4,060 | 0.21% | 0 | 0 |\n'
+                         '| Duncan Hunter* | 2,847 | 0.15% | 0 | 0 |\n'
+                         '| Tom Tancredo* | 1,573 | 0.08% | 0 | 0 |\n'
+                         '| Totals | 1,949,498 | 100% | 67 | 57 |\n'
+                         '\n'
+                         '1. **Extract Percentage Data**:\n'
+                         '   - John McCain: 36%\n'
+                         '   - Mitt Romney: 31.03%\n'
+                         '   - Rudy Giuliani: 14.68%\n'
+                         '   - Mike Huckabee: 13.47%\n'
+                         '   - Ron Paul: 3.23%\n'
+                         '   - Fred Thompson*: 1.16%\n'
+                         '   - Alan Keyes: 0.21%\n'
+                         '   - Duncan Hunter*: 0.15%\n'
+                         '   - Tom Tancredo*: 0.08%\n'
+                         '\n'
+                         '2. **Identify Candidates with More Than 5%**:\n'
+                         '   - John McCain: 36% (> 5%)\n'
+                         '   - Mitt Romney: 31.03% (> 5%)\n'
+                         '   - Rudy Giuliani: 14.68% (> 5%)\n'
+                         '   - Mike Huckabee: 13.47% (> 5%)\n'
+                         '   - Ron Paul: 3.23% (< 5%)\n'
+                         '   - Fred Thompson*: 1.16% (< 5%)\n'
+                         '   - Alan Keyes: 0.21% (< 5%)\n'
+                         '   - Duncan Hunter*: 0.15% (< 5%)\n'
+                         '   - Tom Tancredo*: 0.08% (< 5%)\n'
+                         '\n'
+                         '3. **Count Candidates**:\n'
+                         '   - John McCain\n'
+                         '   - Mitt Romney\n'
+                         '   - Rudy Giuliani\n'
+                         '   - Mike Huckabee\n'
+                         '\n'
+                         'There are 4 candidates who got more than 5% of the '
+                         'votes.\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The table provides the percentage '
+                         'of votes received by each candidate. By examining '
+                         "the 'Percentage' column, we identified the "
+                         'candidates who received more than 5% of the votes.\n'
+                         '**Factual Answer**: 4\n'
+                         "**Source**: The 'Percentage' column in the given "
+                         'table.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many candidates got more than 5% of '
+                      'the votes?" is classified as a **Numerical Question** '
+                      'because it requires counting or calculating the number '
+                      'of candidates based on a specific condition (getting '
+                      'more than 5% of the votes).\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      'percentage of votes each candidate received and count '
+                      'how many of them have more than 5%.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to look at the '
+                      "'Percentage' column in the given table.\n"
+                      '2. **Identify Candidates with More Than 5%**: We will '
+                      "check each candidate's percentage to see if it is more "
+                      'than 5%.\n'
+                      '3. **Count Candidates**: Count the number of candidates '
+                      'who meet the criteria.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given table data:\n'
+                      '| Candidate | Votes | Percentage | Counties | Delegates '
+                      '|\n'
+                      '| --- | --- | --- | --- | --- |\n'
+                      '| John McCain | 701,761 | 36% | 45 | 57 |\n'
+                      '| Mitt Romney | 604,932 | 31.03% | 18 | 0 |\n'
+                      '| Rudy Giuliani | 286,089 | 14.68% | 0 | 0 |\n'
+                      '| Mike Huckabee | 262,681 | 13.47% | 4 | 0 |\n'
+                      '| Ron Paul | 62,887 | 3.23% | 0 | 0 |\n'
+                      '| Fred Thompson* | 22,668 | 1.16% | 0 | 0 |\n'
+                      '| Alan Keyes | 4,060 | 0.21% | 0 | 0 |\n'
+                      '| Duncan Hunter* | 2,847 | 0.15% | 0 | 0 |\n'
+                      '| Tom Tancredo* | 1,573 | 0.08% | 0 | 0 |\n'
+                      '| Totals | 1,949,498 | 100% | 67 | 57 |\n'
+                      '\n'
+                      '1. **Extract Percentage Data**:\n'
+                      '   - John McCain: 36%\n'
+                      '   - Mitt Romney: 31.03%\n'
+                      '   - Rudy Giuliani: 14.68%\n'
+                      '   - Mike Huckabee: 13.47%\n'
+                      '   - Ron Paul: 3.23%\n'
+                      '   - Fred Thompson*: 1.16%\n'
+                      '   - Alan Keyes: 0.21%\n'
+                      '   - Duncan Hunter*: 0.15%\n'
+                      '   - Tom Tancredo*: 0.08%\n'
+                      '\n'
+                      '2. **Identify Candidates with More Than 5%**:\n'
+                      '   - John McCain: 36% (> 5%)\n'
+                      '   - Mitt Romney: 31.03% (> 5%)\n'
+                      '   - Rudy Giuliani: 14.68% (> 5%)\n'
+                      '   - Mike Huckabee: 13.47% (> 5%)\n'
+                      '   - Ron Paul: 3.23% (< 5%)\n'
+                      '   - Fred Thompson*: 1.16% (< 5%)\n'
+                      '   - Alan Keyes: 0.21% (< 5%)\n'
+                      '   - Duncan Hunter*: 0.15% (< 5%)\n'
+                      '   - Tom Tancredo*: 0.08% (< 5%)\n'
+                      '\n'
+                      '3. **Count Candidates**:\n'
+                      '   - John McCain\n'
+                      '   - Mitt Romney\n'
+                      '   - Rudy Giuliani\n'
+                      '   - Mike Huckabee\n'
+                      '\n'
+                      'There are 4 candidates who got more than 5% of the '
+                      'votes.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table provides the percentage of '
+                      'votes received by each candidate. By examining the '
+                      "'Percentage' column, we identified the candidates who "
+                      'received more than 5% of the votes.\n'
+                      '**Factual Answer**: 4\n'
+                      "**Source**: The 'Percentage' column in the given "
+                      'table.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how many candidates '
+                       'got more than 5% of the votes?" requires analyzing the '
+                       'percentage of votes received by each candidate. The '
+                       'text context indicates that the relevant data is in '
+                       'the table from "csv/204-csv/951.csv".',
+                'result': '**Data Support**: The structured data provides the '
+                          'percentage of votes for each candidate. The '
+                          "'Percentage' column shows that:\n"
+                          '- John McCain received 36%\n'
+                          '- Mitt Romney received 31.03%\n'
+                          '- Rudy Giuliani received 14.68%\n'
+                          '- Mike Huckabee received 13.47%\n'
+                          '- Ron Paul received 3.23%\n'
+                          '- Fred Thompson* received 1.16%\n'
+                          '- Alan Keyes received 0.21%\n'
+                          '- Duncan Hunter* received 0.15%\n'
+                          '- Tom Tancredo* received 0.08%\n'
+                          '\n'
+                          "**Factual Analysis**: By examining the 'Percentage' "
+                          'column, we identified that 4 candidates (John '
+                          'McCain, Mitt Romney, Rudy Giuliani, and Mike '
+                          'Huckabee) received more than 5% of the votes.\n'
+                          '\n'
+                          '**Factual Answer**: 4\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The information is accurate, complete, and clearly '
+                          'presented. The structured data directly supports '
+                          'the answer, making it highly confident.',
+                'raw': '**Text Analysis**: The question "how many candidates '
+                       'got more than 5% of the votes?" requires analyzing the '
+                       'percentage of votes received by each candidate. The '
+                       'text context indicates that the relevant data is in '
+                       'the table from "csv/204-csv/951.csv".\n'
+                       '\n'
+                       '**Data Support**: The structured data provides the '
+                       'percentage of votes for each candidate. The '
+                       "'Percentage' column shows that:\n"
+                       '- John McCain received 36%\n'
+                       '- Mitt Romney received 31.03%\n'
+                       '- Rudy Giuliani received 14.68%\n'
+                       '- Mike Huckabee received 13.47%\n'
+                       '- Ron Paul received 3.23%\n'
+                       '- Fred Thompson* received 1.16%\n'
+                       '- Alan Keyes received 0.21%\n'
+                       '- Duncan Hunter* received 0.15%\n'
+                       '- Tom Tancredo* received 0.08%\n'
+                       '\n'
+                       "**Factual Analysis**: By examining the 'Percentage' "
+                       'column, we identified that 4 candidates (John McCain, '
+                       'Mitt Romney, Rudy Giuliani, and Mike Huckabee) '
+                       'received more than 5% of the votes.\n'
+                       '\n'
+                       '**Factual Answer**: 4\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The information is accurate, complete, and clearly '
+                       'presented. The structured data directly supports the '
+                       'answer, making it highly confident.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many candidates got more than 5% '
+                          'of the votes?",\n'
+                          '  "Factual Answer": "4",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- John McCain: 36%\n'
+                          '- Mitt Romney: 31.03%\n'
+                          '- Rudy Giuliani: 14.68%\n'
+                          '- Mike Huckabee: 13.47%\n'
+                          '- Ron Paul: 3.23%\n'
+                          '- Fred Thompson*: 1.16%\n'
+                          '- Alan Keyes: 0.21%\n'
+                          '- Duncan Hunter*: 0.15%\n'
+                          '- Tom Tancredo*: 0.08%\n'
+                          '- John McCain: 36% (> 5%)\n'
+                          '- Mitt Romney: 31.03% (> 5%)\n'
+                          '- Rudy Giuliani: 14.68% (> 5%)\n'
+                          '- Mike Huckabee: 13.47% (> 5%)\n'
+                          '- Ron Paul: 3.23% (< 5%)\n'
+                          '- Fred Thompson*: 1.16% (< 5%)\n'
+                          '- Alan Keyes: 0.21% (< 5%)\n'
+                          '- Duncan Hunter*: 0.15% (< 5%)\n'
+                          '- Tom Tancredo*: 0.08% (< 5%)\n'
+                          '- John McCain\n'
+                          '- Mitt Romney\n'
+                          '- Rudy Giuliani\n'
+                          '- Mike Huckabee\n'
+                          '- John McCain received 36%\n'
+                          '- Mitt Romney received 31.03%\n'
+                          '- Rudy Giuliani received 14.68%\n'
+                          '- Mike Huckabee received 13.47%\n'
+                          '- Ron Paul received 3.23%\n'
+                          '- Fred Thompson* received 1.16%\n'
+                          '- Alan Keyes received 0.21%\n'
+                          '- Duncan Hunter* received 0.15%\n'
+                          '- Tom Tancredo* received 0.08%',
+                'raw': '{\n'
+                       '  "Question": "how many candidates got more than 5% of '
+                       'the votes?",\n'
+                       '  "Factual Answer": "4",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}
