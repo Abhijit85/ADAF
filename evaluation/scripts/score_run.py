@@ -28,6 +28,11 @@ def main(argv=None):
         from scoring.basic import exact_match, f1_score  # type: ignore
 
     try:
+        from evaluation.scripts.scoring.answer_type_aware import exact_match_answer_type_aware, f1_score_answer_type_aware  # type: ignore
+    except ModuleNotFoundError:
+        from scoring.answer_type_aware import exact_match_answer_type_aware, f1_score_answer_type_aware  # type: ignore
+
+    try:
         from evaluation.scripts.scoring.cae import cae_score  # type: ignore
     except ModuleNotFoundError:
         from scoring.cae import cae_score  # type: ignore
@@ -131,9 +136,14 @@ def main(argv=None):
                     # Combined source: balanced approach
                     pass
         else:
-            # Standard scoring for other datasets
-            em = exact_match(g, p)
-            f1 = f1_score(g, p)
+            # Use answer-type-aware scoring for TATQA, standard scoring for others
+            if dataset_name == "tatqa":
+                em = exact_match_answer_type_aware(g, p, atype)
+                f1 = f1_score_answer_type_aware(g, p, atype)
+            else:
+                # Standard scoring for other datasets
+                em = exact_match(g, p)
+                f1 = f1_score(g, p)
             rec["exact_match"] = em
             rec["f1"] = f1
         

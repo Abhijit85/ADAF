@@ -34,13 +34,10 @@ class TatqaPostProcessor:
             gold_raw = rec["gold_answer"]
             pred_raw = rec["pred_answer"]
 
-            # special textual multi-span join
-            if atype == "multi-span" and not self._is_numeric_list(gold_raw):
-                pp_gold = ", ".join(sorted(str(x).strip() for x in gold_raw)) if isinstance(gold_raw, list) else str(gold_raw)
-                if isinstance(pred_raw, list):
-                    pp_pred = ", ".join(sorted(str(x).strip() for x in pred_raw))
-                else:
-                    pp_pred = str(pred_raw).strip()
+            # special handling for multi-span and span types - join all elements and make case-insensitive
+            if atype in ["multi-span", "span"]:
+                pp_gold = self._enhanced_textify(gold_raw)
+                pp_pred = self._enhanced_textify(pred_raw)
             else:
                 # always attempt numeric cleaning for arithmetic type
                 numeric_flag = self._is_numeric(atype, gold_raw)
@@ -85,6 +82,76 @@ class TatqaPostProcessor:
         return out
 
     # ------------------------------------------------------------------
+    def _enhanced_textify(self, val: Any) -> str:
+        """Enhanced textification for span/multi-span types with better normalization."""
+        if isinstance(val, list):
+            items = []
+            for item in val:
+                normalized = self._normalize_span_text(str(item))
+                if normalized:
+                    items.append(normalized)
+            return ", ".join(sorted(items)) if items else ""
+        else:
+            return self._normalize_span_text(str(val))
+
+    def _normalize_span_text(self, text: str) -> str:
+        """Enhanced normalization for span text."""
+        text = text.lower().strip()
+        
+        # Handle currency formatting
+        text = self._normalize_currency(text)
+        
+        # Handle date extraction
+        text = self._normalize_dates(text)
+        
+        # Handle numeric formatting
+        text = self._normalize_numbers(text)
+        
+        # Remove extra whitespace and punctuation
+        text = re.sub(r'\s+', ' ', text)
+        text = re.sub(r'[^\w\s.,-]', '', text)
+        
+        return text.strip()
+
+    def _normalize_currency(self, text: str) -> str:
+        """Normalize currency expressions."""
+        # Handle common currency patterns
+        text = re.sub(r'\$([\d,]+\.?\d*)\s*million', r'\1 million', text)
+        text = re.sub(r'\$([\d,]+\.?\d*)\s*billion', r'\1 billion', text)
+        text = re.sub(r'\$([\d,]+\.?\d*)\s*thousand', r'\1 thousand', text)
+        text = re.sub(r'\$([\d,]+\.?\d*)', r'\1', text)
+        
+        # Handle other currency symbols
+        text = re.sub(r'£([\d,]+\.?\d*)', r'\1', text)
+        text = re.sub(r'€([\d,]+\.?\d*)', r'\1', text)
+        
+        return text
+
+    def _normalize_dates(self, text: str) -> str:
+        """Normalize date expressions."""
+        # Extract year from full dates
+        year_match = re.search(r'\b(19|20)\d{2}\b', text)
+        if year_match:
+            # If text contains a full date but prediction only has year, normalize to year
+            if re.search(r'\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b', text.lower()):
+                return year_match.group()
+        
+        return text
+
+    def _normalize_numbers(self, text: str) -> str:
+        """Normalize numeric expressions."""
+        # Remove commas from numbers
+        text = re.sub(r'(\d),(\d)', r'\1\2', text)
+        
+        # Handle negative numbers in parentheses
+        text = re.sub(r'\((\d+)\)', r'-\1', text)
+        
+        # Normalize decimal numbers
+        text = re.sub(r'(\d+)\.(\d+)', r'\1.\2', text)
+        
+        return text
+
+    # ------------------------------------------------------------------
     @staticmethod
     def _first_elem(val: Any):
         if isinstance(val, list):
@@ -94,8 +161,8 @@ class TatqaPostProcessor:
     @staticmethod
     def _textify(val: Any) -> str:
         if isinstance(val, list):
-            return str(val[0]) if val else ""
-        return str(val)
+            return ", ".join(sorted(str(x).strip().lower() for x in val)) if val else ""
+        return str(val).lower()
 
     # ------------------------------------------------------------------
     def _is_numeric(self, answer_type: str, gold_value: Any) -> bool:

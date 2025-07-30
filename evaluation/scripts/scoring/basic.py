@@ -46,16 +46,12 @@ def exact_match(gold: str, pred: str) -> int:
     if not g or not p:
         return 0
     
-    # Check if one is contained in the other (bidirectional)
-    if len(g) >= len(p):
-        if p in g:
-            return 1
-    else:
-        if g in p:
-            return 1
+    # Check if all gold elements are in prediction (unidirectional)
+    if g in p:
+        return 1
     
-    # Enhanced containment check: check if key phrases match
-    # Split into words and check if most gold words appear in pred
+    # Enhanced containment check: check if all gold words appear in pred
+    # Split into words and check if all gold words appear in prediction
     g_words = set(g.split())
     p_words = set(p.split())
     
@@ -65,16 +61,16 @@ def exact_match(gold: str, pred: str) -> int:
         if len(common_words) / len(g_words) >= 1.0:
             return 1
     
-    # Entity-based matching
-    entity_overlap = _entity_overlap(gold, pred)
-    if entity_overlap >= 1.0:  # High entity overlap
+    # Entity-based matching - check if all gold entities are in prediction
+    gold_entities = set(_extract_entities(gold))
+    pred_entities = set(_extract_entities(pred))
+    
+    if gold_entities and len(gold_entities & pred_entities) == len(gold_entities):
         return 1
     
-    # Fallback: alnum-only containment
+    # Fallback: alnum-only containment - only check if gold is in prediction
     flat_g = re.sub(r"[^a-z0-9]", "", g)
     flat_p = re.sub(r"[^a-z0-9]", "", p)
-    if len(flat_g) >= len(flat_p):
-        return int(flat_p in flat_g)
     return int(flat_g in flat_p)
 
 def f1_score(gold: str, pred: str) -> float:

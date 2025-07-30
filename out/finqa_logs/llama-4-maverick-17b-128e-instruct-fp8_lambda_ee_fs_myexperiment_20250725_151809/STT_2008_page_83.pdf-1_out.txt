@@ -1,0 +1,421 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+
+=== FINAL SUMMARY ===
+
+{
+"Question": "what is the average variance of the value at risk of each 2008 section? ( $ )",
+"Calculation": "For Foreign exchange products: Variance = 3.3353, For Interest-rate products: Variance = 0.5757. Average Variance = (3.3353 + 0.5757) / 2 = 1.9555",
+"Answer": "$1.96",
+"Source": "Combined"
+}
+
+Answer Echoes:
+- Foreign exchange products: Annual Average = $1.8, Maximum = $4.7, Minimum = $0.3
+- Interest-rate products: Annual Average = $1.1, Maximum = $2.4, Minimum = $0.6
+- Values = [$4.7, $0.3, $1.8]
+- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667
+- Variance = Σ(xi - μ)² / N = [($4.7-$2.2667)² + ($0.3-$2.2667)² + ($1.8-$2.2667)²] / 3
+- Variance = [($2.4333)² + (-$1.9667)² + (-$0.4667)²] / 3
+- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / 3 = 3.3353
+- Values = [$2.4, $0.6, $1.1]
+- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667
+- Variance = Σ(xi - μ)² / N = [($2.4-$1.3667)² + ($0.6-$1.3667)² + ($1.1-$1.3667)²] / 3
+- Variance = [($1.0333)² + (-$0.7667)² + (-$0.2667)²] / 3
+- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / 3 = 0.5757
+- Foreign exchange products: Annual Average = $1.8, Maximum = $4.7, Minimum = $0.3
+- Interest-rate products: Annual Average = $1.1, Maximum = $2.4, Minimum = $0.6
+- Values = [$4.7, $0.3, $1.8]
+- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667
+- Variance = [($4.7-$2.2667)² + ($0.3-$2.2667)² + ($1.8-$2.2667)²] / 3
+- Variance = [($2.4333)² + (-$1.9667)² + (-$0.4667)²] / 3
+- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / 3 = 3.3353
+- Values = [$2.4, $0.6, $1.1]
+- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667
+- Variance = [($2.4-$1.3667)² + ($0.6-$1.3667)² + ($1.1-$1.3667)²] / 3
+- Variance = [($1.0333)² + (-$0.7667)² + (-$0.2667)²] / 3
+- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / 3 = 0.5757
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': 'To solve the given problem, we first need to understand '
+                      'what is being asked: "what is the average variance of '
+                      'the value at risk of each 2008 section?"\n'
+                      '\n'
+                      '## Step 1: Identify the relevant data for 2008\n'
+                      "The table provides data for 'Foreign exchange products' "
+                      "and 'Interest-rate products' for the years 2008 and "
+                      '2007. For 2008, the values are:\n'
+                      '- Foreign exchange products: Annual Average = $1.8, '
+                      'Maximum = $4.7, Minimum = $0.3\n'
+                      '- Interest-rate products: Annual Average = $1.1, '
+                      'Maximum = $2.4, Minimum = $0.6\n'
+                      '\n'
+                      '## Step 2: Calculate the variance for each product in '
+                      '2008\n'
+                      'To calculate variance, we first need to understand that '
+                      'the "value at risk" (VaR) is not directly given, but we '
+                      'can infer that the variance here relates to the range '
+                      'or the maximum, minimum, and average values provided.\n'
+                      '\n'
+                      "For each product, we'll calculate the variance using "
+                      'the formula for sample variance. However, given the '
+                      'data, a common approach to estimate variance when only '
+                      'minimum, maximum, and average are available is to use '
+                      "the range rule. But, let's directly calculate the "
+                      'variance using the given three values (Average, '
+                      'Maximum, Minimum) as a representation of the '
+                      'distribution.\n'
+                      '\n'
+                      "First, let's directly compute the variance for the "
+                      'given values.\n'
+                      '\n'
+                      '## Step 3: Compute variance for Foreign exchange '
+                      'products and Interest-rate products\n'
+                      "To simplify, let's treat the given three values "
+                      '(Maximum, Minimum, Average) as representative data '
+                      'points for calculating variance.\n'
+                      '\n'
+                      'For Foreign exchange products:\n'
+                      '- Values = [$4.7, $0.3, $1.8]\n'
+                      '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                      '- Variance = Σ(xi - μ)² / N = [($4.7-$2.2667)² + '
+                      '($0.3-$2.2667)² + ($1.8-$2.2667)²] / 3\n'
+                      '- Variance = [($2.4333)² + (-$1.9667)² + (-$0.4667)²] / '
+                      '3\n'
+                      '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / 3 = '
+                      '3.3353\n'
+                      '\n'
+                      'For Interest-rate products:\n'
+                      '- Values = [$2.4, $0.6, $1.1]\n'
+                      '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                      '- Variance = Σ(xi - μ)² / N = [($2.4-$1.3667)² + '
+                      '($0.6-$1.3667)² + ($1.1-$1.3667)²] / 3\n'
+                      '- Variance = [($1.0333)² + (-$0.7667)² + (-$0.2667)²] / '
+                      '3\n'
+                      '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / 3 = '
+                      '0.5757\n'
+                      '\n'
+                      '## Step 4: Calculate the average variance\n'
+                      'Average Variance = (Variance of Foreign exchange '
+                      'products + Variance of Interest-rate products) / 2\n'
+                      'Average Variance = (3.3353 + 0.5757) / 2 = 3.911 / 2 = '
+                      '1.9555\n'
+                      '\n'
+                      '## Step 5: Provide the final answer\n'
+                      '**Calculation**: Average Variance = (3.3353 + 0.5757) / '
+                      '2 = 1.9555\n'
+                      '**Answer**: 1.96',
+               'result': 'To solve the given problem, we first need to '
+                         'understand what is being asked: "what is the average '
+                         'variance of the value at risk of each 2008 '
+                         'section?"\n'
+                         '\n'
+                         '## Step 1: Identify the relevant data for 2008\n'
+                         "The table provides data for 'Foreign exchange "
+                         "products' and 'Interest-rate products' for the years "
+                         '2008 and 2007. For 2008, the values are:\n'
+                         '- Foreign exchange products: Annual Average = $1.8, '
+                         'Maximum = $4.7, Minimum = $0.3\n'
+                         '- Interest-rate products: Annual Average = $1.1, '
+                         'Maximum = $2.4, Minimum = $0.6\n'
+                         '\n'
+                         '## Step 2: Calculate the variance for each product '
+                         'in 2008\n'
+                         'To calculate variance, we first need to understand '
+                         'that the "value at risk" (VaR) is not directly '
+                         'given, but we can infer that the variance here '
+                         'relates to the range or the maximum, minimum, and '
+                         'average values provided.\n'
+                         '\n'
+                         "For each product, we'll calculate the variance using "
+                         'the formula for sample variance. However, given the '
+                         'data, a common approach to estimate variance when '
+                         'only minimum, maximum, and average are available is '
+                         "to use the range rule. But, let's directly calculate "
+                         'the variance using the given three values (Average, '
+                         'Maximum, Minimum) as a representation of the '
+                         'distribution.\n'
+                         '\n'
+                         "First, let's directly compute the variance for the "
+                         'given values.\n'
+                         '\n'
+                         '## Step 3: Compute variance for Foreign exchange '
+                         'products and Interest-rate products\n'
+                         "To simplify, let's treat the given three values "
+                         '(Maximum, Minimum, Average) as representative data '
+                         'points for calculating variance.\n'
+                         '\n'
+                         'For Foreign exchange products:\n'
+                         '- Values = [$4.7, $0.3, $1.8]\n'
+                         '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                         '- Variance = Σ(xi - μ)² / N = [($4.7-$2.2667)² + '
+                         '($0.3-$2.2667)² + ($1.8-$2.2667)²] / 3\n'
+                         '- Variance = [($2.4333)² + (-$1.9667)² + '
+                         '(-$0.4667)²] / 3\n'
+                         '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / '
+                         '3 = 3.3353\n'
+                         '\n'
+                         'For Interest-rate products:\n'
+                         '- Values = [$2.4, $0.6, $1.1]\n'
+                         '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                         '- Variance = Σ(xi - μ)² / N = [($2.4-$1.3667)² + '
+                         '($0.6-$1.3667)² + ($1.1-$1.3667)²] / 3\n'
+                         '- Variance = [($1.0333)² + (-$0.7667)² + '
+                         '(-$0.2667)²] / 3\n'
+                         '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / 3 '
+                         '= 0.5757\n'
+                         '\n'
+                         '## Step 4: Calculate the average variance\n'
+                         'Average Variance = (Variance of Foreign exchange '
+                         'products + Variance of Interest-rate products) / 2\n'
+                         'Average Variance = (3.3353 + 0.5757) / 2 = 3.911 / 2 '
+                         '= 1.9555\n'
+                         '\n'
+                         '## Step 5: Provide the final answer\n'
+                         '**Calculation**: Average Variance = (3.3353 + '
+                         '0.5757) / 2 = 1.9555\n'
+                         '**Answer**: 1.96',
+               'raw': 'To solve the given problem, we first need to understand '
+                      'what is being asked: "what is the average variance of '
+                      'the value at risk of each 2008 section?"\n'
+                      '\n'
+                      '## Step 1: Identify the relevant data for 2008\n'
+                      "The table provides data for 'Foreign exchange products' "
+                      "and 'Interest-rate products' for the years 2008 and "
+                      '2007. For 2008, the values are:\n'
+                      '- Foreign exchange products: Annual Average = $1.8, '
+                      'Maximum = $4.7, Minimum = $0.3\n'
+                      '- Interest-rate products: Annual Average = $1.1, '
+                      'Maximum = $2.4, Minimum = $0.6\n'
+                      '\n'
+                      '## Step 2: Calculate the variance for each product in '
+                      '2008\n'
+                      'To calculate variance, we first need to understand that '
+                      'the "value at risk" (VaR) is not directly given, but we '
+                      'can infer that the variance here relates to the range '
+                      'or the maximum, minimum, and average values provided.\n'
+                      '\n'
+                      "For each product, we'll calculate the variance using "
+                      'the formula for sample variance. However, given the '
+                      'data, a common approach to estimate variance when only '
+                      'minimum, maximum, and average are available is to use '
+                      "the range rule. But, let's directly calculate the "
+                      'variance using the given three values (Average, '
+                      'Maximum, Minimum) as a representation of the '
+                      'distribution.\n'
+                      '\n'
+                      "First, let's directly compute the variance for the "
+                      'given values.\n'
+                      '\n'
+                      '## Step 3: Compute variance for Foreign exchange '
+                      'products and Interest-rate products\n'
+                      "To simplify, let's treat the given three values "
+                      '(Maximum, Minimum, Average) as representative data '
+                      'points for calculating variance.\n'
+                      '\n'
+                      'For Foreign exchange products:\n'
+                      '- Values = [$4.7, $0.3, $1.8]\n'
+                      '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                      '- Variance = Σ(xi - μ)² / N = [($4.7-$2.2667)² + '
+                      '($0.3-$2.2667)² + ($1.8-$2.2667)²] / 3\n'
+                      '- Variance = [($2.4333)² + (-$1.9667)² + (-$0.4667)²] / '
+                      '3\n'
+                      '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / 3 = '
+                      '3.3353\n'
+                      '\n'
+                      'For Interest-rate products:\n'
+                      '- Values = [$2.4, $0.6, $1.1]\n'
+                      '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                      '- Variance = Σ(xi - μ)² / N = [($2.4-$1.3667)² + '
+                      '($0.6-$1.3667)² + ($1.1-$1.3667)²] / 3\n'
+                      '- Variance = [($1.0333)² + (-$0.7667)² + (-$0.2667)²] / '
+                      '3\n'
+                      '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / 3 = '
+                      '0.5757\n'
+                      '\n'
+                      '## Step 4: Calculate the average variance\n'
+                      'Average Variance = (Variance of Foreign exchange '
+                      'products + Variance of Interest-rate products) / 2\n'
+                      'Average Variance = (3.3353 + 0.5757) / 2 = 3.911 / 2 = '
+                      '1.9555\n'
+                      '\n'
+                      '## Step 5: Provide the final answer\n'
+                      '**Calculation**: Average Variance = (3.3353 + 0.5757) / '
+                      '2 = 1.9555\n'
+                      '**Answer**: 1.96'},
+ 'Contextron': {'cot': '## Step 1: Understand the problem and identify the '
+                       'relevant data\n'
+                       'The task is to calculate the average variance of the '
+                       'value at risk (VaR) for each 2008 section. The '
+                       "relevant data is provided in the table for 'Foreign "
+                       "exchange products' and 'Interest-rate products' for "
+                       'the year 2008.',
+                'result': '## Step 2: Extract the necessary data from the '
+                          'table for 2008\n'
+                          'For 2008, the values are:\n'
+                          '- Foreign exchange products: Annual Average = $1.8, '
+                          'Maximum = $4.7, Minimum = $0.3\n'
+                          '- Interest-rate products: Annual Average = $1.1, '
+                          'Maximum = $2.4, Minimum = $0.6\n'
+                          '\n'
+                          '## Step 3: Calculate the variance for each product '
+                          'in 2008\n'
+                          "To simplify, we'll treat the given three values "
+                          '(Maximum, Minimum, Average) as representative data '
+                          'points for calculating variance.\n'
+                          '\n'
+                          'For Foreign exchange products:\n'
+                          '- Values = [$4.7, $0.3, $1.8]\n'
+                          '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                          '- Variance = [($4.7-$2.2667)² + ($0.3-$2.2667)² + '
+                          '($1.8-$2.2667)²] / 3\n'
+                          '- Variance = [($2.4333)² + (-$1.9667)² + '
+                          '(-$0.4667)²] / 3\n'
+                          '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / '
+                          '3 = 3.3353\n'
+                          '\n'
+                          'For Interest-rate products:\n'
+                          '- Values = [$2.4, $0.6, $1.1]\n'
+                          '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                          '- Variance = [($2.4-$1.3667)² + ($0.6-$1.3667)² + '
+                          '($1.1-$1.3667)²] / 3\n'
+                          '- Variance = [($1.0333)² + (-$0.7667)² + '
+                          '(-$0.2667)²] / 3\n'
+                          '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / '
+                          '3 = 0.5757\n'
+                          '\n'
+                          '## Step 4: Calculate the average variance\n'
+                          'Average Variance = (Variance of Foreign exchange '
+                          'products + Variance of Interest-rate products) / 2\n'
+                          'Average Variance = (3.3353 + 0.5757) / 2 = 3.911 / '
+                          '2 = 1.9555\n'
+                          '\n'
+                          '## Step 5: Provide the final answer\n'
+                          'The final answer is: $\\boxed{1.96}$',
+                'raw': '## Step 1: Understand the problem and identify the '
+                       'relevant data\n'
+                       'The task is to calculate the average variance of the '
+                       'value at risk (VaR) for each 2008 section. The '
+                       "relevant data is provided in the table for 'Foreign "
+                       "exchange products' and 'Interest-rate products' for "
+                       'the year 2008.\n'
+                       '\n'
+                       '## Step 2: Extract the necessary data from the table '
+                       'for 2008\n'
+                       'For 2008, the values are:\n'
+                       '- Foreign exchange products: Annual Average = $1.8, '
+                       'Maximum = $4.7, Minimum = $0.3\n'
+                       '- Interest-rate products: Annual Average = $1.1, '
+                       'Maximum = $2.4, Minimum = $0.6\n'
+                       '\n'
+                       '## Step 3: Calculate the variance for each product in '
+                       '2008\n'
+                       "To simplify, we'll treat the given three values "
+                       '(Maximum, Minimum, Average) as representative data '
+                       'points for calculating variance.\n'
+                       '\n'
+                       'For Foreign exchange products:\n'
+                       '- Values = [$4.7, $0.3, $1.8]\n'
+                       '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                       '- Variance = [($4.7-$2.2667)² + ($0.3-$2.2667)² + '
+                       '($1.8-$2.2667)²] / 3\n'
+                       '- Variance = [($2.4333)² + (-$1.9667)² + (-$0.4667)²] '
+                       '/ 3\n'
+                       '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / 3 '
+                       '= 3.3353\n'
+                       '\n'
+                       'For Interest-rate products:\n'
+                       '- Values = [$2.4, $0.6, $1.1]\n'
+                       '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                       '- Variance = [($2.4-$1.3667)² + ($0.6-$1.3667)² + '
+                       '($1.1-$1.3667)²] / 3\n'
+                       '- Variance = [($1.0333)² + (-$0.7667)² + (-$0.2667)²] '
+                       '/ 3\n'
+                       '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / 3 = '
+                       '0.5757\n'
+                       '\n'
+                       '## Step 4: Calculate the average variance\n'
+                       'Average Variance = (Variance of Foreign exchange '
+                       'products + Variance of Interest-rate products) / 2\n'
+                       'Average Variance = (3.3353 + 0.5757) / 2 = 3.911 / 2 = '
+                       '1.9555\n'
+                       '\n'
+                       '## Step 5: Provide the final answer\n'
+                       'The final answer is: $\\boxed{1.96}$'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '"Question": "what is the average variance of the '
+                          'value at risk of each 2008 section? ( $ )",\n'
+                          '"Calculation": "For Foreign exchange products: '
+                          'Variance = 3.3353, For Interest-rate products: '
+                          'Variance = 0.5757. Average Variance = (3.3353 + '
+                          '0.5757) / 2 = 1.9555",\n'
+                          '"Answer": "$1.96",\n'
+                          '"Source": "Combined"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Foreign exchange products: Annual Average = $1.8, '
+                          'Maximum = $4.7, Minimum = $0.3\n'
+                          '- Interest-rate products: Annual Average = $1.1, '
+                          'Maximum = $2.4, Minimum = $0.6\n'
+                          '- Values = [$4.7, $0.3, $1.8]\n'
+                          '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                          '- Variance = Σ(xi - μ)² / N = [($4.7-$2.2667)² + '
+                          '($0.3-$2.2667)² + ($1.8-$2.2667)²] / 3\n'
+                          '- Variance = [($2.4333)² + (-$1.9667)² + '
+                          '(-$0.4667)²] / 3\n'
+                          '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / '
+                          '3 = 3.3353\n'
+                          '- Values = [$2.4, $0.6, $1.1]\n'
+                          '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                          '- Variance = Σ(xi - μ)² / N = [($2.4-$1.3667)² + '
+                          '($0.6-$1.3667)² + ($1.1-$1.3667)²] / 3\n'
+                          '- Variance = [($1.0333)² + (-$0.7667)² + '
+                          '(-$0.2667)²] / 3\n'
+                          '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / '
+                          '3 = 0.5757\n'
+                          '- Foreign exchange products: Annual Average = $1.8, '
+                          'Maximum = $4.7, Minimum = $0.3\n'
+                          '- Interest-rate products: Annual Average = $1.1, '
+                          'Maximum = $2.4, Minimum = $0.6\n'
+                          '- Values = [$4.7, $0.3, $1.8]\n'
+                          '- Mean = ($4.7 + $0.3 + $1.8) / 3 = $2.2667\n'
+                          '- Variance = [($4.7-$2.2667)² + ($0.3-$2.2667)² + '
+                          '($1.8-$2.2667)²] / 3\n'
+                          '- Variance = [($2.4333)² + (-$1.9667)² + '
+                          '(-$0.4667)²] / 3\n'
+                          '- Variance = [5.921 + 3.867 + 0.218] / 3 = 10.006 / '
+                          '3 = 3.3353\n'
+                          '- Values = [$2.4, $0.6, $1.1]\n'
+                          '- Mean = ($2.4 + $0.6 + $1.1) / 3 = $1.3667\n'
+                          '- Variance = [($2.4-$1.3667)² + ($0.6-$1.3667)² + '
+                          '($1.1-$1.3667)²] / 3\n'
+                          '- Variance = [($1.0333)² + (-$0.7667)² + '
+                          '(-$0.2667)²] / 3\n'
+                          '- Variance = [1.068 + 0.588 + 0.071] / 3 = 1.727 / '
+                          '3 = 0.5757',
+                'raw': '{\n'
+                       '"Question": "what is the average variance of the value '
+                       'at risk of each 2008 section? ( $ )",\n'
+                       '"Calculation": "For Foreign exchange products: '
+                       'Variance = 3.3353, For Interest-rate products: '
+                       'Variance = 0.5757. Average Variance = (3.3353 + '
+                       '0.5757) / 2 = 1.9555",\n'
+                       '"Answer": "$1.96",\n'
+                       '"Source": "Combined"\n'
+                       '}'}}

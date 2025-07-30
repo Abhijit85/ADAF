@@ -1,0 +1,491 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/mmqa/235a044858b1ace24e80833fc28e758a.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+To synthesize the best factual answer, let's analyze the information provided:
+
+1. **Question**: "in the Production discography of Dave Brainard, when the year was 2017, do they make a new lombardi every year?"
+2. **TabuSynth Analysis (Data-focused)**: The structured data for 2017 lists 'Sunny Sweeney' as the 'Artist' and 'Trophy' as the 'Album'. There's no direct mention of "Lombardi".
+3. **Contextron Analysis (Text + Data)**: The text context provides information that a new Vince Lombardi Trophy is made every year, with the exception of Super Bowl V. The year 2017 is not Super Bowl V, so it follows the rule.
+
+Given the information:
+- The structured data doesn't directly mention "Lombardi" but lists an album titled 'Trophy' in 2017.
+- The text context clearly states that a new Vince Lombardi Trophy is made every year, except for Super Bowl V.
+
+The question seems to be asking whether a new Lombardi (presumably referring to the Vince Lombardi Trophy) is made every year, specifically in the context of the year 2017 in Dave Brainard's Production discography.
+
+### Synthesis
+- The text context confirms that a new Vince Lombardi Trophy is made every year, with one exception (Super Bowl V), which is not relevant to the year 2017.
+- The data context shows an album titled 'Trophy' in 2017, which could be related to the Vince Lombardi Trophy.
+
+### Factual Answer
+Yes, a new Lombardi is made every year in 2017.
+
+### JSON Output
+```json
+{
+  "Question": "in the Production discography of Dave Brainard, when the year was 2017, do they make a new lombardi every year?",
+  "Factual Answer": "Yes",
+  "Source": "Combined",
+  "Confidence": "High"
+}
+```
+
+Answer Echoes:
+- For the year 2017, the 'Artist' is 'Sunny Sweeney' and the 'Album' is 'Trophy'.
+- There's no direct mention of "Lombardi" in the provided data.
+- **Text Primary**: The text context informs us that a new Vince Lombardi Trophy is made every year (with one exception).
+- **Data Support**: The structured data does not directly mention "Lombardi" but shows an album titled 'Trophy' in 2017.
+- **Consistency Check**: The text context and structured data are not directly related in terms of content, but both can be used to infer information about "trophies".
+- **Complete Picture**: While the structured data doesn't directly answer the question about the Vince Lombardi Trophy, the text context provides the necessary information.
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question is related to a specific entry in the '
+                      '"Production discography" table and involves checking if '
+                      'a new "Lombardi" is made every year when the year is '
+                      '2017. This can be classified as a **Temporal Question** '
+                      'with elements of **Factual Verification**.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to:\n'
+                      '1. Identify the relevant data for the year 2017 in the '
+                      '"Production discography" table.\n'
+                      '2. Check if there\'s any mention of "Lombardi" in the '
+                      'context of the data for 2017 or any other year.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Identify Relevant Data**: Look for the row where '
+                      "the 'Year' column is 2017.\n"
+                      "2. **Extract Information**: Check the 'Artist' and "
+                      "'Album' columns for the 2017 entry.\n"
+                      '3. **Verify Context**: Understand if "Lombardi" is '
+                      'relevant to the data provided for 2017 or any pattern '
+                      'related to it.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the data:\n'
+                      "- For the year 2017, the 'Artist' is 'Sunny Sweeney' "
+                      "and the 'Album' is 'Trophy'.\n"
+                      '- There\'s no direct mention of "Lombardi" in the '
+                      'provided data.\n'
+                      '\n'
+                      '### Step 5: Answering the Question\n'
+                      'Since "Lombardi" is not mentioned in the data for 2017 '
+                      "or any other year, and there's no pattern or "
+                      'information related to making a "Lombardi" every year, '
+                      'we cannot directly answer the question based on the '
+                      'provided data.\n'
+                      '\n'
+                      '### Output\n'
+                      "**Data Analysis**: The data for 2017 shows 'Artist' as "
+                      "'Sunny Sweeney' and 'Album' as 'Trophy'. There's no "
+                      'mention of "Lombardi".\n'
+                      '**Factual Answer**: The data does not support answering '
+                      'whether a new "Lombardi" is made every year when the '
+                      'year is 2017 because "Lombardi" is not mentioned.\n'
+                      '**Source**: Production discography table\n'
+                      '\n'
+                      '**Additional Context Required**: Information about '
+                      '"Lombardi" and its relation to the production '
+                      'discography or the artists/albums listed.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question is related to a specific entry in the '
+                         '"Production discography" table and involves checking '
+                         'if a new "Lombardi" is made every year when the year '
+                         'is 2017. This can be classified as a **Temporal '
+                         'Question** with elements of **Factual '
+                         'Verification**.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to:\n'
+                         '1. Identify the relevant data for the year 2017 in '
+                         'the "Production discography" table.\n'
+                         '2. Check if there\'s any mention of "Lombardi" in '
+                         'the context of the data for 2017 or any other year.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Identify Relevant Data**: Look for the row '
+                         "where the 'Year' column is 2017.\n"
+                         "2. **Extract Information**: Check the 'Artist' and "
+                         "'Album' columns for the 2017 entry.\n"
+                         '3. **Verify Context**: Understand if "Lombardi" is '
+                         'relevant to the data provided for 2017 or any '
+                         'pattern related to it.\n'
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given the data:\n'
+                         "- For the year 2017, the 'Artist' is 'Sunny Sweeney' "
+                         "and the 'Album' is 'Trophy'.\n"
+                         '- There\'s no direct mention of "Lombardi" in the '
+                         'provided data.\n'
+                         '\n'
+                         '### Step 5: Answering the Question\n'
+                         'Since "Lombardi" is not mentioned in the data for '
+                         "2017 or any other year, and there's no pattern or "
+                         'information related to making a "Lombardi" every '
+                         'year, we cannot directly answer the question based '
+                         'on the provided data.\n'
+                         '\n'
+                         '### Output\n'
+                         "**Data Analysis**: The data for 2017 shows 'Artist' "
+                         "as 'Sunny Sweeney' and 'Album' as 'Trophy'. There's "
+                         'no mention of "Lombardi".\n'
+                         '**Factual Answer**: The data does not support '
+                         'answering whether a new "Lombardi" is made every '
+                         'year when the year is 2017 because "Lombardi" is not '
+                         'mentioned.\n'
+                         '**Source**: Production discography table\n'
+                         '\n'
+                         '**Additional Context Required**: Information about '
+                         '"Lombardi" and its relation to the production '
+                         'discography or the artists/albums listed.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question is related to a specific entry in the '
+                      '"Production discography" table and involves checking if '
+                      'a new "Lombardi" is made every year when the year is '
+                      '2017. This can be classified as a **Temporal Question** '
+                      'with elements of **Factual Verification**.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to:\n'
+                      '1. Identify the relevant data for the year 2017 in the '
+                      '"Production discography" table.\n'
+                      '2. Check if there\'s any mention of "Lombardi" in the '
+                      'context of the data for 2017 or any other year.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Identify Relevant Data**: Look for the row where '
+                      "the 'Year' column is 2017.\n"
+                      "2. **Extract Information**: Check the 'Artist' and "
+                      "'Album' columns for the 2017 entry.\n"
+                      '3. **Verify Context**: Understand if "Lombardi" is '
+                      'relevant to the data provided for 2017 or any pattern '
+                      'related to it.\n'
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the data:\n'
+                      "- For the year 2017, the 'Artist' is 'Sunny Sweeney' "
+                      "and the 'Album' is 'Trophy'.\n"
+                      '- There\'s no direct mention of "Lombardi" in the '
+                      'provided data.\n'
+                      '\n'
+                      '### Step 5: Answering the Question\n'
+                      'Since "Lombardi" is not mentioned in the data for 2017 '
+                      "or any other year, and there's no pattern or "
+                      'information related to making a "Lombardi" every year, '
+                      'we cannot directly answer the question based on the '
+                      'provided data.\n'
+                      '\n'
+                      '### Output\n'
+                      "**Data Analysis**: The data for 2017 shows 'Artist' as "
+                      "'Sunny Sweeney' and 'Album' as 'Trophy'. There's no "
+                      'mention of "Lombardi".\n'
+                      '**Factual Answer**: The data does not support answering '
+                      'whether a new "Lombardi" is made every year when the '
+                      'year is 2017 because "Lombardi" is not mentioned.\n'
+                      '**Source**: Production discography table\n'
+                      '\n'
+                      '**Additional Context Required**: Information about '
+                      '"Lombardi" and its relation to the production '
+                      'discography or the artists/albums listed.'},
+ 'Contextron': {'cot': '### Step 1: Question Understanding\n'
+                       '- **Question Type**: Temporal, Factual Verification\n'
+                       '- **Information Needs**: Whether a new "Lombardi" is '
+                       'made every year when the year is 2017 in the context '
+                       "of Dave Brainard's Production discography.\n"
+                       '- **Data Sources**: Text context and structured data '
+                       '(Production discography table).\n'
+                       '- **Reasoning Path**: Combine information from text '
+                       'context about the Vince Lombardi Trophy with the '
+                       'structured data from the Production discography table '
+                       'to determine if a new Lombardi is made every year.',
+                'result': '### Step 2: Information Synthesis Strategy\n'
+                          '\n'
+                          '#### From Text Context:\n'
+                          'The text context provides information about the '
+                          'Vince Lombardi Trophy, stating that a new one is '
+                          'made every year, with one notable exception (Super '
+                          'Bowl V).\n'
+                          '\n'
+                          '#### From Structured Data:\n'
+                          'The structured data (Production discography table) '
+                          "for 2017 lists 'Sunny Sweeney' as the 'Artist' and "
+                          "'Trophy' as the 'Album'. There's no direct mention "
+                          'of "Lombardi".\n'
+                          '\n'
+                          '### Step 3: Factual Reasoning Process\n'
+                          '\n'
+                          '1. **Understand the Question**: The question '
+                          'pertains to whether a new "Lombardi" is made every '
+                          "year in 2017, related to Dave Brainard's Production "
+                          'discography.\n'
+                          '2. **Extract Relevant Information from Text '
+                          'Context**: The Vince Lombardi Trophy is made every '
+                          'year, with an exception for Super Bowl V.\n'
+                          '3. **Extract Relevant Information from Structured '
+                          "Data**: The data for 2017 shows 'Artist' as 'Sunny "
+                          "Sweeney' and 'Album' as 'Trophy'. There's no "
+                          'mention of "Lombardi".\n'
+                          '\n'
+                          '### Step 4: Multimodal Integration\n'
+                          '- **Text Primary**: The text context informs us '
+                          'that a new Vince Lombardi Trophy is made every year '
+                          '(with one exception).\n'
+                          '- **Data Support**: The structured data does not '
+                          'directly mention "Lombardi" but shows an album '
+                          "titled 'Trophy' in 2017.\n"
+                          '- **Consistency Check**: The text context and '
+                          'structured data are not directly related in terms '
+                          'of content, but both can be used to infer '
+                          'information about "trophies".\n'
+                          '- **Complete Picture**: While the structured data '
+                          "doesn't directly answer the question about the "
+                          'Vince Lombardi Trophy, the text context provides '
+                          'the necessary information.\n'
+                          '\n'
+                          '### Step 5: Answering the Question\n'
+                          'The text context clearly states that a new Vince '
+                          'Lombardi Trophy is made every year, with the '
+                          'exception of Super Bowl V. The year 2017 is not an '
+                          'exception as it is not Super Bowl V. Therefore, '
+                          'according to the information provided in the text '
+                          'context, a new Lombardi is made every year, '
+                          'including 2017.\n'
+                          '\n'
+                          '### Output\n'
+                          '**Text Analysis**: A new Vince Lombardi Trophy is '
+                          'made every year, with one notable exception being '
+                          'Super Bowl V.\n'
+                          '**Data Support**: The data for 2017 lists an album '
+                          "titled 'Trophy' by 'Sunny Sweeney', but does not "
+                          'directly mention "Lombardi".\n'
+                          '**Factual Answer**: Yes, a new Lombardi is made '
+                          'every year in 2017, as per the general rule stated '
+                          'in the text context.\n'
+                          '**Confidence**: High (based on the text context)\n'
+                          '\n'
+                          '**Missing Information**: Specific details about '
+                          "Dave Brainard's involvement in the Production "
+                          'discography or how it relates to the Vince Lombardi '
+                          'Trophy.',
+                'raw': '### Step 1: Question Understanding\n'
+                       '- **Question Type**: Temporal, Factual Verification\n'
+                       '- **Information Needs**: Whether a new "Lombardi" is '
+                       'made every year when the year is 2017 in the context '
+                       "of Dave Brainard's Production discography.\n"
+                       '- **Data Sources**: Text context and structured data '
+                       '(Production discography table).\n'
+                       '- **Reasoning Path**: Combine information from text '
+                       'context about the Vince Lombardi Trophy with the '
+                       'structured data from the Production discography table '
+                       'to determine if a new Lombardi is made every year.\n'
+                       '\n'
+                       '### Step 2: Information Synthesis Strategy\n'
+                       '\n'
+                       '#### From Text Context:\n'
+                       'The text context provides information about the Vince '
+                       'Lombardi Trophy, stating that a new one is made every '
+                       'year, with one notable exception (Super Bowl V).\n'
+                       '\n'
+                       '#### From Structured Data:\n'
+                       'The structured data (Production discography table) for '
+                       "2017 lists 'Sunny Sweeney' as the 'Artist' and "
+                       "'Trophy' as the 'Album'. There's no direct mention of "
+                       '"Lombardi".\n'
+                       '\n'
+                       '### Step 3: Factual Reasoning Process\n'
+                       '\n'
+                       '1. **Understand the Question**: The question pertains '
+                       'to whether a new "Lombardi" is made every year in '
+                       "2017, related to Dave Brainard's Production "
+                       'discography.\n'
+                       '2. **Extract Relevant Information from Text Context**: '
+                       'The Vince Lombardi Trophy is made every year, with an '
+                       'exception for Super Bowl V.\n'
+                       '3. **Extract Relevant Information from Structured '
+                       "Data**: The data for 2017 shows 'Artist' as 'Sunny "
+                       "Sweeney' and 'Album' as 'Trophy'. There's no mention "
+                       'of "Lombardi".\n'
+                       '\n'
+                       '### Step 4: Multimodal Integration\n'
+                       '- **Text Primary**: The text context informs us that a '
+                       'new Vince Lombardi Trophy is made every year (with one '
+                       'exception).\n'
+                       '- **Data Support**: The structured data does not '
+                       'directly mention "Lombardi" but shows an album titled '
+                       "'Trophy' in 2017.\n"
+                       '- **Consistency Check**: The text context and '
+                       'structured data are not directly related in terms of '
+                       'content, but both can be used to infer information '
+                       'about "trophies".\n'
+                       '- **Complete Picture**: While the structured data '
+                       "doesn't directly answer the question about the Vince "
+                       'Lombardi Trophy, the text context provides the '
+                       'necessary information.\n'
+                       '\n'
+                       '### Step 5: Answering the Question\n'
+                       'The text context clearly states that a new Vince '
+                       'Lombardi Trophy is made every year, with the exception '
+                       'of Super Bowl V. The year 2017 is not an exception as '
+                       'it is not Super Bowl V. Therefore, according to the '
+                       'information provided in the text context, a new '
+                       'Lombardi is made every year, including 2017.\n'
+                       '\n'
+                       '### Output\n'
+                       '**Text Analysis**: A new Vince Lombardi Trophy is made '
+                       'every year, with one notable exception being Super '
+                       'Bowl V.\n'
+                       '**Data Support**: The data for 2017 lists an album '
+                       "titled 'Trophy' by 'Sunny Sweeney', but does not "
+                       'directly mention "Lombardi".\n'
+                       '**Factual Answer**: Yes, a new Lombardi is made every '
+                       'year in 2017, as per the general rule stated in the '
+                       'text context.\n'
+                       '**Confidence**: High (based on the text context)\n'
+                       '\n'
+                       '**Missing Information**: Specific details about Dave '
+                       "Brainard's involvement in the Production discography "
+                       'or how it relates to the Vince Lombardi Trophy.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': "To synthesize the best factual answer, let's "
+                          'analyze the information provided:\n'
+                          '\n'
+                          '1. **Question**: "in the Production discography of '
+                          'Dave Brainard, when the year was 2017, do they make '
+                          'a new lombardi every year?"\n'
+                          '2. **TabuSynth Analysis (Data-focused)**: The '
+                          "structured data for 2017 lists 'Sunny Sweeney' as "
+                          "the 'Artist' and 'Trophy' as the 'Album'. There's "
+                          'no direct mention of "Lombardi".\n'
+                          '3. **Contextron Analysis (Text + Data)**: The text '
+                          'context provides information that a new Vince '
+                          'Lombardi Trophy is made every year, with the '
+                          'exception of Super Bowl V. The year 2017 is not '
+                          'Super Bowl V, so it follows the rule.\n'
+                          '\n'
+                          'Given the information:\n'
+                          "- The structured data doesn't directly mention "
+                          '"Lombardi" but lists an album titled \'Trophy\' in '
+                          '2017.\n'
+                          '- The text context clearly states that a new Vince '
+                          'Lombardi Trophy is made every year, except for '
+                          'Super Bowl V.\n'
+                          '\n'
+                          'The question seems to be asking whether a new '
+                          'Lombardi (presumably referring to the Vince '
+                          'Lombardi Trophy) is made every year, specifically '
+                          "in the context of the year 2017 in Dave Brainard's "
+                          'Production discography.\n'
+                          '\n'
+                          '### Synthesis\n'
+                          '- The text context confirms that a new Vince '
+                          'Lombardi Trophy is made every year, with one '
+                          'exception (Super Bowl V), which is not relevant to '
+                          'the year 2017.\n'
+                          "- The data context shows an album titled 'Trophy' "
+                          'in 2017, which could be related to the Vince '
+                          'Lombardi Trophy.\n'
+                          '\n'
+                          '### Factual Answer\n'
+                          'Yes, a new Lombardi is made every year in 2017.\n'
+                          '\n'
+                          '### JSON Output\n'
+                          '```json\n'
+                          '{\n'
+                          '  "Question": "in the Production discography of '
+                          'Dave Brainard, when the year was 2017, do they make '
+                          'a new lombardi every year?",\n'
+                          '  "Factual Answer": "Yes",\n'
+                          '  "Source": "Combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '```\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "- For the year 2017, the 'Artist' is 'Sunny "
+                          "Sweeney' and the 'Album' is 'Trophy'.\n"
+                          '- There\'s no direct mention of "Lombardi" in the '
+                          'provided data.\n'
+                          '- **Text Primary**: The text context informs us '
+                          'that a new Vince Lombardi Trophy is made every year '
+                          '(with one exception).\n'
+                          '- **Data Support**: The structured data does not '
+                          'directly mention "Lombardi" but shows an album '
+                          "titled 'Trophy' in 2017.\n"
+                          '- **Consistency Check**: The text context and '
+                          'structured data are not directly related in terms '
+                          'of content, but both can be used to infer '
+                          'information about "trophies".\n'
+                          '- **Complete Picture**: While the structured data '
+                          "doesn't directly answer the question about the "
+                          'Vince Lombardi Trophy, the text context provides '
+                          'the necessary information.',
+                'raw': "To synthesize the best factual answer, let's analyze "
+                       'the information provided:\n'
+                       '\n'
+                       '1. **Question**: "in the Production discography of '
+                       'Dave Brainard, when the year was 2017, do they make a '
+                       'new lombardi every year?"\n'
+                       '2. **TabuSynth Analysis (Data-focused)**: The '
+                       "structured data for 2017 lists 'Sunny Sweeney' as the "
+                       "'Artist' and 'Trophy' as the 'Album'. There's no "
+                       'direct mention of "Lombardi".\n'
+                       '3. **Contextron Analysis (Text + Data)**: The text '
+                       'context provides information that a new Vince Lombardi '
+                       'Trophy is made every year, with the exception of Super '
+                       'Bowl V. The year 2017 is not Super Bowl V, so it '
+                       'follows the rule.\n'
+                       '\n'
+                       'Given the information:\n'
+                       "- The structured data doesn't directly mention "
+                       '"Lombardi" but lists an album titled \'Trophy\' in '
+                       '2017.\n'
+                       '- The text context clearly states that a new Vince '
+                       'Lombardi Trophy is made every year, except for Super '
+                       'Bowl V.\n'
+                       '\n'
+                       'The question seems to be asking whether a new Lombardi '
+                       '(presumably referring to the Vince Lombardi Trophy) is '
+                       'made every year, specifically in the context of the '
+                       "year 2017 in Dave Brainard's Production discography.\n"
+                       '\n'
+                       '### Synthesis\n'
+                       '- The text context confirms that a new Vince Lombardi '
+                       'Trophy is made every year, with one exception (Super '
+                       'Bowl V), which is not relevant to the year 2017.\n'
+                       "- The data context shows an album titled 'Trophy' in "
+                       '2017, which could be related to the Vince Lombardi '
+                       'Trophy.\n'
+                       '\n'
+                       '### Factual Answer\n'
+                       'Yes, a new Lombardi is made every year in 2017.\n'
+                       '\n'
+                       '### JSON Output\n'
+                       '```json\n'
+                       '{\n'
+                       '  "Question": "in the Production discography of Dave '
+                       'Brainard, when the year was 2017, do they make a new '
+                       'lombardi every year?",\n'
+                       '  "Factual Answer": "Yes",\n'
+                       '  "Source": "Combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}\n'
+                       '```'}}
