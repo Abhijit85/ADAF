@@ -1,0 +1,432 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-6867.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "what game had the most total goals scored?",
+  "Factual Answer": "Serbia vs. Cameroon, June 5, 2010",
+  "Source": "Combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- March 3, 2010: 3:0 = 3 goals
+- April 7, 2010: 3:0 = 3 goals
+- May 29, 2010: 0:1 = 1 goal
+- June 2, 2010: 0:0 = 0 goals
+- June 5, 2010: 4:3 = 7 goals
+- June 13, 2010: 0:1 = 1 goal
+- June 18, 2010: 1:0 = 1 goal
+- June 23, 2010: 1:2 = 3 goals
+- August 11, 2010: 0:1 = 1 goal
+- September 3, 2010: 3:0 = 3 goals
+- September 7, 2010: 1:1 = 2 goals
+- October 8, 2010: 1:3 = 4 goals
+- October 12, 2010: 0:3 = 3 goals (though abandoned, we'll count the score)
+- November 17, 2010: 1:0 = 1 goal
+- The game on June 5, 2010, between Serbia and Cameroon had the most total goals scored with 7 goals (4:3).
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "what game had the most total goals '
+                      'scored?" is a **Comparative Question** because it '
+                      'requires comparing the total goals scored in different '
+                      'games to identify the game with the highest total.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the total '
+                      'number of goals scored in each game from the provided '
+                      'structured data. The relevant column for this '
+                      'information is "Results".\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to extract the '
+                      '"Results" column which contains the score of each '
+                      'game.\n'
+                      '2. **Calculate Total Goals**: For each game, calculate '
+                      'the total goals scored by summing the scores of both '
+                      'teams.\n'
+                      '3. **Compare Totals**: Identify the game with the '
+                      'highest total goals scored.\n'
+                      '\n'
+                      '### Step 4: Performing the Analysis\n'
+                      "Let's analyze the data:\n"
+                      '\n'
+                      '| Date | City | Opponent | Results | Scorers | Type of '
+                      'game |\n'
+                      '|------|------|----------|---------|---------|--------------|\n'
+                      '| March 3, 2010 | Algiers, Algeria | Algeria | 3:0 '
+                      "(1:0) | Pantelić (16') Kuzmanović (55') Tošić (65') | "
+                      'Friendly |\n'
+                      '| April 7, 2010 | Osaka, Japan | Japan | 3:0 (2:0) | '
+                      "Mrđa (15', 23') Tomić (60') | Friendly |\n"
+                      '| May 29, 2010 | Klagenfurt, Austria | New Zealand | '
+                      "0:1 (0:1) | Smeltz (22') | Friendly |\n"
+                      '| June 2, 2010 | Kufstein, Austria | Poland | 0:0 (0:0) '
+                      '| nan | Friendly |\n'
+                      '| June 5, 2010 | Belgrade, Serbia | Cameroon | 4:3 '
+                      "(4:2) | Webo (5', 20') Krasić (16') Stanković (25') "
+                      "Milijaš (44') Pantelić (45') Choupo-Moting (67') | "
+                      'Friendly |\n'
+                      '| June 13, 2010 | Pretoria, South Africa | Ghana | 0:1 '
+                      "(0:0) | Gyan (85') | WC 2010 |\n"
+                      '| June 18, 2010 | Port Elizabeth, South Africa | '
+                      "Germany | 1:0 (1:0) | Jovanović (38') | WC 2010 |\n"
+                      '| June 23, 2010 | Nelspruit, South Africa | Australia | '
+                      "1:2 (0:0) | Cahill (69') Holman (73') Pantelić (84') | "
+                      'WC 2010 |\n'
+                      '| August 11, 2010 | Belgrade, Serbia | Greece | 0:1 '
+                      "(0:0) | Salpingidis (45') | Friendly |\n"
+                      '| September 3, 2010 | Tórshavn, Faroe Islands | Faroe '
+                      "Islands | 3:0 (2:0) | Lazović (14') Stanković (18') "
+                      "Žigić (90+1') | Euro 2012 Q |\n"
+                      '| September 7, 2010 | Belgrade, Serbia | Slovenia | 1:1 '
+                      "(0:0) | Novaković (63') Žigić (86') | Euro 2012 Q |\n"
+                      '| October 8, 2010 | Belgrade, Serbia | Estonia | 1:3 '
+                      "(0:0) | Žigić (60') Kink (63') Vassiljev (73') Luković "
+                      "(90+1') (o.g) | Euro 2012 Q |\n"
+                      '| October 12, 2010 | Genoa, Italy | Italy | abandoned '
+                      '0:3 | Game abandoned after six minutes on account of '
+                      'crowd disturbances in the stadium | Euro 2012 Q |\n'
+                      '| November 17, 2010 | Sofia, Bulgaria | Bulgaria | 1:0 '
+                      "(0:0) | Žigić (80') | Friendly |\n"
+                      '\n'
+                      '1. **Extract and Calculate Total Goals**:\n'
+                      '   - March 3, 2010: 3:0 = 3 goals\n'
+                      '   - April 7, 2010: 3:0 = 3 goals\n'
+                      '   - May 29, 2010: 0:1 = 1 goal\n'
+                      '   - June 2, 2010: 0:0 = 0 goals\n'
+                      '   - June 5, 2010: 4:3 = 7 goals\n'
+                      '   - June 13, 2010: 0:1 = 1 goal\n'
+                      '   - June 18, 2010: 1:0 = 1 goal\n'
+                      '   - June 23, 2010: 1:2 = 3 goals\n'
+                      '   - August 11, 2010: 0:1 = 1 goal\n'
+                      '   - September 3, 2010: 3:0 = 3 goals\n'
+                      '   - September 7, 2010: 1:1 = 2 goals\n'
+                      '   - October 8, 2010: 1:3 = 4 goals\n'
+                      '   - October 12, 2010: 0:3 = 3 goals (though abandoned, '
+                      "we'll count the score)\n"
+                      '   - November 17, 2010: 1:0 = 1 goal\n'
+                      '\n'
+                      '2. **Identify Game with Most Total Goals**:\n'
+                      '   - The game on June 5, 2010, between Serbia and '
+                      'Cameroon had the most total goals scored with 7 goals '
+                      '(4:3).\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The total goals scored in each game '
+                      'were calculated from the "Results" column. The game '
+                      'with the most total goals scored was identified by '
+                      'comparing these totals.\n'
+                      '**Factual Answer**: The game between Serbia and '
+                      'Cameroon on June 5, 2010, had the most total goals '
+                      'scored with 7 goals (4:3).\n'
+                      '**Source**: The "Results" column in the provided table '
+                      'data.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "what game had the most total goals '
+                         'scored?" is a **Comparative Question** because it '
+                         'requires comparing the total goals scored in '
+                         'different games to identify the game with the '
+                         'highest total.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         'total number of goals scored in each game from the '
+                         'provided structured data. The relevant column for '
+                         'this information is "Results".\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract Relevant Data**: We need to extract the '
+                         '"Results" column which contains the score of each '
+                         'game.\n'
+                         '2. **Calculate Total Goals**: For each game, '
+                         'calculate the total goals scored by summing the '
+                         'scores of both teams.\n'
+                         '3. **Compare Totals**: Identify the game with the '
+                         'highest total goals scored.\n'
+                         '\n'
+                         '### Step 4: Performing the Analysis\n'
+                         "Let's analyze the data:\n"
+                         '\n'
+                         '| Date | City | Opponent | Results | Scorers | Type '
+                         'of game |\n'
+                         '|------|------|----------|---------|---------|--------------|\n'
+                         '| March 3, 2010 | Algiers, Algeria | Algeria | 3:0 '
+                         "(1:0) | Pantelić (16') Kuzmanović (55') Tošić (65') "
+                         '| Friendly |\n'
+                         '| April 7, 2010 | Osaka, Japan | Japan | 3:0 (2:0) | '
+                         "Mrđa (15', 23') Tomić (60') | Friendly |\n"
+                         '| May 29, 2010 | Klagenfurt, Austria | New Zealand | '
+                         "0:1 (0:1) | Smeltz (22') | Friendly |\n"
+                         '| June 2, 2010 | Kufstein, Austria | Poland | 0:0 '
+                         '(0:0) | nan | Friendly |\n'
+                         '| June 5, 2010 | Belgrade, Serbia | Cameroon | 4:3 '
+                         "(4:2) | Webo (5', 20') Krasić (16') Stanković (25') "
+                         "Milijaš (44') Pantelić (45') Choupo-Moting (67') | "
+                         'Friendly |\n'
+                         '| June 13, 2010 | Pretoria, South Africa | Ghana | '
+                         "0:1 (0:0) | Gyan (85') | WC 2010 |\n"
+                         '| June 18, 2010 | Port Elizabeth, South Africa | '
+                         "Germany | 1:0 (1:0) | Jovanović (38') | WC 2010 |\n"
+                         '| June 23, 2010 | Nelspruit, South Africa | '
+                         "Australia | 1:2 (0:0) | Cahill (69') Holman (73') "
+                         "Pantelić (84') | WC 2010 |\n"
+                         '| August 11, 2010 | Belgrade, Serbia | Greece | 0:1 '
+                         "(0:0) | Salpingidis (45') | Friendly |\n"
+                         '| September 3, 2010 | Tórshavn, Faroe Islands | '
+                         "Faroe Islands | 3:0 (2:0) | Lazović (14') Stanković "
+                         "(18') Žigić (90+1') | Euro 2012 Q |\n"
+                         '| September 7, 2010 | Belgrade, Serbia | Slovenia | '
+                         "1:1 (0:0) | Novaković (63') Žigić (86') | Euro 2012 "
+                         'Q |\n'
+                         '| October 8, 2010 | Belgrade, Serbia | Estonia | 1:3 '
+                         "(0:0) | Žigić (60') Kink (63') Vassiljev (73') "
+                         "Luković (90+1') (o.g) | Euro 2012 Q |\n"
+                         '| October 12, 2010 | Genoa, Italy | Italy | '
+                         'abandoned 0:3 | Game abandoned after six minutes on '
+                         'account of crowd disturbances in the stadium | Euro '
+                         '2012 Q |\n'
+                         '| November 17, 2010 | Sofia, Bulgaria | Bulgaria | '
+                         "1:0 (0:0) | Žigić (80') | Friendly |\n"
+                         '\n'
+                         '1. **Extract and Calculate Total Goals**:\n'
+                         '   - March 3, 2010: 3:0 = 3 goals\n'
+                         '   - April 7, 2010: 3:0 = 3 goals\n'
+                         '   - May 29, 2010: 0:1 = 1 goal\n'
+                         '   - June 2, 2010: 0:0 = 0 goals\n'
+                         '   - June 5, 2010: 4:3 = 7 goals\n'
+                         '   - June 13, 2010: 0:1 = 1 goal\n'
+                         '   - June 18, 2010: 1:0 = 1 goal\n'
+                         '   - June 23, 2010: 1:2 = 3 goals\n'
+                         '   - August 11, 2010: 0:1 = 1 goal\n'
+                         '   - September 3, 2010: 3:0 = 3 goals\n'
+                         '   - September 7, 2010: 1:1 = 2 goals\n'
+                         '   - October 8, 2010: 1:3 = 4 goals\n'
+                         '   - October 12, 2010: 0:3 = 3 goals (though '
+                         "abandoned, we'll count the score)\n"
+                         '   - November 17, 2010: 1:0 = 1 goal\n'
+                         '\n'
+                         '2. **Identify Game with Most Total Goals**:\n'
+                         '   - The game on June 5, 2010, between Serbia and '
+                         'Cameroon had the most total goals scored with 7 '
+                         'goals (4:3).\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The total goals scored in each '
+                         'game were calculated from the "Results" column. The '
+                         'game with the most total goals scored was identified '
+                         'by comparing these totals.\n'
+                         '**Factual Answer**: The game between Serbia and '
+                         'Cameroon on June 5, 2010, had the most total goals '
+                         'scored with 7 goals (4:3).\n'
+                         '**Source**: The "Results" column in the provided '
+                         'table data.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "what game had the most total goals '
+                      'scored?" is a **Comparative Question** because it '
+                      'requires comparing the total goals scored in different '
+                      'games to identify the game with the highest total.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the total '
+                      'number of goals scored in each game from the provided '
+                      'structured data. The relevant column for this '
+                      'information is "Results".\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to extract the '
+                      '"Results" column which contains the score of each '
+                      'game.\n'
+                      '2. **Calculate Total Goals**: For each game, calculate '
+                      'the total goals scored by summing the scores of both '
+                      'teams.\n'
+                      '3. **Compare Totals**: Identify the game with the '
+                      'highest total goals scored.\n'
+                      '\n'
+                      '### Step 4: Performing the Analysis\n'
+                      "Let's analyze the data:\n"
+                      '\n'
+                      '| Date | City | Opponent | Results | Scorers | Type of '
+                      'game |\n'
+                      '|------|------|----------|---------|---------|--------------|\n'
+                      '| March 3, 2010 | Algiers, Algeria | Algeria | 3:0 '
+                      "(1:0) | Pantelić (16') Kuzmanović (55') Tošić (65') | "
+                      'Friendly |\n'
+                      '| April 7, 2010 | Osaka, Japan | Japan | 3:0 (2:0) | '
+                      "Mrđa (15', 23') Tomić (60') | Friendly |\n"
+                      '| May 29, 2010 | Klagenfurt, Austria | New Zealand | '
+                      "0:1 (0:1) | Smeltz (22') | Friendly |\n"
+                      '| June 2, 2010 | Kufstein, Austria | Poland | 0:0 (0:0) '
+                      '| nan | Friendly |\n'
+                      '| June 5, 2010 | Belgrade, Serbia | Cameroon | 4:3 '
+                      "(4:2) | Webo (5', 20') Krasić (16') Stanković (25') "
+                      "Milijaš (44') Pantelić (45') Choupo-Moting (67') | "
+                      'Friendly |\n'
+                      '| June 13, 2010 | Pretoria, South Africa | Ghana | 0:1 '
+                      "(0:0) | Gyan (85') | WC 2010 |\n"
+                      '| June 18, 2010 | Port Elizabeth, South Africa | '
+                      "Germany | 1:0 (1:0) | Jovanović (38') | WC 2010 |\n"
+                      '| June 23, 2010 | Nelspruit, South Africa | Australia | '
+                      "1:2 (0:0) | Cahill (69') Holman (73') Pantelić (84') | "
+                      'WC 2010 |\n'
+                      '| August 11, 2010 | Belgrade, Serbia | Greece | 0:1 '
+                      "(0:0) | Salpingidis (45') | Friendly |\n"
+                      '| September 3, 2010 | Tórshavn, Faroe Islands | Faroe '
+                      "Islands | 3:0 (2:0) | Lazović (14') Stanković (18') "
+                      "Žigić (90+1') | Euro 2012 Q |\n"
+                      '| September 7, 2010 | Belgrade, Serbia | Slovenia | 1:1 '
+                      "(0:0) | Novaković (63') Žigić (86') | Euro 2012 Q |\n"
+                      '| October 8, 2010 | Belgrade, Serbia | Estonia | 1:3 '
+                      "(0:0) | Žigić (60') Kink (63') Vassiljev (73') Luković "
+                      "(90+1') (o.g) | Euro 2012 Q |\n"
+                      '| October 12, 2010 | Genoa, Italy | Italy | abandoned '
+                      '0:3 | Game abandoned after six minutes on account of '
+                      'crowd disturbances in the stadium | Euro 2012 Q |\n'
+                      '| November 17, 2010 | Sofia, Bulgaria | Bulgaria | 1:0 '
+                      "(0:0) | Žigić (80') | Friendly |\n"
+                      '\n'
+                      '1. **Extract and Calculate Total Goals**:\n'
+                      '   - March 3, 2010: 3:0 = 3 goals\n'
+                      '   - April 7, 2010: 3:0 = 3 goals\n'
+                      '   - May 29, 2010: 0:1 = 1 goal\n'
+                      '   - June 2, 2010: 0:0 = 0 goals\n'
+                      '   - June 5, 2010: 4:3 = 7 goals\n'
+                      '   - June 13, 2010: 0:1 = 1 goal\n'
+                      '   - June 18, 2010: 1:0 = 1 goal\n'
+                      '   - June 23, 2010: 1:2 = 3 goals\n'
+                      '   - August 11, 2010: 0:1 = 1 goal\n'
+                      '   - September 3, 2010: 3:0 = 3 goals\n'
+                      '   - September 7, 2010: 1:1 = 2 goals\n'
+                      '   - October 8, 2010: 1:3 = 4 goals\n'
+                      '   - October 12, 2010: 0:3 = 3 goals (though abandoned, '
+                      "we'll count the score)\n"
+                      '   - November 17, 2010: 1:0 = 1 goal\n'
+                      '\n'
+                      '2. **Identify Game with Most Total Goals**:\n'
+                      '   - The game on June 5, 2010, between Serbia and '
+                      'Cameroon had the most total goals scored with 7 goals '
+                      '(4:3).\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The total goals scored in each game '
+                      'were calculated from the "Results" column. The game '
+                      'with the most total goals scored was identified by '
+                      'comparing these totals.\n'
+                      '**Factual Answer**: The game between Serbia and '
+                      'Cameroon on June 5, 2010, had the most total goals '
+                      'scored with 7 goals (4:3).\n'
+                      '**Source**: The "Results" column in the provided table '
+                      'data.'},
+ 'Contextron': {'cot': '**Text Analysis**: The text context indicates that the '
+                       'table contains information about various games played '
+                       'by Serbia, including the date, city, opponent, '
+                       'results, scorers, and type of game.',
+                'result': '**Data Support**: The structured data provides a '
+                          'detailed breakdown of each game, including the '
+                          'score. By analyzing the "Results" column, we can '
+                          'calculate the total goals scored in each game and '
+                          'identify the game with the most total goals.\n'
+                          '\n'
+                          '**Factual Analysis**: \n'
+                          '1. The "Results" column was extracted and analyzed '
+                          'to calculate the total goals scored in each game.\n'
+                          '2. The total goals scored in each game were: 3, 3, '
+                          '1, 0, 7, 1, 1, 3, 1, 3, 2, 4, 3, 1.\n'
+                          '3. The game with the most total goals scored was '
+                          'identified as Serbia vs. Cameroon on June 5, 2010, '
+                          'with 7 goals (4:3).\n'
+                          '\n'
+                          '**Factual Answer**: The game between Serbia and '
+                          'Cameroon on June 5, 2010, had the most total goals '
+                          'scored with 7 goals (4:3).\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The answer is based on a thorough analysis of the '
+                          'structured data provided, which clearly indicates '
+                          'that the game on June 5, 2010, between Serbia and '
+                          'Cameroon had the highest total number of goals '
+                          'scored.',
+                'raw': '**Text Analysis**: The text context indicates that the '
+                       'table contains information about various games played '
+                       'by Serbia, including the date, city, opponent, '
+                       'results, scorers, and type of game.\n'
+                       '\n'
+                       '**Data Support**: The structured data provides a '
+                       'detailed breakdown of each game, including the score. '
+                       'By analyzing the "Results" column, we can calculate '
+                       'the total goals scored in each game and identify the '
+                       'game with the most total goals.\n'
+                       '\n'
+                       '**Factual Analysis**: \n'
+                       '1. The "Results" column was extracted and analyzed to '
+                       'calculate the total goals scored in each game.\n'
+                       '2. The total goals scored in each game were: 3, 3, 1, '
+                       '0, 7, 1, 1, 3, 1, 3, 2, 4, 3, 1.\n'
+                       '3. The game with the most total goals scored was '
+                       'identified as Serbia vs. Cameroon on June 5, 2010, '
+                       'with 7 goals (4:3).\n'
+                       '\n'
+                       '**Factual Answer**: The game between Serbia and '
+                       'Cameroon on June 5, 2010, had the most total goals '
+                       'scored with 7 goals (4:3).\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The answer is based on a thorough analysis of the '
+                       'structured data provided, which clearly indicates that '
+                       'the game on June 5, 2010, between Serbia and Cameroon '
+                       'had the highest total number of goals scored.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "what game had the most total goals '
+                          'scored?",\n'
+                          '  "Factual Answer": "Serbia vs. Cameroon, June 5, '
+                          '2010",\n'
+                          '  "Source": "Combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- March 3, 2010: 3:0 = 3 goals\n'
+                          '- April 7, 2010: 3:0 = 3 goals\n'
+                          '- May 29, 2010: 0:1 = 1 goal\n'
+                          '- June 2, 2010: 0:0 = 0 goals\n'
+                          '- June 5, 2010: 4:3 = 7 goals\n'
+                          '- June 13, 2010: 0:1 = 1 goal\n'
+                          '- June 18, 2010: 1:0 = 1 goal\n'
+                          '- June 23, 2010: 1:2 = 3 goals\n'
+                          '- August 11, 2010: 0:1 = 1 goal\n'
+                          '- September 3, 2010: 3:0 = 3 goals\n'
+                          '- September 7, 2010: 1:1 = 2 goals\n'
+                          '- October 8, 2010: 1:3 = 4 goals\n'
+                          '- October 12, 2010: 0:3 = 3 goals (though '
+                          "abandoned, we'll count the score)\n"
+                          '- November 17, 2010: 1:0 = 1 goal\n'
+                          '- The game on June 5, 2010, between Serbia and '
+                          'Cameroon had the most total goals scored with 7 '
+                          'goals (4:3).',
+                'raw': '{\n'
+                       '  "Question": "what game had the most total goals '
+                       'scored?",\n'
+                       '  "Factual Answer": "Serbia vs. Cameroon, June 5, '
+                       '2010",\n'
+                       '  "Source": "Combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

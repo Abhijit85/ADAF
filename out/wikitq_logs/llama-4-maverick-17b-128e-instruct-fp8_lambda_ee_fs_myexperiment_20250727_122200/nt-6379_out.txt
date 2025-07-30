@@ -1,0 +1,247 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-6379.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "other than against the 49ers how many wins were there?",
+  "Factual Answer": "11",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- **Row 1**: 'Cleveland Browns', 'W 28–21' - Win
+- **Row 3**: 'Los Angeles Rams', 'W 37–10' - Win
+- **Row 5**: 'at Chicago Bears', 'W 19–17' - Win
+- **Row 7**: 'at Atlanta Falcons', 'W 38–0' - Win
+- **Row 8**: 'at Los Angeles Rams', 'W 31–14' - Win
+- **Row 9**: 'at San Francisco 49ers', 'W 26–24' - Win (against 49ers, exclude)
+- **Row 10**: 'New York Giants', 'W 23–14' - Win
+- **Row 11**: 'at Pittsburgh Steelers', 'W 20–16' - Win
+- **Row 12**: 'Tampa Bay Buccaneers', 'W 44–34' - Win
+- **Row 13**: 'Houston Oilers', 'W 24–10' - Win
+- **Row 14**: 'at Cincinnati Bengals', 'W 41–24' - Win
+- **Row 15**: 'Green Bay Packers', 'W 33–24' - Win
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks for the number of wins, excluding the '
+                      'game against the 49ers.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Data\n'
+                      'From the given table, the relevant columns are '
+                      "'Opponent' and 'Result'. We need to count the number of "
+                      "wins (denoted by 'W') in the 'Result' column, excluding "
+                      "the game against the 'San Francisco 49ers'.\n"
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      "1. **Identify Wins**: Look for 'W' in the 'Result' "
+                      'column.\n'
+                      '2. **Exclude 49ers Game**: Ignore the row where '
+                      "'Opponent' is 'San Francisco 49ers'.\n"
+                      "3. **Count Wins**: Count the remaining 'W' entries.\n"
+                      '\n'
+                      '### Step 4: Perform the Analysis\n'
+                      "- **Row 1**: 'Cleveland Browns', 'W 28–21' - Win\n"
+                      "- **Row 3**: 'Los Angeles Rams', 'W 37–10' - Win\n"
+                      "- **Row 5**: 'at Chicago Bears', 'W 19–17' - Win\n"
+                      "- **Row 7**: 'at Atlanta Falcons', 'W 38–0' - Win\n"
+                      "- **Row 8**: 'at Los Angeles Rams', 'W 31–14' - Win\n"
+                      "- **Row 9**: 'at San Francisco 49ers', 'W 26–24' - Win "
+                      '(against 49ers, exclude)\n'
+                      "- **Row 10**: 'New York Giants', 'W 23–14' - Win\n"
+                      "- **Row 11**: 'at Pittsburgh Steelers', 'W 20–16' - "
+                      'Win\n'
+                      "- **Row 12**: 'Tampa Bay Buccaneers', 'W 44–34' - Win\n"
+                      "- **Row 13**: 'Houston Oilers', 'W 24–10' - Win\n"
+                      "- **Row 14**: 'at Cincinnati Bengals', 'W 41–24' - Win\n"
+                      "- **Row 15**: 'Green Bay Packers', 'W 33–24' - Win\n"
+                      '\n'
+                      '### Step 5: Count the Wins Excluding the 49ers Game\n'
+                      'Total wins = 12\n'
+                      'Wins against 49ers = 1\n'
+                      'Wins excluding 49ers = Total wins - Wins against 49ers '
+                      '= 12 - 1 = 11\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table contains the results of '
+                      'football games. There were 12 wins in total, with one '
+                      'of them being against the San Francisco 49ers.\n'
+                      '**Factual Answer**: 11\n'
+                      '**Source**: Game results data in the provided table.',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks for the number of wins, excluding '
+                         'the game against the 49ers.\n'
+                         '\n'
+                         '### Step 2: Extract Relevant Data\n'
+                         'From the given table, the relevant columns are '
+                         "'Opponent' and 'Result'. We need to count the number "
+                         "of wins (denoted by 'W') in the 'Result' column, "
+                         "excluding the game against the 'San Francisco "
+                         "49ers'.\n"
+                         '\n'
+                         '### Step 3: Analyze the Data\n'
+                         "1. **Identify Wins**: Look for 'W' in the 'Result' "
+                         'column.\n'
+                         '2. **Exclude 49ers Game**: Ignore the row where '
+                         "'Opponent' is 'San Francisco 49ers'.\n"
+                         "3. **Count Wins**: Count the remaining 'W' entries.\n"
+                         '\n'
+                         '### Step 4: Perform the Analysis\n'
+                         "- **Row 1**: 'Cleveland Browns', 'W 28–21' - Win\n"
+                         "- **Row 3**: 'Los Angeles Rams', 'W 37–10' - Win\n"
+                         "- **Row 5**: 'at Chicago Bears', 'W 19–17' - Win\n"
+                         "- **Row 7**: 'at Atlanta Falcons', 'W 38–0' - Win\n"
+                         "- **Row 8**: 'at Los Angeles Rams', 'W 31–14' - Win\n"
+                         "- **Row 9**: 'at San Francisco 49ers', 'W 26–24' - "
+                         'Win (against 49ers, exclude)\n'
+                         "- **Row 10**: 'New York Giants', 'W 23–14' - Win\n"
+                         "- **Row 11**: 'at Pittsburgh Steelers', 'W 20–16' - "
+                         'Win\n'
+                         "- **Row 12**: 'Tampa Bay Buccaneers', 'W 44–34' - "
+                         'Win\n'
+                         "- **Row 13**: 'Houston Oilers', 'W 24–10' - Win\n"
+                         "- **Row 14**: 'at Cincinnati Bengals', 'W 41–24' - "
+                         'Win\n'
+                         "- **Row 15**: 'Green Bay Packers', 'W 33–24' - Win\n"
+                         '\n'
+                         '### Step 5: Count the Wins Excluding the 49ers Game\n'
+                         'Total wins = 12\n'
+                         'Wins against 49ers = 1\n'
+                         'Wins excluding 49ers = Total wins - Wins against '
+                         '49ers = 12 - 1 = 11\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The table contains the results of '
+                         'football games. There were 12 wins in total, with '
+                         'one of them being against the San Francisco 49ers.\n'
+                         '**Factual Answer**: 11\n'
+                         '**Source**: Game results data in the provided table.',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks for the number of wins, excluding the '
+                      'game against the 49ers.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Data\n'
+                      'From the given table, the relevant columns are '
+                      "'Opponent' and 'Result'. We need to count the number of "
+                      "wins (denoted by 'W') in the 'Result' column, excluding "
+                      "the game against the 'San Francisco 49ers'.\n"
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      "1. **Identify Wins**: Look for 'W' in the 'Result' "
+                      'column.\n'
+                      '2. **Exclude 49ers Game**: Ignore the row where '
+                      "'Opponent' is 'San Francisco 49ers'.\n"
+                      "3. **Count Wins**: Count the remaining 'W' entries.\n"
+                      '\n'
+                      '### Step 4: Perform the Analysis\n'
+                      "- **Row 1**: 'Cleveland Browns', 'W 28–21' - Win\n"
+                      "- **Row 3**: 'Los Angeles Rams', 'W 37–10' - Win\n"
+                      "- **Row 5**: 'at Chicago Bears', 'W 19–17' - Win\n"
+                      "- **Row 7**: 'at Atlanta Falcons', 'W 38–0' - Win\n"
+                      "- **Row 8**: 'at Los Angeles Rams', 'W 31–14' - Win\n"
+                      "- **Row 9**: 'at San Francisco 49ers', 'W 26–24' - Win "
+                      '(against 49ers, exclude)\n'
+                      "- **Row 10**: 'New York Giants', 'W 23–14' - Win\n"
+                      "- **Row 11**: 'at Pittsburgh Steelers', 'W 20–16' - "
+                      'Win\n'
+                      "- **Row 12**: 'Tampa Bay Buccaneers', 'W 44–34' - Win\n"
+                      "- **Row 13**: 'Houston Oilers', 'W 24–10' - Win\n"
+                      "- **Row 14**: 'at Cincinnati Bengals', 'W 41–24' - Win\n"
+                      "- **Row 15**: 'Green Bay Packers', 'W 33–24' - Win\n"
+                      '\n'
+                      '### Step 5: Count the Wins Excluding the 49ers Game\n'
+                      'Total wins = 12\n'
+                      'Wins against 49ers = 1\n'
+                      'Wins excluding 49ers = Total wins - Wins against 49ers '
+                      '= 12 - 1 = 11\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table contains the results of '
+                      'football games. There were 12 wins in total, with one '
+                      'of them being against the San Francisco 49ers.\n'
+                      '**Factual Answer**: 11\n'
+                      '**Source**: Game results data in the provided table.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question asks for the number of '
+                       'wins excluding the game against the 49ers. The '
+                       'relevant information is found in the structured data '
+                       'analysis.',
+                'result': '**Data Support**: The structured data analysis '
+                          'shows that there were 12 wins in total, with one of '
+                          'them being against the San Francisco 49ers. The '
+                          'count of wins excluding the 49ers game is 12 - 1 = '
+                          '11.\n'
+                          '\n'
+                          '**Factual Answer**: 11\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The analysis effectively combines the structured '
+                          'data with the context of the question to provide an '
+                          'accurate factual answer.',
+                'raw': '**Text Analysis**: The question asks for the number of '
+                       'wins excluding the game against the 49ers. The '
+                       'relevant information is found in the structured data '
+                       'analysis.\n'
+                       '\n'
+                       '**Data Support**: The structured data analysis shows '
+                       'that there were 12 wins in total, with one of them '
+                       'being against the San Francisco 49ers. The count of '
+                       'wins excluding the 49ers game is 12 - 1 = 11.\n'
+                       '\n'
+                       '**Factual Answer**: 11\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The analysis effectively combines the structured data '
+                       'with the context of the question to provide an '
+                       'accurate factual answer.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "other than against the 49ers how '
+                          'many wins were there?",\n'
+                          '  "Factual Answer": "11",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "- **Row 1**: 'Cleveland Browns', 'W 28–21' - Win\n"
+                          "- **Row 3**: 'Los Angeles Rams', 'W 37–10' - Win\n"
+                          "- **Row 5**: 'at Chicago Bears', 'W 19–17' - Win\n"
+                          "- **Row 7**: 'at Atlanta Falcons', 'W 38–0' - Win\n"
+                          "- **Row 8**: 'at Los Angeles Rams', 'W 31–14' - "
+                          'Win\n'
+                          "- **Row 9**: 'at San Francisco 49ers', 'W 26–24' - "
+                          'Win (against 49ers, exclude)\n'
+                          "- **Row 10**: 'New York Giants', 'W 23–14' - Win\n"
+                          "- **Row 11**: 'at Pittsburgh Steelers', 'W 20–16' - "
+                          'Win\n'
+                          "- **Row 12**: 'Tampa Bay Buccaneers', 'W 44–34' - "
+                          'Win\n'
+                          "- **Row 13**: 'Houston Oilers', 'W 24–10' - Win\n"
+                          "- **Row 14**: 'at Cincinnati Bengals', 'W 41–24' - "
+                          'Win\n'
+                          "- **Row 15**: 'Green Bay Packers', 'W 33–24' - Win",
+                'raw': '{\n'
+                       '  "Question": "other than against the 49ers how many '
+                       'wins were there?",\n'
+                       '  "Factual Answer": "11",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

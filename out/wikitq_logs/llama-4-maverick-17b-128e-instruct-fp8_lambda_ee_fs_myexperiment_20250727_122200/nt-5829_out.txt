@@ -1,0 +1,535 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-5829.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many devices have no notes?",
+  "Factual Answer": "14",
+  "Source": "Data",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+(none)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many devices have no notes?" is '
+                      'classified as a **Numerical Question** because it asks '
+                      'for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract information '
+                      'from the structured data provided, specifically '
+                      "focusing on the 'Notes' column. We will count the "
+                      "number of rows where the 'Notes' column is empty or NaN "
+                      '(Not a Number), indicating no notes.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to examine the '
+                      "'Notes' column of the given table.\n"
+                      '2. **Count Empty/NaN Values**: Count the number of rows '
+                      "where the 'Notes' column is empty or NaN.\n"
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      "{'table': [['Device', 'Type', 'IOPS', 'Interface', "
+                      "'Notes'], \n"
+                      "           ['Simple SLC SSD', 'SSD', '~400 "
+                      "IOPS[citation needed]', 'SATA 3 Gbit/s', nan], \n"
+                      "           ['Intel X25-M G2 (MLC)', 'SSD', '~8,600 "
+                      'IOPS\', \'SATA 3 Gbit/s\', "Intel\'s data sheet claims '
+                      '6,600/8,600 IOPS (80 GB/160 GB version) and 35,000 IOPS '
+                      'for random 4 KB writes and reads, respectively."], \n'
+                      "           ['Intel X25-E (SLC)', 'SSD', '~5,000 IOPS', "
+                      '\'SATA 3 Gbit/s\', "Intel\'s data sheet claims 3,300 '
+                      'IOPS and 35,000 IOPS for writes and reads, '
+                      'respectively. 5,000 IOPS are measured for a mix. Intel '
+                      'X25-E G1 has around 3 times higher IOPS compared to the '
+                      'Intel X25-M G2."], \n'
+                      "           ['G.Skill Phoenix Pro', 'SSD', '~20,000 "
+                      "IOPS', 'SATA 3 Gbit/s', 'SandForce-1200 based SSD "
+                      'drives with enhanced firmware, states up to 50,000 '
+                      'IOPS, but benchmarking shows for this particular drive '
+                      '~25,000 IOPS for random read and ~15,000 IOPS for '
+                      "random write.'], \n"
+                      "           ['OCZ Vertex 3', 'SSD', 'Up to 60,000 IOPS', "
+                      "'SATA 6 Gbit/s', 'Random Write 4 KB (Aligned)'], \n"
+                      "           ['Corsair Force Series GT', 'SSD', 'Up to "
+                      "85,000 IOPS', 'SATA 6 Gbit/s', '240 GB Drive, 555 MB/s "
+                      'sequential read & 525 MB/s sequential write, Random '
+                      "Write 4 KB Test (Aligned)'], \n"
+                      "           ['OCZ Vertex 4', 'SSD', 'Up to 120,000 "
+                      "IOPS', 'SATA 6 Gbit/s', '256 GB Drive, 560 MB/s "
+                      'sequential read & 510 MB/s sequential write, Random '
+                      'Read 4 KB Test 90K IOPS, Random Write 4 KB Test 85K '
+                      "IOPS'], \n"
+                      "           ['Texas Memory Systems RamSan-20', 'SSD', "
+                      "'120,000+ Random Read/Write IOPS', 'PCIe', 'Includes "
+                      "RAM cache'], \n"
+                      "           ['Fusion-io ioDrive', 'SSD', '140,000 Read "
+                      "IOPS, 135,000 Write IOPS', 'PCIe', nan], \n"
+                      "           ['Virident Systems tachIOn', 'SSD', '320,000 "
+                      'sustained READ IOPS using 4KB blocks and 200,000 '
+                      "sustained WRITE IOPS using 4KB blocks', 'PCIe', nan], \n"
+                      "           ['OCZ RevoDrive 3 X2', 'SSD', '200,000 "
+                      "Random Write 4K IOPS', 'PCIe', nan], \n"
+                      "           ['Fusion-io ioDrive Duo', 'SSD', '250,000+ "
+                      "IOPS', 'PCIe', nan], \n"
+                      "           ['Violin Memory Violin 3200', 'SSD', "
+                      "'250,000+ Random Read/Write IOPS', 'PCIe "
+                      "/FC/Infiniband/iSCSI', 'Flash Memory Array'], \n"
+                      "           ['WHIPTAIL, ACCELA', 'SSD', "
+                      "'250,000/200,000+ Write/Read IOPS', 'Fibre Channel, "
+                      "iSCSI, Infiniband/SRP, NFS, CIFS', 'Flash Based Storage "
+                      "Array'], \n"
+                      "           ['DDRdrive X1,', 'SSD', '300,000+ (512B "
+                      'Random Read IOPS) and 200,000+ (512B Random Write '
+                      "IOPS)', 'PCIe', nan], \n"
+                      "           ['SolidFire SF3010/SF6010', 'SSD', '250,000 "
+                      "4KB Read/Write IOPS', 'iSCSI', 'Flash Based Storage "
+                      "Array (5RU)'], \n"
+                      "           ['Texas Memory Systems RamSan-720 "
+                      "Appliance', 'SSD', '500,000 Optimal Read, 250,000 "
+                      "Optimal Write 4KB IOPS', 'FC / InfiniBand', nan], \n"
+                      "           ['OCZ Single SuperScale Z-Drive R4 "
+                      "PCI-Express SSD', 'SSD', 'Up to 500,000 IOPS', 'PCIe', "
+                      'nan], \n'
+                      "           ['WHIPTAIL, INVICTA', 'SSD', "
+                      "'650,000/550,000+ Read/Write IOPS', 'Fibre Channel, "
+                      "iSCSI, Infiniband/SRP, NFS', 'Flash Based Storage "
+                      "Array'], \n"
+                      "           ['Violin Memory Violin 6000', '3RU Flash "
+                      "Memory Array', '1,000,000+ Random Read/Write IOPS', "
+                      "'/FC/Infiniband/10Gb(iSCSI)/ PCIe', nan], \n"
+                      "           ['Texas Memory Systems RamSan-630 "
+                      "Appliance', 'SSD', '1,000,000+ 4KB Random Read/Write "
+                      "IOPS', 'FC / InfiniBand', nan], \n"
+                      "           ['Fusion-io ioDrive Octal (single PCI "
+                      "Express card)', 'SSD', '1,180,000+ Random Read/Write "
+                      "IOPS', 'PCIe', nan], \n"
+                      "           ['OCZ 2x SuperScale Z-Drive R4 PCI-Express "
+                      "SSD', 'SSD', 'Up to 1,200,000 IOPS', 'PCIe', nan], \n"
+                      "           ['Texas Memory Systems RamSan-70', 'SSD', "
+                      "'1,200,000 Random Read/Write IOPS', 'PCIe', 'Includes "
+                      "RAM cache'], \n"
+                      "           ['Kaminario K2', 'Flash/DRAM/Hybrid SSD', "
+                      "'Up to 1,200,000 IOPS SPC-1 IOPS with the K2-D (DRAM)', "
+                      "'FC', nan], \n"
+                      "           ['NetApp FAS6240 cluster', 'Flash/Disk', "
+                      "'1,261,145 SPECsfs2008 nfsv3 IOPs using disks with "
+                      "virtual storage tiering.', 'NFS, CIFS, FC, FCoE, "
+                      "iSCSI', 'SPECsfs2008 is the latest version of the "
+                      'Standard Performance Evaluation Corporation benchmark '
+                      'suite measuring file server throughput and response '
+                      'time, providing a standardized method for comparing '
+                      'performance across different vendor platforms. '
+                      "http://www.spec.org/sfs2008/'], \n"
+                      "           ['Fusion-io ioDrive2', 'SSD', 'Up to "
+                      "9,608,000 IOPS', 'PCIe', nan]], \n"
+                      "  'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      "Let's count the number of rows where 'Notes' is NaN:\n"
+                      '1. Simple SLC SSD: NaN\n'
+                      '2. Fusion-io ioDrive: NaN\n'
+                      '3. Virident Systems tachIOn: NaN\n'
+                      '4. OCZ RevoDrive 3 X2: NaN\n'
+                      '5. Fusion-io ioDrive Duo: NaN\n'
+                      '6. DDRdrive X1,: NaN\n'
+                      '7. Texas Memory Systems RamSan-720 Appliance: NaN\n'
+                      '8. OCZ Single SuperScale Z-Drive R4 PCI-Express SSD: '
+                      'NaN\n'
+                      '9. Violin Memory Violin 6000: NaN\n'
+                      '10. Texas Memory Systems RamSan-630 Appliance: NaN\n'
+                      '11. Fusion-io ioDrive Octal (single PCI Express card): '
+                      'NaN\n'
+                      '12. OCZ 2x SuperScale Z-Drive R4 PCI-Express SSD: NaN\n'
+                      '13. Kaminario K2: NaN\n'
+                      '14. Fusion-io ioDrive2: NaN\n'
+                      '\n'
+                      'There are 14 devices with no notes.\n'
+                      '\n'
+                      '### Output\n'
+                      "**Data Analysis**: The 'Notes' column was examined for "
+                      'NaN values to determine the number of devices without '
+                      'notes.\n'
+                      '**Factual Answer**: 14\n'
+                      '**Source**: The table provided in the data.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many devices have no notes?" is '
+                         'classified as a **Numerical Question** because it '
+                         'asks for a count.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract '
+                         'information from the structured data provided, '
+                         "specifically focusing on the 'Notes' column. We will "
+                         "count the number of rows where the 'Notes' column is "
+                         'empty or NaN (Not a Number), indicating no notes.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract Relevant Data**: We need to examine the '
+                         "'Notes' column of the given table.\n"
+                         '2. **Count Empty/NaN Values**: Count the number of '
+                         "rows where the 'Notes' column is empty or NaN.\n"
+                         '\n'
+                         '### Step 4: Analysis\n'
+                         'Given the table:\n'
+                         '```python\n'
+                         "{'table': [['Device', 'Type', 'IOPS', 'Interface', "
+                         "'Notes'], \n"
+                         "           ['Simple SLC SSD', 'SSD', '~400 "
+                         "IOPS[citation needed]', 'SATA 3 Gbit/s', nan], \n"
+                         "           ['Intel X25-M G2 (MLC)', 'SSD', '~8,600 "
+                         'IOPS\', \'SATA 3 Gbit/s\', "Intel\'s data sheet '
+                         'claims 6,600/8,600 IOPS (80 GB/160 GB version) and '
+                         '35,000 IOPS for random 4 KB writes and reads, '
+                         'respectively."], \n'
+                         "           ['Intel X25-E (SLC)', 'SSD', '~5,000 "
+                         'IOPS\', \'SATA 3 Gbit/s\', "Intel\'s data sheet '
+                         'claims 3,300 IOPS and 35,000 IOPS for writes and '
+                         'reads, respectively. 5,000 IOPS are measured for a '
+                         'mix. Intel X25-E G1 has around 3 times higher IOPS '
+                         'compared to the Intel X25-M G2."], \n'
+                         "           ['G.Skill Phoenix Pro', 'SSD', '~20,000 "
+                         "IOPS', 'SATA 3 Gbit/s', 'SandForce-1200 based SSD "
+                         'drives with enhanced firmware, states up to 50,000 '
+                         'IOPS, but benchmarking shows for this particular '
+                         'drive ~25,000 IOPS for random read and ~15,000 IOPS '
+                         "for random write.'], \n"
+                         "           ['OCZ Vertex 3', 'SSD', 'Up to 60,000 "
+                         "IOPS', 'SATA 6 Gbit/s', 'Random Write 4 KB "
+                         "(Aligned)'], \n"
+                         "           ['Corsair Force Series GT', 'SSD', 'Up to "
+                         "85,000 IOPS', 'SATA 6 Gbit/s', '240 GB Drive, 555 "
+                         'MB/s sequential read & 525 MB/s sequential write, '
+                         "Random Write 4 KB Test (Aligned)'], \n"
+                         "           ['OCZ Vertex 4', 'SSD', 'Up to 120,000 "
+                         "IOPS', 'SATA 6 Gbit/s', '256 GB Drive, 560 MB/s "
+                         'sequential read & 510 MB/s sequential write, Random '
+                         'Read 4 KB Test 90K IOPS, Random Write 4 KB Test 85K '
+                         "IOPS'], \n"
+                         "           ['Texas Memory Systems RamSan-20', 'SSD', "
+                         "'120,000+ Random Read/Write IOPS', 'PCIe', 'Includes "
+                         "RAM cache'], \n"
+                         "           ['Fusion-io ioDrive', 'SSD', '140,000 "
+                         "Read IOPS, 135,000 Write IOPS', 'PCIe', nan], \n"
+                         "           ['Virident Systems tachIOn', 'SSD', "
+                         "'320,000 sustained READ IOPS using 4KB blocks and "
+                         "200,000 sustained WRITE IOPS using 4KB blocks', "
+                         "'PCIe', nan], \n"
+                         "           ['OCZ RevoDrive 3 X2', 'SSD', '200,000 "
+                         "Random Write 4K IOPS', 'PCIe', nan], \n"
+                         "           ['Fusion-io ioDrive Duo', 'SSD', "
+                         "'250,000+ IOPS', 'PCIe', nan], \n"
+                         "           ['Violin Memory Violin 3200', 'SSD', "
+                         "'250,000+ Random Read/Write IOPS', 'PCIe "
+                         "/FC/Infiniband/iSCSI', 'Flash Memory Array'], \n"
+                         "           ['WHIPTAIL, ACCELA', 'SSD', "
+                         "'250,000/200,000+ Write/Read IOPS', 'Fibre Channel, "
+                         "iSCSI, Infiniband/SRP, NFS, CIFS', 'Flash Based "
+                         "Storage Array'], \n"
+                         "           ['DDRdrive X1,', 'SSD', '300,000+ (512B "
+                         'Random Read IOPS) and 200,000+ (512B Random Write '
+                         "IOPS)', 'PCIe', nan], \n"
+                         "           ['SolidFire SF3010/SF6010', 'SSD', "
+                         "'250,000 4KB Read/Write IOPS', 'iSCSI', 'Flash Based "
+                         "Storage Array (5RU)'], \n"
+                         "           ['Texas Memory Systems RamSan-720 "
+                         "Appliance', 'SSD', '500,000 Optimal Read, 250,000 "
+                         "Optimal Write 4KB IOPS', 'FC / InfiniBand', nan], \n"
+                         "           ['OCZ Single SuperScale Z-Drive R4 "
+                         "PCI-Express SSD', 'SSD', 'Up to 500,000 IOPS', "
+                         "'PCIe', nan], \n"
+                         "           ['WHIPTAIL, INVICTA', 'SSD', "
+                         "'650,000/550,000+ Read/Write IOPS', 'Fibre Channel, "
+                         "iSCSI, Infiniband/SRP, NFS', 'Flash Based Storage "
+                         "Array'], \n"
+                         "           ['Violin Memory Violin 6000', '3RU Flash "
+                         "Memory Array', '1,000,000+ Random Read/Write IOPS', "
+                         "'/FC/Infiniband/10Gb(iSCSI)/ PCIe', nan], \n"
+                         "           ['Texas Memory Systems RamSan-630 "
+                         "Appliance', 'SSD', '1,000,000+ 4KB Random Read/Write "
+                         "IOPS', 'FC / InfiniBand', nan], \n"
+                         "           ['Fusion-io ioDrive Octal (single PCI "
+                         "Express card)', 'SSD', '1,180,000+ Random Read/Write "
+                         "IOPS', 'PCIe', nan], \n"
+                         "           ['OCZ 2x SuperScale Z-Drive R4 "
+                         "PCI-Express SSD', 'SSD', 'Up to 1,200,000 IOPS', "
+                         "'PCIe', nan], \n"
+                         "           ['Texas Memory Systems RamSan-70', 'SSD', "
+                         "'1,200,000 Random Read/Write IOPS', 'PCIe', "
+                         "'Includes RAM cache'], \n"
+                         "           ['Kaminario K2', 'Flash/DRAM/Hybrid SSD', "
+                         "'Up to 1,200,000 IOPS SPC-1 IOPS with the K2-D "
+                         "(DRAM)', 'FC', nan], \n"
+                         "           ['NetApp FAS6240 cluster', 'Flash/Disk', "
+                         "'1,261,145 SPECsfs2008 nfsv3 IOPs using disks with "
+                         "virtual storage tiering.', 'NFS, CIFS, FC, FCoE, "
+                         "iSCSI', 'SPECsfs2008 is the latest version of the "
+                         'Standard Performance Evaluation Corporation '
+                         'benchmark suite measuring file server throughput and '
+                         'response time, providing a standardized method for '
+                         'comparing performance across different vendor '
+                         "platforms. http://www.spec.org/sfs2008/'], \n"
+                         "           ['Fusion-io ioDrive2', 'SSD', 'Up to "
+                         "9,608,000 IOPS', 'PCIe', nan]], \n"
+                         "  'highlighted_cells': []}\n"
+                         '```\n'
+                         '\n'
+                         "Let's count the number of rows where 'Notes' is "
+                         'NaN:\n'
+                         '1. Simple SLC SSD: NaN\n'
+                         '2. Fusion-io ioDrive: NaN\n'
+                         '3. Virident Systems tachIOn: NaN\n'
+                         '4. OCZ RevoDrive 3 X2: NaN\n'
+                         '5. Fusion-io ioDrive Duo: NaN\n'
+                         '6. DDRdrive X1,: NaN\n'
+                         '7. Texas Memory Systems RamSan-720 Appliance: NaN\n'
+                         '8. OCZ Single SuperScale Z-Drive R4 PCI-Express SSD: '
+                         'NaN\n'
+                         '9. Violin Memory Violin 6000: NaN\n'
+                         '10. Texas Memory Systems RamSan-630 Appliance: NaN\n'
+                         '11. Fusion-io ioDrive Octal (single PCI Express '
+                         'card): NaN\n'
+                         '12. OCZ 2x SuperScale Z-Drive R4 PCI-Express SSD: '
+                         'NaN\n'
+                         '13. Kaminario K2: NaN\n'
+                         '14. Fusion-io ioDrive2: NaN\n'
+                         '\n'
+                         'There are 14 devices with no notes.\n'
+                         '\n'
+                         '### Output\n'
+                         "**Data Analysis**: The 'Notes' column was examined "
+                         'for NaN values to determine the number of devices '
+                         'without notes.\n'
+                         '**Factual Answer**: 14\n'
+                         '**Source**: The table provided in the data.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many devices have no notes?" is '
+                      'classified as a **Numerical Question** because it asks '
+                      'for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract information '
+                      'from the structured data provided, specifically '
+                      "focusing on the 'Notes' column. We will count the "
+                      "number of rows where the 'Notes' column is empty or NaN "
+                      '(Not a Number), indicating no notes.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to examine the '
+                      "'Notes' column of the given table.\n"
+                      '2. **Count Empty/NaN Values**: Count the number of rows '
+                      "where the 'Notes' column is empty or NaN.\n"
+                      '\n'
+                      '### Step 4: Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      "{'table': [['Device', 'Type', 'IOPS', 'Interface', "
+                      "'Notes'], \n"
+                      "           ['Simple SLC SSD', 'SSD', '~400 "
+                      "IOPS[citation needed]', 'SATA 3 Gbit/s', nan], \n"
+                      "           ['Intel X25-M G2 (MLC)', 'SSD', '~8,600 "
+                      'IOPS\', \'SATA 3 Gbit/s\', "Intel\'s data sheet claims '
+                      '6,600/8,600 IOPS (80 GB/160 GB version) and 35,000 IOPS '
+                      'for random 4 KB writes and reads, respectively."], \n'
+                      "           ['Intel X25-E (SLC)', 'SSD', '~5,000 IOPS', "
+                      '\'SATA 3 Gbit/s\', "Intel\'s data sheet claims 3,300 '
+                      'IOPS and 35,000 IOPS for writes and reads, '
+                      'respectively. 5,000 IOPS are measured for a mix. Intel '
+                      'X25-E G1 has around 3 times higher IOPS compared to the '
+                      'Intel X25-M G2."], \n'
+                      "           ['G.Skill Phoenix Pro', 'SSD', '~20,000 "
+                      "IOPS', 'SATA 3 Gbit/s', 'SandForce-1200 based SSD "
+                      'drives with enhanced firmware, states up to 50,000 '
+                      'IOPS, but benchmarking shows for this particular drive '
+                      '~25,000 IOPS for random read and ~15,000 IOPS for '
+                      "random write.'], \n"
+                      "           ['OCZ Vertex 3', 'SSD', 'Up to 60,000 IOPS', "
+                      "'SATA 6 Gbit/s', 'Random Write 4 KB (Aligned)'], \n"
+                      "           ['Corsair Force Series GT', 'SSD', 'Up to "
+                      "85,000 IOPS', 'SATA 6 Gbit/s', '240 GB Drive, 555 MB/s "
+                      'sequential read & 525 MB/s sequential write, Random '
+                      "Write 4 KB Test (Aligned)'], \n"
+                      "           ['OCZ Vertex 4', 'SSD', 'Up to 120,000 "
+                      "IOPS', 'SATA 6 Gbit/s', '256 GB Drive, 560 MB/s "
+                      'sequential read & 510 MB/s sequential write, Random '
+                      'Read 4 KB Test 90K IOPS, Random Write 4 KB Test 85K '
+                      "IOPS'], \n"
+                      "           ['Texas Memory Systems RamSan-20', 'SSD', "
+                      "'120,000+ Random Read/Write IOPS', 'PCIe', 'Includes "
+                      "RAM cache'], \n"
+                      "           ['Fusion-io ioDrive', 'SSD', '140,000 Read "
+                      "IOPS, 135,000 Write IOPS', 'PCIe', nan], \n"
+                      "           ['Virident Systems tachIOn', 'SSD', '320,000 "
+                      'sustained READ IOPS using 4KB blocks and 200,000 '
+                      "sustained WRITE IOPS using 4KB blocks', 'PCIe', nan], \n"
+                      "           ['OCZ RevoDrive 3 X2', 'SSD', '200,000 "
+                      "Random Write 4K IOPS', 'PCIe', nan], \n"
+                      "           ['Fusion-io ioDrive Duo', 'SSD', '250,000+ "
+                      "IOPS', 'PCIe', nan], \n"
+                      "           ['Violin Memory Violin 3200', 'SSD', "
+                      "'250,000+ Random Read/Write IOPS', 'PCIe "
+                      "/FC/Infiniband/iSCSI', 'Flash Memory Array'], \n"
+                      "           ['WHIPTAIL, ACCELA', 'SSD', "
+                      "'250,000/200,000+ Write/Read IOPS', 'Fibre Channel, "
+                      "iSCSI, Infiniband/SRP, NFS, CIFS', 'Flash Based Storage "
+                      "Array'], \n"
+                      "           ['DDRdrive X1,', 'SSD', '300,000+ (512B "
+                      'Random Read IOPS) and 200,000+ (512B Random Write '
+                      "IOPS)', 'PCIe', nan], \n"
+                      "           ['SolidFire SF3010/SF6010', 'SSD', '250,000 "
+                      "4KB Read/Write IOPS', 'iSCSI', 'Flash Based Storage "
+                      "Array (5RU)'], \n"
+                      "           ['Texas Memory Systems RamSan-720 "
+                      "Appliance', 'SSD', '500,000 Optimal Read, 250,000 "
+                      "Optimal Write 4KB IOPS', 'FC / InfiniBand', nan], \n"
+                      "           ['OCZ Single SuperScale Z-Drive R4 "
+                      "PCI-Express SSD', 'SSD', 'Up to 500,000 IOPS', 'PCIe', "
+                      'nan], \n'
+                      "           ['WHIPTAIL, INVICTA', 'SSD', "
+                      "'650,000/550,000+ Read/Write IOPS', 'Fibre Channel, "
+                      "iSCSI, Infiniband/SRP, NFS', 'Flash Based Storage "
+                      "Array'], \n"
+                      "           ['Violin Memory Violin 6000', '3RU Flash "
+                      "Memory Array', '1,000,000+ Random Read/Write IOPS', "
+                      "'/FC/Infiniband/10Gb(iSCSI)/ PCIe', nan], \n"
+                      "           ['Texas Memory Systems RamSan-630 "
+                      "Appliance', 'SSD', '1,000,000+ 4KB Random Read/Write "
+                      "IOPS', 'FC / InfiniBand', nan], \n"
+                      "           ['Fusion-io ioDrive Octal (single PCI "
+                      "Express card)', 'SSD', '1,180,000+ Random Read/Write "
+                      "IOPS', 'PCIe', nan], \n"
+                      "           ['OCZ 2x SuperScale Z-Drive R4 PCI-Express "
+                      "SSD', 'SSD', 'Up to 1,200,000 IOPS', 'PCIe', nan], \n"
+                      "           ['Texas Memory Systems RamSan-70', 'SSD', "
+                      "'1,200,000 Random Read/Write IOPS', 'PCIe', 'Includes "
+                      "RAM cache'], \n"
+                      "           ['Kaminario K2', 'Flash/DRAM/Hybrid SSD', "
+                      "'Up to 1,200,000 IOPS SPC-1 IOPS with the K2-D (DRAM)', "
+                      "'FC', nan], \n"
+                      "           ['NetApp FAS6240 cluster', 'Flash/Disk', "
+                      "'1,261,145 SPECsfs2008 nfsv3 IOPs using disks with "
+                      "virtual storage tiering.', 'NFS, CIFS, FC, FCoE, "
+                      "iSCSI', 'SPECsfs2008 is the latest version of the "
+                      'Standard Performance Evaluation Corporation benchmark '
+                      'suite measuring file server throughput and response '
+                      'time, providing a standardized method for comparing '
+                      'performance across different vendor platforms. '
+                      "http://www.spec.org/sfs2008/'], \n"
+                      "           ['Fusion-io ioDrive2', 'SSD', 'Up to "
+                      "9,608,000 IOPS', 'PCIe', nan]], \n"
+                      "  'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      "Let's count the number of rows where 'Notes' is NaN:\n"
+                      '1. Simple SLC SSD: NaN\n'
+                      '2. Fusion-io ioDrive: NaN\n'
+                      '3. Virident Systems tachIOn: NaN\n'
+                      '4. OCZ RevoDrive 3 X2: NaN\n'
+                      '5. Fusion-io ioDrive Duo: NaN\n'
+                      '6. DDRdrive X1,: NaN\n'
+                      '7. Texas Memory Systems RamSan-720 Appliance: NaN\n'
+                      '8. OCZ Single SuperScale Z-Drive R4 PCI-Express SSD: '
+                      'NaN\n'
+                      '9. Violin Memory Violin 6000: NaN\n'
+                      '10. Texas Memory Systems RamSan-630 Appliance: NaN\n'
+                      '11. Fusion-io ioDrive Octal (single PCI Express card): '
+                      'NaN\n'
+                      '12. OCZ 2x SuperScale Z-Drive R4 PCI-Express SSD: NaN\n'
+                      '13. Kaminario K2: NaN\n'
+                      '14. Fusion-io ioDrive2: NaN\n'
+                      '\n'
+                      'There are 14 devices with no notes.\n'
+                      '\n'
+                      '### Output\n'
+                      "**Data Analysis**: The 'Notes' column was examined for "
+                      'NaN values to determine the number of devices without '
+                      'notes.\n'
+                      '**Factual Answer**: 14\n'
+                      '**Source**: The table provided in the data.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how many devices have '
+                       'no notes?" is a numerical question that requires '
+                       "examining the 'Notes' column of the provided table for "
+                       'empty or NaN values.',
+                'result': '**Data Support**: The structured data provided '
+                          "includes a table with a 'Notes' column. Upon "
+                          'examining this column, we count the number of rows '
+                          "where 'Notes' is NaN.\n"
+                          '\n'
+                          '**Factual Analysis Process**:\n'
+                          "1. Extract the 'Notes' column from the table.\n"
+                          "2. Count the number of rows where 'Notes' is NaN.\n"
+                          '\n'
+                          "**Data Analysis**: The 'Notes' column was examined "
+                          'for NaN values to determine the number of devices '
+                          'without notes. The count revealed that 14 devices '
+                          "have NaN in the 'Notes' column.\n"
+                          '\n'
+                          '**Factual Answer**: 14\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The final answer is based on a thorough examination '
+                          "of the 'Notes' column in the provided structured "
+                          'data, ensuring accuracy and completeness.',
+                'raw': '**Text Analysis**: The question "how many devices have '
+                       'no notes?" is a numerical question that requires '
+                       "examining the 'Notes' column of the provided table for "
+                       'empty or NaN values.\n'
+                       '\n'
+                       '**Data Support**: The structured data provided '
+                       "includes a table with a 'Notes' column. Upon examining "
+                       "this column, we count the number of rows where 'Notes' "
+                       'is NaN.\n'
+                       '\n'
+                       '**Factual Analysis Process**:\n'
+                       "1. Extract the 'Notes' column from the table.\n"
+                       "2. Count the number of rows where 'Notes' is NaN.\n"
+                       '\n'
+                       "**Data Analysis**: The 'Notes' column was examined for "
+                       'NaN values to determine the number of devices without '
+                       'notes. The count revealed that 14 devices have NaN in '
+                       "the 'Notes' column.\n"
+                       '\n'
+                       '**Factual Answer**: 14\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The final answer is based on a thorough examination of '
+                       "the 'Notes' column in the provided structured data, "
+                       'ensuring accuracy and completeness.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many devices have no notes?",\n'
+                          '  "Factual Answer": "14",\n'
+                          '  "Source": "Data",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '(none)',
+                'raw': '{\n'
+                       '  "Question": "how many devices have no notes?",\n'
+                       '  "Factual Answer": "14",\n'
+                       '  "Source": "Data",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

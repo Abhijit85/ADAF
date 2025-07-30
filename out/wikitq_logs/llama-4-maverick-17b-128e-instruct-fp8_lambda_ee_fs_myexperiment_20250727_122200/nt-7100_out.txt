@@ -1,0 +1,437 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-7100.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how many songs in the table only reached position number 2?",
+  "Factual Answer": "6",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- '\\That\'s Rock and Roll\\"" by Shaun Cassidy
+- '\\Living Next Door to Alice\\"" by Smokie
+- '\\Lido Shuffle\\" / \\"What Can I Say\\"" by Boz Scaggs
+- '\\You and Me\\"" by Alice Cooper
+- '\\Don\'t Fall in Love\\"" by Ferrets
+- '\\Ain\'t Gonna Bump No More with No Big Fat Woman\\"" by Joe Tex
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how many songs in the table only reached '
+                      'position number 2?" is a **Numerical Question** as it '
+                      'asks for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      'information related to the "Highest pos. reached" '
+                      'column from the given table and count how many songs '
+                      'reached position 2 but did not reach position 1.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to look at the '
+                      '"Highest pos. reached" column.\n'
+                      '2. **Identify Position 2 Songs**: Identify rows where '
+                      '"Highest pos. reached" is 2.\n'
+                      '3. **Check for Weeks at No. 1**: Verify that these '
+                      'songs have "nan" or no value in the "weeks at No. 1" '
+                      'column, indicating they did not reach No. 1.\n'
+                      '4. **Count**: Count the number of such songs.\n'
+                      '\n'
+                      '### Step 4: Performing the Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      "{'table': [['#', 'Title', 'Artist', 'Highest pos. "
+                      "reached', 'weeks at No. 1'], \n"
+                      "           [1.0, '\\\\Don\\'t Cry for Me "
+                      'Argentina\\\\""\', \'Julie Covington\', 1, \'7\'], \n'
+                      "           [2.0, '\\\\The Way You That You Do "
+                      'It\\\\""\', \'Pussyfoot\', 1, \'7\'], \n'
+                      "           [3.0, '\\\\I Just Want to Be Your "
+                      'Everything\\\\""\', \'Andy Gibb\', 1, \'7\'], \n'
+                      '           [4.0, \'\\\\That\\\'s Rock and Roll\\\\""\', '
+                      "'Shaun Cassidy', 2, nan], \n"
+                      "           [5.0, '\\\\Living Next Door to "
+                      'Alice\\\\""\', \'Smokie\', 2, nan], \n'
+                      '           [6.0, \'\\\\I Go To Rio\\\\""\', \'Peter '
+                      "Allen', 1, '5'], \n"
+                      '           [7.0, \'\\\\Torn Between Two Lovers\\\\""\', '
+                      "'Mary McGregor', 1, '4'], \n"
+                      '           [8.0, \'\\\\Walk Right In\\\\""\', \'Dr '
+                      "Hook', 1, '5'], \n"
+                      "           [9.0, '\\\\You\\'re Moving Out "
+                      'Today\\\\""\', \'Carole Bayer Sager\', 1, \'4\'], \n'
+                      '           [10.0, \'\\\\If You Leave Me Now\\\\""\', '
+                      "'Chicago', 1, '5 (pkd #1 in 76 & 77)'], \n"
+                      '           [11.0, \'\\\\Don\\\'t Give Up on Us\\\\""\', '
+                      "'David Soul', 1, '3'], \n"
+                      '           [12.0, \'\\\\Lido Shuffle\\\\" / \\\\"What '
+                      'Can I Say\\\\""\', \'Boz Scaggs\', 2, nan], \n'
+                      '           [13.0, \'\\\\You and Me\\\\""\', \'Alice '
+                      "Cooper', 2, nan], \n"
+                      "           [14.0, '\\\\Dance Little Lady "
+                      'Dance\\\\""\', \'Tina Charles\', 4, nan], \n'
+                      '           [15.0, \'\\\\When I Need You\\\\""\', \'Leo '
+                      "Sayer', 8, nan], \n"
+                      '           [16.0, \'\\\\Don\\\'t Fall in Love\\\\""\', '
+                      "'Ferrets', 2, nan], \n"
+                      '           [17.0, \'\\\\I Feel Love\\\\""\', \'Donna '
+                      "Summer', 1, '1'], \n"
+                      '           [18.0, \'\\\\Help is on its Way\\\\""\', '
+                      "'Little River Band', 1, '1'], \n"
+                      "           [19.0, '\\\\You Gotta Get Up and "
+                      'Dance\\\\""\', \'Supercharge\', 3, nan], \n'
+                      '           [20.0, \'\\\\Mull of Kintyre\\\\""\', '
+                      "'Wings', 1, '11 (pkd #1 in 77 & 78)'], \n"
+                      "           [21.0, '\\\\Don\\'t Leave Me This "
+                      'Way\\\\""\', \'Thelma Houston\', 6, nan], \n'
+                      "           [22.0, '\\\\Ain\\'t Gonna Bump No More with "
+                      'No Big Fat Woman\\\\""\', \'Joe Tex\', 2, nan], \n'
+                      '           [23.0, \'\\\\You\\\'re in My Heart\\\\""\', '
+                      "'Rod Stewart', 1, '1'], \n"
+                      '           [24.0, \'\\\\Ma Baker\\\\""\', \'Boney M\', '
+                      '5, nan], \n'
+                      '           [25.0, \'\\\\Lucille\\\\""\', \'Kenny '
+                      "Rogers', 7, nan]], \n"
+                      "           'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      '1. **Extract Relevant Data**: The "Highest pos. '
+                      'reached" column is the 4th column.\n'
+                      '2. **Identify Position 2 Songs**: Songs with "Highest '
+                      'pos. reached" = 2 are:\n'
+                      '   - \'\\\\That\\\'s Rock and Roll\\\\"" by Shaun '
+                      'Cassidy\n'
+                      '   - \'\\\\Living Next Door to Alice\\\\"" by Smokie\n'
+                      '   - \'\\\\Lido Shuffle\\\\" / \\\\"What Can I '
+                      'Say\\\\"" by Boz Scaggs\n'
+                      '   - \'\\\\You and Me\\\\"" by Alice Cooper\n'
+                      '   - \'\\\\Don\\\'t Fall in Love\\\\"" by Ferrets\n'
+                      "   - '\\\\Ain\\'t Gonna Bump No More with No Big Fat "
+                      'Woman\\\\"" by Joe Tex\n'
+                      '\n'
+                      '3. **Check for Weeks at No. 1**: All these songs have '
+                      '"nan" in the "weeks at No. 1" column, confirming they '
+                      'did not reach No. 1.\n'
+                      '\n'
+                      '4. **Count**: There are 6 songs.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table contains information about '
+                      'songs and their highest positions reached. We '
+                      'identified songs that reached position 2 and verified '
+                      'they did not reach position 1 by checking for "nan" in '
+                      'the "weeks at No. 1" column.\n'
+                      '**Factual Answer**: 6\n'
+                      '**Source**: The table data provided.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how many songs in the table only '
+                         'reached position number 2?" is a **Numerical '
+                         'Question** as it asks for a count.\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         'information related to the "Highest pos. reached" '
+                         'column from the given table and count how many songs '
+                         'reached position 2 but did not reach position 1.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         '1. **Extract Relevant Data**: We need to look at the '
+                         '"Highest pos. reached" column.\n'
+                         '2. **Identify Position 2 Songs**: Identify rows '
+                         'where "Highest pos. reached" is 2.\n'
+                         '3. **Check for Weeks at No. 1**: Verify that these '
+                         'songs have "nan" or no value in the "weeks at No. 1" '
+                         'column, indicating they did not reach No. 1.\n'
+                         '4. **Count**: Count the number of such songs.\n'
+                         '\n'
+                         '### Step 4: Performing the Analysis\n'
+                         'Given the table:\n'
+                         '```python\n'
+                         "{'table': [['#', 'Title', 'Artist', 'Highest pos. "
+                         "reached', 'weeks at No. 1'], \n"
+                         "           [1.0, '\\\\Don\\'t Cry for Me "
+                         'Argentina\\\\""\', \'Julie Covington\', 1, \'7\'], \n'
+                         "           [2.0, '\\\\The Way You That You Do "
+                         'It\\\\""\', \'Pussyfoot\', 1, \'7\'], \n'
+                         "           [3.0, '\\\\I Just Want to Be Your "
+                         'Everything\\\\""\', \'Andy Gibb\', 1, \'7\'], \n'
+                         "           [4.0, '\\\\That\\'s Rock and "
+                         'Roll\\\\""\', \'Shaun Cassidy\', 2, nan], \n'
+                         "           [5.0, '\\\\Living Next Door to "
+                         'Alice\\\\""\', \'Smokie\', 2, nan], \n'
+                         '           [6.0, \'\\\\I Go To Rio\\\\""\', \'Peter '
+                         "Allen', 1, '5'], \n"
+                         "           [7.0, '\\\\Torn Between Two "
+                         'Lovers\\\\""\', \'Mary McGregor\', 1, \'4\'], \n'
+                         '           [8.0, \'\\\\Walk Right In\\\\""\', \'Dr '
+                         "Hook', 1, '5'], \n"
+                         "           [9.0, '\\\\You\\'re Moving Out "
+                         'Today\\\\""\', \'Carole Bayer Sager\', 1, \'4\'], \n'
+                         '           [10.0, \'\\\\If You Leave Me Now\\\\""\', '
+                         "'Chicago', 1, '5 (pkd #1 in 76 & 77)'], \n"
+                         "           [11.0, '\\\\Don\\'t Give Up on "
+                         'Us\\\\""\', \'David Soul\', 1, \'3\'], \n'
+                         '           [12.0, \'\\\\Lido Shuffle\\\\" / '
+                         '\\\\"What Can I Say\\\\""\', \'Boz Scaggs\', 2, '
+                         'nan], \n'
+                         '           [13.0, \'\\\\You and Me\\\\""\', \'Alice '
+                         "Cooper', 2, nan], \n"
+                         "           [14.0, '\\\\Dance Little Lady "
+                         'Dance\\\\""\', \'Tina Charles\', 4, nan], \n'
+                         '           [15.0, \'\\\\When I Need You\\\\""\', '
+                         "'Leo Sayer', 8, nan], \n"
+                         "           [16.0, '\\\\Don\\'t Fall in "
+                         'Love\\\\""\', \'Ferrets\', 2, nan], \n'
+                         '           [17.0, \'\\\\I Feel Love\\\\""\', \'Donna '
+                         "Summer', 1, '1'], \n"
+                         '           [18.0, \'\\\\Help is on its Way\\\\""\', '
+                         "'Little River Band', 1, '1'], \n"
+                         "           [19.0, '\\\\You Gotta Get Up and "
+                         'Dance\\\\""\', \'Supercharge\', 3, nan], \n'
+                         '           [20.0, \'\\\\Mull of Kintyre\\\\""\', '
+                         "'Wings', 1, '11 (pkd #1 in 77 & 78)'], \n"
+                         "           [21.0, '\\\\Don\\'t Leave Me This "
+                         'Way\\\\""\', \'Thelma Houston\', 6, nan], \n'
+                         "           [22.0, '\\\\Ain\\'t Gonna Bump No More "
+                         'with No Big Fat Woman\\\\""\', \'Joe Tex\', 2, '
+                         'nan], \n'
+                         "           [23.0, '\\\\You\\'re in My "
+                         'Heart\\\\""\', \'Rod Stewart\', 1, \'1\'], \n'
+                         '           [24.0, \'\\\\Ma Baker\\\\""\', \'Boney '
+                         "M', 5, nan], \n"
+                         '           [25.0, \'\\\\Lucille\\\\""\', \'Kenny '
+                         "Rogers', 7, nan]], \n"
+                         "           'highlighted_cells': []}\n"
+                         '```\n'
+                         '\n'
+                         '1. **Extract Relevant Data**: The "Highest pos. '
+                         'reached" column is the 4th column.\n'
+                         '2. **Identify Position 2 Songs**: Songs with '
+                         '"Highest pos. reached" = 2 are:\n'
+                         '   - \'\\\\That\\\'s Rock and Roll\\\\"" by Shaun '
+                         'Cassidy\n'
+                         '   - \'\\\\Living Next Door to Alice\\\\"" by '
+                         'Smokie\n'
+                         '   - \'\\\\Lido Shuffle\\\\" / \\\\"What Can I '
+                         'Say\\\\"" by Boz Scaggs\n'
+                         '   - \'\\\\You and Me\\\\"" by Alice Cooper\n'
+                         '   - \'\\\\Don\\\'t Fall in Love\\\\"" by Ferrets\n'
+                         "   - '\\\\Ain\\'t Gonna Bump No More with No Big Fat "
+                         'Woman\\\\"" by Joe Tex\n'
+                         '\n'
+                         '3. **Check for Weeks at No. 1**: All these songs '
+                         'have "nan" in the "weeks at No. 1" column, '
+                         'confirming they did not reach No. 1.\n'
+                         '\n'
+                         '4. **Count**: There are 6 songs.\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: The table contains information '
+                         'about songs and their highest positions reached. We '
+                         'identified songs that reached position 2 and '
+                         'verified they did not reach position 1 by checking '
+                         'for "nan" in the "weeks at No. 1" column.\n'
+                         '**Factual Answer**: 6\n'
+                         '**Source**: The table data provided.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how many songs in the table only reached '
+                      'position number 2?" is a **Numerical Question** as it '
+                      'asks for a count.\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the '
+                      'information related to the "Highest pos. reached" '
+                      'column from the given table and count how many songs '
+                      'reached position 2 but did not reach position 1.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      '1. **Extract Relevant Data**: We need to look at the '
+                      '"Highest pos. reached" column.\n'
+                      '2. **Identify Position 2 Songs**: Identify rows where '
+                      '"Highest pos. reached" is 2.\n'
+                      '3. **Check for Weeks at No. 1**: Verify that these '
+                      'songs have "nan" or no value in the "weeks at No. 1" '
+                      'column, indicating they did not reach No. 1.\n'
+                      '4. **Count**: Count the number of such songs.\n'
+                      '\n'
+                      '### Step 4: Performing the Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      "{'table': [['#', 'Title', 'Artist', 'Highest pos. "
+                      "reached', 'weeks at No. 1'], \n"
+                      "           [1.0, '\\\\Don\\'t Cry for Me "
+                      'Argentina\\\\""\', \'Julie Covington\', 1, \'7\'], \n'
+                      "           [2.0, '\\\\The Way You That You Do "
+                      'It\\\\""\', \'Pussyfoot\', 1, \'7\'], \n'
+                      "           [3.0, '\\\\I Just Want to Be Your "
+                      'Everything\\\\""\', \'Andy Gibb\', 1, \'7\'], \n'
+                      '           [4.0, \'\\\\That\\\'s Rock and Roll\\\\""\', '
+                      "'Shaun Cassidy', 2, nan], \n"
+                      "           [5.0, '\\\\Living Next Door to "
+                      'Alice\\\\""\', \'Smokie\', 2, nan], \n'
+                      '           [6.0, \'\\\\I Go To Rio\\\\""\', \'Peter '
+                      "Allen', 1, '5'], \n"
+                      '           [7.0, \'\\\\Torn Between Two Lovers\\\\""\', '
+                      "'Mary McGregor', 1, '4'], \n"
+                      '           [8.0, \'\\\\Walk Right In\\\\""\', \'Dr '
+                      "Hook', 1, '5'], \n"
+                      "           [9.0, '\\\\You\\'re Moving Out "
+                      'Today\\\\""\', \'Carole Bayer Sager\', 1, \'4\'], \n'
+                      '           [10.0, \'\\\\If You Leave Me Now\\\\""\', '
+                      "'Chicago', 1, '5 (pkd #1 in 76 & 77)'], \n"
+                      '           [11.0, \'\\\\Don\\\'t Give Up on Us\\\\""\', '
+                      "'David Soul', 1, '3'], \n"
+                      '           [12.0, \'\\\\Lido Shuffle\\\\" / \\\\"What '
+                      'Can I Say\\\\""\', \'Boz Scaggs\', 2, nan], \n'
+                      '           [13.0, \'\\\\You and Me\\\\""\', \'Alice '
+                      "Cooper', 2, nan], \n"
+                      "           [14.0, '\\\\Dance Little Lady "
+                      'Dance\\\\""\', \'Tina Charles\', 4, nan], \n'
+                      '           [15.0, \'\\\\When I Need You\\\\""\', \'Leo '
+                      "Sayer', 8, nan], \n"
+                      '           [16.0, \'\\\\Don\\\'t Fall in Love\\\\""\', '
+                      "'Ferrets', 2, nan], \n"
+                      '           [17.0, \'\\\\I Feel Love\\\\""\', \'Donna '
+                      "Summer', 1, '1'], \n"
+                      '           [18.0, \'\\\\Help is on its Way\\\\""\', '
+                      "'Little River Band', 1, '1'], \n"
+                      "           [19.0, '\\\\You Gotta Get Up and "
+                      'Dance\\\\""\', \'Supercharge\', 3, nan], \n'
+                      '           [20.0, \'\\\\Mull of Kintyre\\\\""\', '
+                      "'Wings', 1, '11 (pkd #1 in 77 & 78)'], \n"
+                      "           [21.0, '\\\\Don\\'t Leave Me This "
+                      'Way\\\\""\', \'Thelma Houston\', 6, nan], \n'
+                      "           [22.0, '\\\\Ain\\'t Gonna Bump No More with "
+                      'No Big Fat Woman\\\\""\', \'Joe Tex\', 2, nan], \n'
+                      '           [23.0, \'\\\\You\\\'re in My Heart\\\\""\', '
+                      "'Rod Stewart', 1, '1'], \n"
+                      '           [24.0, \'\\\\Ma Baker\\\\""\', \'Boney M\', '
+                      '5, nan], \n'
+                      '           [25.0, \'\\\\Lucille\\\\""\', \'Kenny '
+                      "Rogers', 7, nan]], \n"
+                      "           'highlighted_cells': []}\n"
+                      '```\n'
+                      '\n'
+                      '1. **Extract Relevant Data**: The "Highest pos. '
+                      'reached" column is the 4th column.\n'
+                      '2. **Identify Position 2 Songs**: Songs with "Highest '
+                      'pos. reached" = 2 are:\n'
+                      '   - \'\\\\That\\\'s Rock and Roll\\\\"" by Shaun '
+                      'Cassidy\n'
+                      '   - \'\\\\Living Next Door to Alice\\\\"" by Smokie\n'
+                      '   - \'\\\\Lido Shuffle\\\\" / \\\\"What Can I '
+                      'Say\\\\"" by Boz Scaggs\n'
+                      '   - \'\\\\You and Me\\\\"" by Alice Cooper\n'
+                      '   - \'\\\\Don\\\'t Fall in Love\\\\"" by Ferrets\n'
+                      "   - '\\\\Ain\\'t Gonna Bump No More with No Big Fat "
+                      'Woman\\\\"" by Joe Tex\n'
+                      '\n'
+                      '3. **Check for Weeks at No. 1**: All these songs have '
+                      '"nan" in the "weeks at No. 1" column, confirming they '
+                      'did not reach No. 1.\n'
+                      '\n'
+                      '4. **Count**: There are 6 songs.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: The table contains information about '
+                      'songs and their highest positions reached. We '
+                      'identified songs that reached position 2 and verified '
+                      'they did not reach position 1 by checking for "nan" in '
+                      'the "weeks at No. 1" column.\n'
+                      '**Factual Answer**: 6\n'
+                      '**Source**: The table data provided.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how many songs in the '
+                       'table only reached position number 2?" requires '
+                       'analyzing the "Highest pos. reached" column in the '
+                       'given table to identify songs that reached position 2 '
+                       'and verifying they did not reach position 1 by '
+                       'checking the "weeks at No. 1" column.',
+                'result': '**Data Support**: The table data shows that the '
+                          "songs which reached position 2 are '\\\\That\\'s "
+                          'Rock and Roll\\\\"" by Shaun Cassidy, \'\\\\Living '
+                          'Next Door to Alice\\\\"" by Smokie, \'\\\\Lido '
+                          'Shuffle\\\\" / \\\\"What Can I Say\\\\"" by Boz '
+                          'Scaggs, \'\\\\You and Me\\\\"" by Alice Cooper, '
+                          '\'\\\\Don\\\'t Fall in Love\\\\"" by Ferrets, and '
+                          "'\\\\Ain\\'t Gonna Bump No More with No Big Fat "
+                          'Woman\\\\"" by Joe Tex. All these songs have "nan" '
+                          'in the "weeks at No. 1" column, confirming they did '
+                          'not reach No. 1.\n'
+                          '\n'
+                          '**Factual Answer**: 6\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The analysis effectively combines the structured '
+                          'data from the table with the context provided by '
+                          'the question, ensuring a comprehensive and accurate '
+                          'answer.',
+                'raw': '**Text Analysis**: The question "how many songs in the '
+                       'table only reached position number 2?" requires '
+                       'analyzing the "Highest pos. reached" column in the '
+                       'given table to identify songs that reached position 2 '
+                       'and verifying they did not reach position 1 by '
+                       'checking the "weeks at No. 1" column.\n'
+                       '\n'
+                       '**Data Support**: The table data shows that the songs '
+                       "which reached position 2 are '\\\\That\\'s Rock and "
+                       'Roll\\\\"" by Shaun Cassidy, \'\\\\Living Next Door to '
+                       'Alice\\\\"" by Smokie, \'\\\\Lido Shuffle\\\\" / '
+                       '\\\\"What Can I Say\\\\"" by Boz Scaggs, \'\\\\You and '
+                       'Me\\\\"" by Alice Cooper, \'\\\\Don\\\'t Fall in '
+                       'Love\\\\"" by Ferrets, and \'\\\\Ain\\\'t Gonna Bump '
+                       'No More with No Big Fat Woman\\\\"" by Joe Tex. All '
+                       'these songs have "nan" in the "weeks at No. 1" column, '
+                       'confirming they did not reach No. 1.\n'
+                       '\n'
+                       '**Factual Answer**: 6\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The analysis effectively combines the structured data '
+                       'from the table with the context provided by the '
+                       'question, ensuring a comprehensive and accurate '
+                       'answer.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how many songs in the table only '
+                          'reached position number 2?",\n'
+                          '  "Factual Answer": "6",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- \'\\\\That\\\'s Rock and Roll\\\\"" by Shaun '
+                          'Cassidy\n'
+                          '- \'\\\\Living Next Door to Alice\\\\"" by Smokie\n'
+                          '- \'\\\\Lido Shuffle\\\\" / \\\\"What Can I '
+                          'Say\\\\"" by Boz Scaggs\n'
+                          '- \'\\\\You and Me\\\\"" by Alice Cooper\n'
+                          '- \'\\\\Don\\\'t Fall in Love\\\\"" by Ferrets\n'
+                          "- '\\\\Ain\\'t Gonna Bump No More with No Big Fat "
+                          'Woman\\\\"" by Joe Tex',
+                'raw': '{\n'
+                       '  "Question": "how many songs in the table only '
+                       'reached position number 2?",\n'
+                       '  "Factual Answer": "6",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

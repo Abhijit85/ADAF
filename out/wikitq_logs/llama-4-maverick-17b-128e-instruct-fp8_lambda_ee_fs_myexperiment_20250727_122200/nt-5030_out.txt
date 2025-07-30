@@ -1,0 +1,342 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-5030.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "what is the total number of away wins?",
+  "Factual Answer": "3",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- For the row "Kotayk Abovian", Home = 5, Away = 0. Away loss.
+- For the row "Barcelona", Home = 0, Away = 0. Draw.
+- For the row "Maccabi Petah Tikva", Home = 0, Away = 4. Away win.
+- For the row "Floriana", Home = 1, Away = 0. Away loss.
+- For the row "Mladá Boleslav", Home = 3, Away = 2. Away loss.
+- For the row "Rosenborg", Home = 2, Away = 0. Away loss (though Home score is given as 2-1, it indicates a home win, not away).
+- For the row "Maccabi Haifa", Home = 2, Away = 1. Away loss.
+- For the row "Steaua Bucureşti", Home = 1, Away = 3. Away win.
+- For the row "Schalke 04", Home = 0, Away = 0. Draw.
+- 'Away' win occurs when 'Away' score > 'Home' score.
+- 'Kotayk Abovian': Home = 5, Away = 0 (Away loss)
+- 'Barcelona': Home = 0, Away = 2 (Away win)
+- 'Maccabi Petah Tikva': Home = 0, Away = 4 (Away win)
+- 'Floriana': Home = 1, Away = 0 (Away loss)
+- 'Mladá Boleslav': Home = 3, Away = 2 (Away loss)
+- 'Rosenborg': Home = 2, Away = 0 (Away loss)
+- 'Maccabi Haifa': Home = 2, Away = 1 (Away loss)
+- 'Steaua Bucureşti': Home = 1, Away = 3 (Away win)
+- 'Schalke 04': Home = 0, Away = 0 (Draw)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks for the total number of away wins. '
+                      "This requires analyzing the 'Away' column in the given "
+                      'table.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Information\n'
+                      'The table contains football match results with columns '
+                      "for 'Home' and 'Away' scores. To find away wins, we "
+                      "need to look at the 'Away' column and count the number "
+                      "of matches where the 'Away' score is greater than the "
+                      "'Home' score.\n"
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      "Let's examine the 'Home' and 'Away' scores:\n"
+                      '- For the row "Kotayk Abovian", Home = 5, Away = 0. '
+                      'Away loss.\n'
+                      '- For the row "Barcelona", Home = 0, Away = 0. Draw.\n'
+                      '- For the row "Maccabi Petah Tikva", Home = 0, Away = '
+                      '4. Away win.\n'
+                      '- For the row "Floriana", Home = 1, Away = 0. Away '
+                      'loss.\n'
+                      '- For the row "Mladá Boleslav", Home = 3, Away = 2. '
+                      'Away loss.\n'
+                      '- For the row "Rosenborg", Home = 2, Away = 0. Away '
+                      'loss (though Home score is given as 2-1, it indicates a '
+                      'home win, not away).\n'
+                      '- For the row "Maccabi Haifa", Home = 2, Away = 1. Away '
+                      'loss.\n'
+                      '- For the row "Steaua Bucureşti", Home = 1, Away = 3. '
+                      'Away win.\n'
+                      '- For the row "Schalke 04", Home = 0, Away = 0. Draw.\n'
+                      '\n'
+                      'Correcting the understanding of the data:\n'
+                      "- 'Away' win occurs when 'Away' score > 'Home' score.\n"
+                      '\n'
+                      '### Step 4: Count Away Wins\n'
+                      "1. 'Kotayk Abovian': Away = 0, Home = 5. Not a win.\n"
+                      "2. 'Barcelona': Away = 2, Home = 0. Win.\n"
+                      "3. 'Maccabi Petah Tikva': Away = 4, Home = 0. Win.\n"
+                      "4. 'Floriana': Away = 0, Home = 1. Not a win.\n"
+                      "5. 'Mladá Boleslav': Away = 2, Home = 3. Not a win.\n"
+                      "6. 'Rosenborg': Away = 0, Home = 2. Not a win.\n"
+                      "7. 'Maccabi Haifa': Away = 1, Home = 2. Not a win.\n"
+                      "8. 'Steaua Bucureşti': Away = 3, Home = 1. Win.\n"
+                      "9. 'Schalke 04': Away = 0, Home = 0. Not a win (draw).\n"
+                      '\n'
+                      '### Step 5: Summarize Findings\n'
+                      "There are away wins for 'Barcelona' (2-0), 'Maccabi "
+                      "Petah Tikva' (4-0), and 'Steaua Bucureşti' (3-1).\n"
+                      '\n'
+                      '### Step 6: Provide Answer\n'
+                      '**Data Analysis**: The table contains match results for '
+                      'various football competitions. To find the total number '
+                      "of away wins, we analyzed the 'Home' and 'Away' scores "
+                      'for each match.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: Match results data in the provided table.\n'
+                      '\n'
+                      'The final answer is based on the count of away wins '
+                      'from the given data.',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks for the total number of away wins. '
+                         "This requires analyzing the 'Away' column in the "
+                         'given table.\n'
+                         '\n'
+                         '### Step 2: Extract Relevant Information\n'
+                         'The table contains football match results with '
+                         "columns for 'Home' and 'Away' scores. To find away "
+                         "wins, we need to look at the 'Away' column and count "
+                         "the number of matches where the 'Away' score is "
+                         "greater than the 'Home' score.\n"
+                         '\n'
+                         '### Step 3: Analyze the Data\n'
+                         "Let's examine the 'Home' and 'Away' scores:\n"
+                         '- For the row "Kotayk Abovian", Home = 5, Away = 0. '
+                         'Away loss.\n'
+                         '- For the row "Barcelona", Home = 0, Away = 0. '
+                         'Draw.\n'
+                         '- For the row "Maccabi Petah Tikva", Home = 0, Away '
+                         '= 4. Away win.\n'
+                         '- For the row "Floriana", Home = 1, Away = 0. Away '
+                         'loss.\n'
+                         '- For the row "Mladá Boleslav", Home = 3, Away = 2. '
+                         'Away loss.\n'
+                         '- For the row "Rosenborg", Home = 2, Away = 0. Away '
+                         'loss (though Home score is given as 2-1, it '
+                         'indicates a home win, not away).\n'
+                         '- For the row "Maccabi Haifa", Home = 2, Away = 1. '
+                         'Away loss.\n'
+                         '- For the row "Steaua Bucureşti", Home = 1, Away = '
+                         '3. Away win.\n'
+                         '- For the row "Schalke 04", Home = 0, Away = 0. '
+                         'Draw.\n'
+                         '\n'
+                         'Correcting the understanding of the data:\n'
+                         "- 'Away' win occurs when 'Away' score > 'Home' "
+                         'score.\n'
+                         '\n'
+                         '### Step 4: Count Away Wins\n'
+                         "1. 'Kotayk Abovian': Away = 0, Home = 5. Not a win.\n"
+                         "2. 'Barcelona': Away = 2, Home = 0. Win.\n"
+                         "3. 'Maccabi Petah Tikva': Away = 4, Home = 0. Win.\n"
+                         "4. 'Floriana': Away = 0, Home = 1. Not a win.\n"
+                         "5. 'Mladá Boleslav': Away = 2, Home = 3. Not a win.\n"
+                         "6. 'Rosenborg': Away = 0, Home = 2. Not a win.\n"
+                         "7. 'Maccabi Haifa': Away = 1, Home = 2. Not a win.\n"
+                         "8. 'Steaua Bucureşti': Away = 3, Home = 1. Win.\n"
+                         "9. 'Schalke 04': Away = 0, Home = 0. Not a win "
+                         '(draw).\n'
+                         '\n'
+                         '### Step 5: Summarize Findings\n'
+                         "There are away wins for 'Barcelona' (2-0), 'Maccabi "
+                         "Petah Tikva' (4-0), and 'Steaua Bucureşti' (3-1).\n"
+                         '\n'
+                         '### Step 6: Provide Answer\n'
+                         '**Data Analysis**: The table contains match results '
+                         'for various football competitions. To find the total '
+                         "number of away wins, we analyzed the 'Home' and "
+                         "'Away' scores for each match.\n"
+                         '**Factual Answer**: 3\n'
+                         '**Source**: Match results data in the provided '
+                         'table.\n'
+                         '\n'
+                         'The final answer is based on the count of away wins '
+                         'from the given data.',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks for the total number of away wins. '
+                      "This requires analyzing the 'Away' column in the given "
+                      'table.\n'
+                      '\n'
+                      '### Step 2: Extract Relevant Information\n'
+                      'The table contains football match results with columns '
+                      "for 'Home' and 'Away' scores. To find away wins, we "
+                      "need to look at the 'Away' column and count the number "
+                      "of matches where the 'Away' score is greater than the "
+                      "'Home' score.\n"
+                      '\n'
+                      '### Step 3: Analyze the Data\n'
+                      "Let's examine the 'Home' and 'Away' scores:\n"
+                      '- For the row "Kotayk Abovian", Home = 5, Away = 0. '
+                      'Away loss.\n'
+                      '- For the row "Barcelona", Home = 0, Away = 0. Draw.\n'
+                      '- For the row "Maccabi Petah Tikva", Home = 0, Away = '
+                      '4. Away win.\n'
+                      '- For the row "Floriana", Home = 1, Away = 0. Away '
+                      'loss.\n'
+                      '- For the row "Mladá Boleslav", Home = 3, Away = 2. '
+                      'Away loss.\n'
+                      '- For the row "Rosenborg", Home = 2, Away = 0. Away '
+                      'loss (though Home score is given as 2-1, it indicates a '
+                      'home win, not away).\n'
+                      '- For the row "Maccabi Haifa", Home = 2, Away = 1. Away '
+                      'loss.\n'
+                      '- For the row "Steaua Bucureşti", Home = 1, Away = 3. '
+                      'Away win.\n'
+                      '- For the row "Schalke 04", Home = 0, Away = 0. Draw.\n'
+                      '\n'
+                      'Correcting the understanding of the data:\n'
+                      "- 'Away' win occurs when 'Away' score > 'Home' score.\n"
+                      '\n'
+                      '### Step 4: Count Away Wins\n'
+                      "1. 'Kotayk Abovian': Away = 0, Home = 5. Not a win.\n"
+                      "2. 'Barcelona': Away = 2, Home = 0. Win.\n"
+                      "3. 'Maccabi Petah Tikva': Away = 4, Home = 0. Win.\n"
+                      "4. 'Floriana': Away = 0, Home = 1. Not a win.\n"
+                      "5. 'Mladá Boleslav': Away = 2, Home = 3. Not a win.\n"
+                      "6. 'Rosenborg': Away = 0, Home = 2. Not a win.\n"
+                      "7. 'Maccabi Haifa': Away = 1, Home = 2. Not a win.\n"
+                      "8. 'Steaua Bucureşti': Away = 3, Home = 1. Win.\n"
+                      "9. 'Schalke 04': Away = 0, Home = 0. Not a win (draw).\n"
+                      '\n'
+                      '### Step 5: Summarize Findings\n'
+                      "There are away wins for 'Barcelona' (2-0), 'Maccabi "
+                      "Petah Tikva' (4-0), and 'Steaua Bucureşti' (3-1).\n"
+                      '\n'
+                      '### Step 6: Provide Answer\n'
+                      '**Data Analysis**: The table contains match results for '
+                      'various football competitions. To find the total number '
+                      "of away wins, we analyzed the 'Home' and 'Away' scores "
+                      'for each match.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: Match results data in the provided table.\n'
+                      '\n'
+                      'The final answer is based on the count of away wins '
+                      'from the given data.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question requires analyzing the '
+                       "'Away' column in the given table to determine the "
+                       'total number of away wins. The text context indicates '
+                       'that the table contains football match results with '
+                       "columns for 'Home' and 'Away' scores.",
+                'result': '**Data Support**: The structured data analysis '
+                          "involves examining the 'Home' and 'Away' scores for "
+                          'each match. The relevant data points are:\n'
+                          "- 'Kotayk Abovian': Home = 5, Away = 0 (Away loss)\n"
+                          "- 'Barcelona': Home = 0, Away = 2 (Away win)\n"
+                          "- 'Maccabi Petah Tikva': Home = 0, Away = 4 (Away "
+                          'win)\n'
+                          "- 'Floriana': Home = 1, Away = 0 (Away loss)\n"
+                          "- 'Mladá Boleslav': Home = 3, Away = 2 (Away loss)\n"
+                          "- 'Rosenborg': Home = 2, Away = 0 (Away loss)\n"
+                          "- 'Maccabi Haifa': Home = 2, Away = 1 (Away loss)\n"
+                          "- 'Steaua Bucureşti': Home = 1, Away = 3 (Away "
+                          'win)\n'
+                          "- 'Schalke 04': Home = 0, Away = 0 (Draw)\n"
+                          '\n'
+                          '**Factual Answer**: 3\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The total number of away wins is determined by '
+                          "counting the matches where the 'Away' score is "
+                          "greater than the 'Home' score. The matches that "
+                          "satisfy this condition are 'Barcelona' (2-0), "
+                          "'Maccabi Petah Tikva' (4-0), and 'Steaua Bucureşti' "
+                          '(3-1), resulting in a total of 3 away wins.',
+                'raw': '**Text Analysis**: The question requires analyzing the '
+                       "'Away' column in the given table to determine the "
+                       'total number of away wins. The text context indicates '
+                       'that the table contains football match results with '
+                       "columns for 'Home' and 'Away' scores.\n"
+                       '\n'
+                       '**Data Support**: The structured data analysis '
+                       "involves examining the 'Home' and 'Away' scores for "
+                       'each match. The relevant data points are:\n'
+                       "- 'Kotayk Abovian': Home = 5, Away = 0 (Away loss)\n"
+                       "- 'Barcelona': Home = 0, Away = 2 (Away win)\n"
+                       "- 'Maccabi Petah Tikva': Home = 0, Away = 4 (Away "
+                       'win)\n'
+                       "- 'Floriana': Home = 1, Away = 0 (Away loss)\n"
+                       "- 'Mladá Boleslav': Home = 3, Away = 2 (Away loss)\n"
+                       "- 'Rosenborg': Home = 2, Away = 0 (Away loss)\n"
+                       "- 'Maccabi Haifa': Home = 2, Away = 1 (Away loss)\n"
+                       "- 'Steaua Bucureşti': Home = 1, Away = 3 (Away win)\n"
+                       "- 'Schalke 04': Home = 0, Away = 0 (Draw)\n"
+                       '\n'
+                       '**Factual Answer**: 3\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The total number of away wins is determined by '
+                       "counting the matches where the 'Away' score is greater "
+                       "than the 'Home' score. The matches that satisfy this "
+                       "condition are 'Barcelona' (2-0), 'Maccabi Petah Tikva' "
+                       "(4-0), and 'Steaua Bucureşti' (3-1), resulting in a "
+                       'total of 3 away wins.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "what is the total number of away '
+                          'wins?",\n'
+                          '  "Factual Answer": "3",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- For the row "Kotayk Abovian", Home = 5, Away = 0. '
+                          'Away loss.\n'
+                          '- For the row "Barcelona", Home = 0, Away = 0. '
+                          'Draw.\n'
+                          '- For the row "Maccabi Petah Tikva", Home = 0, Away '
+                          '= 4. Away win.\n'
+                          '- For the row "Floriana", Home = 1, Away = 0. Away '
+                          'loss.\n'
+                          '- For the row "Mladá Boleslav", Home = 3, Away = 2. '
+                          'Away loss.\n'
+                          '- For the row "Rosenborg", Home = 2, Away = 0. Away '
+                          'loss (though Home score is given as 2-1, it '
+                          'indicates a home win, not away).\n'
+                          '- For the row "Maccabi Haifa", Home = 2, Away = 1. '
+                          'Away loss.\n'
+                          '- For the row "Steaua Bucureşti", Home = 1, Away = '
+                          '3. Away win.\n'
+                          '- For the row "Schalke 04", Home = 0, Away = 0. '
+                          'Draw.\n'
+                          "- 'Away' win occurs when 'Away' score > 'Home' "
+                          'score.\n'
+                          "- 'Kotayk Abovian': Home = 5, Away = 0 (Away loss)\n"
+                          "- 'Barcelona': Home = 0, Away = 2 (Away win)\n"
+                          "- 'Maccabi Petah Tikva': Home = 0, Away = 4 (Away "
+                          'win)\n'
+                          "- 'Floriana': Home = 1, Away = 0 (Away loss)\n"
+                          "- 'Mladá Boleslav': Home = 3, Away = 2 (Away loss)\n"
+                          "- 'Rosenborg': Home = 2, Away = 0 (Away loss)\n"
+                          "- 'Maccabi Haifa': Home = 2, Away = 1 (Away loss)\n"
+                          "- 'Steaua Bucureşti': Home = 1, Away = 3 (Away "
+                          'win)\n'
+                          "- 'Schalke 04': Home = 0, Away = 0 (Draw)",
+                'raw': '{\n'
+                       '  "Question": "what is the total number of away '
+                       'wins?",\n'
+                       '  "Factual Answer": "3",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

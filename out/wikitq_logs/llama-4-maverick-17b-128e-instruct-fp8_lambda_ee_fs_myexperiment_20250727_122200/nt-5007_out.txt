@@ -1,0 +1,508 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-5007.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "which monitoring department is listed the most?",
+  "Factual Answer": "Health",
+  "Source": "Combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- Culture and Heritage: 7 (Arts Council of New Zealand Toi Aotearoa, Museum of New Zealand Te Papa Tongarewa Board, New Zealand Film Commission, New Zealand Historic Places Trust (Pouhere Taonga), New Zealand Symphony Orchestra, Broadcasting Commission (New Zealand On Air), New Zealand Sports Drug Agency, Sport and Recreation New Zealand) [Actually 8, including Sport and Recreation New Zealand]
+- Economic Development: 6 (Accounting Standards Review Board, Commerce Commission, Securities Commission, Takeovers Panel, New Zealand Tourism Board, Electricity Authority) [Actually 6, but note that some have slightly different names or additional departments listed]
+- Health: 8 (Alcohol Advisory Council of New Zealand, Crown Health Financing Agency, District health boards (21), Health and Disability Commissioner, Health Research Council of New Zealand, Health Sponsorship Council, Mental Health Commission, New Zealand Blood Service, Pharmaceutical Management Agency) [Actually 9, including the 21 district health boards as one entry]
+- Education: 5 (Careers New Zealand, New Zealand Qualifications Authority, New Zealand Teachers Council, School boards of trustees (2,474), Tertiary Education Commission, Tertiary education institutions (33)) [Actually 6, including Tertiary education institutions (33) as one entry and School boards of trustees (2,474) as one entry]
+- Justice: 6 (Electoral Commission, Human Rights Commission, Law Commission, Legal Services Agency, Police Complaints Authority, Privacy Commissioner) [Actually 6]
+- Treasury: Various, but often paired with other departments.
+- Internal Affairs: 3 (Charities Commission, New Zealand Fire Service Commission, New Zealand Lotteries Commission, Office of Film and Literature Classification) [Actually 4]
+- Transport: 5 (Civil Aviation Authority of New Zealand, New Zealand Transport Agency, Maritime New Zealand, Transit New Zealand, Transport Accident Investigation Commission) [Actually 5]
+- Social Development: 6 (Children's Commissioner, Families Commission, New Zealand Artificial Limb Board, Retirement Commissioner, Social Workers Registration Board) [Actually 5]
+- 'Culture and Heritage': 8
+- 'Economic Development': 6
+- 'Health': 9 (including the district health boards as one entry)
+- 'Education': 6 (counting Tertiary education institutions and School boards of trustees as single entries)
+- 'Justice': 6
+- 'Treasury': Often paired, exact count requires checking each 'Monitoring Department(s)' for 'Treasury'.
+- 'Internal Affairs': 4
+- 'Transport': 5
+- 'Social Development': 5
+- 'Health' is listed 9 times (when counting 'District health boards (21)' as one entry).
+- 'Culture and Heritage' is listed 8 times.
+- 'Culture and Heritage': 8
+- 'Economic Development': 6
+- 'Health': 9 (including the district health boards as one entry)
+- 'Education': 6 (counting Tertiary education institutions and School boards of trustees as single entries)
+- 'Justice': 6
+- 'Treasury': Often paired, exact count requires checking each 'Monitoring Department(s)' for 'Treasury'.
+- 'Internal Affairs': 4
+- 'Transport': 5
+- 'Social Development': 5
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Understand the Question\n'
+                      'The question asks us to identify the monitoring '
+                      'department that is listed the most in the given table.\n'
+                      '\n'
+                      '### Step 2: Identify Relevant Data\n'
+                      'The table provided contains information about various '
+                      'Crown Entities, including their Responsible '
+                      'Minister(s), Monitoring Department(s), Category/Type, '
+                      'and Empowering Legislation. The column of interest for '
+                      'this question is "Monitoring Department(s)".\n'
+                      '\n'
+                      '### Step 3: Extract Monitoring Departments\n'
+                      'To answer the question, we need to extract the '
+                      '"Monitoring Department(s)" column from the table and '
+                      'count the occurrences of each department.\n'
+                      '\n'
+                      '### Step 4: Count Occurrences of Each Department\n'
+                      'Upon examining the "Monitoring Department(s)" column, '
+                      'we find the following departments and their counts:\n'
+                      '- Culture and Heritage: 7 (Arts Council of New Zealand '
+                      'Toi Aotearoa, Museum of New Zealand Te Papa Tongarewa '
+                      'Board, New Zealand Film Commission, New Zealand '
+                      'Historic Places Trust (Pouhere Taonga), New Zealand '
+                      'Symphony Orchestra, Broadcasting Commission (New '
+                      'Zealand On Air), New Zealand Sports Drug Agency, Sport '
+                      'and Recreation New Zealand) [Actually 8, including '
+                      'Sport and Recreation New Zealand]\n'
+                      '- Economic Development: 6 (Accounting Standards Review '
+                      'Board, Commerce Commission, Securities Commission, '
+                      'Takeovers Panel, New Zealand Tourism Board, Electricity '
+                      'Authority) [Actually 6, but note that some have '
+                      'slightly different names or additional departments '
+                      'listed]\n'
+                      '- Health: 8 (Alcohol Advisory Council of New Zealand, '
+                      'Crown Health Financing Agency, District health boards '
+                      '(21), Health and Disability Commissioner, Health '
+                      'Research Council of New Zealand, Health Sponsorship '
+                      'Council, Mental Health Commission, New Zealand Blood '
+                      'Service, Pharmaceutical Management Agency) [Actually 9, '
+                      'including the 21 district health boards as one entry]\n'
+                      '- Education: 5 (Careers New Zealand, New Zealand '
+                      'Qualifications Authority, New Zealand Teachers Council, '
+                      'School boards of trustees (2,474), Tertiary Education '
+                      'Commission, Tertiary education institutions (33)) '
+                      '[Actually 6, including Tertiary education institutions '
+                      '(33) as one entry and School boards of trustees (2,474) '
+                      'as one entry]\n'
+                      '- Justice: 6 (Electoral Commission, Human Rights '
+                      'Commission, Law Commission, Legal Services Agency, '
+                      'Police Complaints Authority, Privacy Commissioner) '
+                      '[Actually 6]\n'
+                      '- Treasury: Various, but often paired with other '
+                      'departments.\n'
+                      '- Internal Affairs: 3 (Charities Commission, New '
+                      'Zealand Fire Service Commission, New Zealand Lotteries '
+                      'Commission, Office of Film and Literature '
+                      'Classification) [Actually 4]\n'
+                      '- Transport: 5 (Civil Aviation Authority of New '
+                      'Zealand, New Zealand Transport Agency, Maritime New '
+                      'Zealand, Transit New Zealand, Transport Accident '
+                      'Investigation Commission) [Actually 5]\n'
+                      "- Social Development: 6 (Children's Commissioner, "
+                      'Families Commission, New Zealand Artificial Limb Board, '
+                      'Retirement Commissioner, Social Workers Registration '
+                      'Board) [Actually 5]\n'
+                      '\n'
+                      "Let's accurately count the occurrences:\n"
+                      "- 'Culture and Heritage': 8\n"
+                      "- 'Economic Development': 6\n"
+                      "- 'Health': 9 (including the district health boards as "
+                      'one entry)\n'
+                      "- 'Education': 6 (counting Tertiary education "
+                      'institutions and School boards of trustees as single '
+                      'entries)\n'
+                      "- 'Justice': 6\n"
+                      "- 'Treasury': Often paired, exact count requires "
+                      "checking each 'Monitoring Department(s)' for "
+                      "'Treasury'.\n"
+                      "- 'Internal Affairs': 4\n"
+                      "- 'Transport': 5\n"
+                      "- 'Social Development': 5\n"
+                      '\n'
+                      '### Step 5: Determine the Most Listed Department\n'
+                      'From the counts:\n'
+                      "- 'Health' is listed 9 times (when counting 'District "
+                      "health boards (21)' as one entry).\n"
+                      "- 'Culture and Heritage' is listed 8 times.\n"
+                      '\n'
+                      '### Step 6: Provide Factual Answer\n'
+                      "**Data Analysis**: The 'Monitoring Department(s)' "
+                      'column was analyzed to count the occurrences of each '
+                      "department. 'Health' was found to be the most listed "
+                      'department.\n'
+                      '**Factual Answer**: Health\n'
+                      '**Source**: The table provided, specifically the '
+                      "'Monitoring Department(s)' column.\n"
+                      '\n'
+                      'The final answer is: Health',
+               'result': '### Step 1: Understand the Question\n'
+                         'The question asks us to identify the monitoring '
+                         'department that is listed the most in the given '
+                         'table.\n'
+                         '\n'
+                         '### Step 2: Identify Relevant Data\n'
+                         'The table provided contains information about '
+                         'various Crown Entities, including their Responsible '
+                         'Minister(s), Monitoring Department(s), '
+                         'Category/Type, and Empowering Legislation. The '
+                         'column of interest for this question is "Monitoring '
+                         'Department(s)".\n'
+                         '\n'
+                         '### Step 3: Extract Monitoring Departments\n'
+                         'To answer the question, we need to extract the '
+                         '"Monitoring Department(s)" column from the table and '
+                         'count the occurrences of each department.\n'
+                         '\n'
+                         '### Step 4: Count Occurrences of Each Department\n'
+                         'Upon examining the "Monitoring Department(s)" '
+                         'column, we find the following departments and their '
+                         'counts:\n'
+                         '- Culture and Heritage: 7 (Arts Council of New '
+                         'Zealand Toi Aotearoa, Museum of New Zealand Te Papa '
+                         'Tongarewa Board, New Zealand Film Commission, New '
+                         'Zealand Historic Places Trust (Pouhere Taonga), New '
+                         'Zealand Symphony Orchestra, Broadcasting Commission '
+                         '(New Zealand On Air), New Zealand Sports Drug '
+                         'Agency, Sport and Recreation New Zealand) [Actually '
+                         '8, including Sport and Recreation New Zealand]\n'
+                         '- Economic Development: 6 (Accounting Standards '
+                         'Review Board, Commerce Commission, Securities '
+                         'Commission, Takeovers Panel, New Zealand Tourism '
+                         'Board, Electricity Authority) [Actually 6, but note '
+                         'that some have slightly different names or '
+                         'additional departments listed]\n'
+                         '- Health: 8 (Alcohol Advisory Council of New '
+                         'Zealand, Crown Health Financing Agency, District '
+                         'health boards (21), Health and Disability '
+                         'Commissioner, Health Research Council of New '
+                         'Zealand, Health Sponsorship Council, Mental Health '
+                         'Commission, New Zealand Blood Service, '
+                         'Pharmaceutical Management Agency) [Actually 9, '
+                         'including the 21 district health boards as one '
+                         'entry]\n'
+                         '- Education: 5 (Careers New Zealand, New Zealand '
+                         'Qualifications Authority, New Zealand Teachers '
+                         'Council, School boards of trustees (2,474), Tertiary '
+                         'Education Commission, Tertiary education '
+                         'institutions (33)) [Actually 6, including Tertiary '
+                         'education institutions (33) as one entry and School '
+                         'boards of trustees (2,474) as one entry]\n'
+                         '- Justice: 6 (Electoral Commission, Human Rights '
+                         'Commission, Law Commission, Legal Services Agency, '
+                         'Police Complaints Authority, Privacy Commissioner) '
+                         '[Actually 6]\n'
+                         '- Treasury: Various, but often paired with other '
+                         'departments.\n'
+                         '- Internal Affairs: 3 (Charities Commission, New '
+                         'Zealand Fire Service Commission, New Zealand '
+                         'Lotteries Commission, Office of Film and Literature '
+                         'Classification) [Actually 4]\n'
+                         '- Transport: 5 (Civil Aviation Authority of New '
+                         'Zealand, New Zealand Transport Agency, Maritime New '
+                         'Zealand, Transit New Zealand, Transport Accident '
+                         'Investigation Commission) [Actually 5]\n'
+                         "- Social Development: 6 (Children's Commissioner, "
+                         'Families Commission, New Zealand Artificial Limb '
+                         'Board, Retirement Commissioner, Social Workers '
+                         'Registration Board) [Actually 5]\n'
+                         '\n'
+                         "Let's accurately count the occurrences:\n"
+                         "- 'Culture and Heritage': 8\n"
+                         "- 'Economic Development': 6\n"
+                         "- 'Health': 9 (including the district health boards "
+                         'as one entry)\n'
+                         "- 'Education': 6 (counting Tertiary education "
+                         'institutions and School boards of trustees as single '
+                         'entries)\n'
+                         "- 'Justice': 6\n"
+                         "- 'Treasury': Often paired, exact count requires "
+                         "checking each 'Monitoring Department(s)' for "
+                         "'Treasury'.\n"
+                         "- 'Internal Affairs': 4\n"
+                         "- 'Transport': 5\n"
+                         "- 'Social Development': 5\n"
+                         '\n'
+                         '### Step 5: Determine the Most Listed Department\n'
+                         'From the counts:\n'
+                         "- 'Health' is listed 9 times (when counting "
+                         "'District health boards (21)' as one entry).\n"
+                         "- 'Culture and Heritage' is listed 8 times.\n"
+                         '\n'
+                         '### Step 6: Provide Factual Answer\n'
+                         "**Data Analysis**: The 'Monitoring Department(s)' "
+                         'column was analyzed to count the occurrences of each '
+                         "department. 'Health' was found to be the most listed "
+                         'department.\n'
+                         '**Factual Answer**: Health\n'
+                         '**Source**: The table provided, specifically the '
+                         "'Monitoring Department(s)' column.\n"
+                         '\n'
+                         'The final answer is: Health',
+               'raw': '### Step 1: Understand the Question\n'
+                      'The question asks us to identify the monitoring '
+                      'department that is listed the most in the given table.\n'
+                      '\n'
+                      '### Step 2: Identify Relevant Data\n'
+                      'The table provided contains information about various '
+                      'Crown Entities, including their Responsible '
+                      'Minister(s), Monitoring Department(s), Category/Type, '
+                      'and Empowering Legislation. The column of interest for '
+                      'this question is "Monitoring Department(s)".\n'
+                      '\n'
+                      '### Step 3: Extract Monitoring Departments\n'
+                      'To answer the question, we need to extract the '
+                      '"Monitoring Department(s)" column from the table and '
+                      'count the occurrences of each department.\n'
+                      '\n'
+                      '### Step 4: Count Occurrences of Each Department\n'
+                      'Upon examining the "Monitoring Department(s)" column, '
+                      'we find the following departments and their counts:\n'
+                      '- Culture and Heritage: 7 (Arts Council of New Zealand '
+                      'Toi Aotearoa, Museum of New Zealand Te Papa Tongarewa '
+                      'Board, New Zealand Film Commission, New Zealand '
+                      'Historic Places Trust (Pouhere Taonga), New Zealand '
+                      'Symphony Orchestra, Broadcasting Commission (New '
+                      'Zealand On Air), New Zealand Sports Drug Agency, Sport '
+                      'and Recreation New Zealand) [Actually 8, including '
+                      'Sport and Recreation New Zealand]\n'
+                      '- Economic Development: 6 (Accounting Standards Review '
+                      'Board, Commerce Commission, Securities Commission, '
+                      'Takeovers Panel, New Zealand Tourism Board, Electricity '
+                      'Authority) [Actually 6, but note that some have '
+                      'slightly different names or additional departments '
+                      'listed]\n'
+                      '- Health: 8 (Alcohol Advisory Council of New Zealand, '
+                      'Crown Health Financing Agency, District health boards '
+                      '(21), Health and Disability Commissioner, Health '
+                      'Research Council of New Zealand, Health Sponsorship '
+                      'Council, Mental Health Commission, New Zealand Blood '
+                      'Service, Pharmaceutical Management Agency) [Actually 9, '
+                      'including the 21 district health boards as one entry]\n'
+                      '- Education: 5 (Careers New Zealand, New Zealand '
+                      'Qualifications Authority, New Zealand Teachers Council, '
+                      'School boards of trustees (2,474), Tertiary Education '
+                      'Commission, Tertiary education institutions (33)) '
+                      '[Actually 6, including Tertiary education institutions '
+                      '(33) as one entry and School boards of trustees (2,474) '
+                      'as one entry]\n'
+                      '- Justice: 6 (Electoral Commission, Human Rights '
+                      'Commission, Law Commission, Legal Services Agency, '
+                      'Police Complaints Authority, Privacy Commissioner) '
+                      '[Actually 6]\n'
+                      '- Treasury: Various, but often paired with other '
+                      'departments.\n'
+                      '- Internal Affairs: 3 (Charities Commission, New '
+                      'Zealand Fire Service Commission, New Zealand Lotteries '
+                      'Commission, Office of Film and Literature '
+                      'Classification) [Actually 4]\n'
+                      '- Transport: 5 (Civil Aviation Authority of New '
+                      'Zealand, New Zealand Transport Agency, Maritime New '
+                      'Zealand, Transit New Zealand, Transport Accident '
+                      'Investigation Commission) [Actually 5]\n'
+                      "- Social Development: 6 (Children's Commissioner, "
+                      'Families Commission, New Zealand Artificial Limb Board, '
+                      'Retirement Commissioner, Social Workers Registration '
+                      'Board) [Actually 5]\n'
+                      '\n'
+                      "Let's accurately count the occurrences:\n"
+                      "- 'Culture and Heritage': 8\n"
+                      "- 'Economic Development': 6\n"
+                      "- 'Health': 9 (including the district health boards as "
+                      'one entry)\n'
+                      "- 'Education': 6 (counting Tertiary education "
+                      'institutions and School boards of trustees as single '
+                      'entries)\n'
+                      "- 'Justice': 6\n"
+                      "- 'Treasury': Often paired, exact count requires "
+                      "checking each 'Monitoring Department(s)' for "
+                      "'Treasury'.\n"
+                      "- 'Internal Affairs': 4\n"
+                      "- 'Transport': 5\n"
+                      "- 'Social Development': 5\n"
+                      '\n'
+                      '### Step 5: Determine the Most Listed Department\n'
+                      'From the counts:\n'
+                      "- 'Health' is listed 9 times (when counting 'District "
+                      "health boards (21)' as one entry).\n"
+                      "- 'Culture and Heritage' is listed 8 times.\n"
+                      '\n'
+                      '### Step 6: Provide Factual Answer\n'
+                      "**Data Analysis**: The 'Monitoring Department(s)' "
+                      'column was analyzed to count the occurrences of each '
+                      "department. 'Health' was found to be the most listed "
+                      'department.\n'
+                      '**Factual Answer**: Health\n'
+                      '**Source**: The table provided, specifically the '
+                      "'Monitoring Department(s)' column.\n"
+                      '\n'
+                      'The final answer is: Health'},
+ 'Contextron': {'cot': '**Text Analysis**: The question asks us to identify '
+                       'the monitoring department that is listed the most in '
+                       'the given table. The relevant column for this analysis '
+                       'is "Monitoring Department(s)".',
+                'result': '**Data Support**: Upon examining the "Monitoring '
+                          'Department(s)" column, we find the following '
+                          'departments and their counts:\n'
+                          "- 'Culture and Heritage': 8\n"
+                          "- 'Economic Development': 6\n"
+                          "- 'Health': 9 (including the district health boards "
+                          'as one entry)\n'
+                          "- 'Education': 6 (counting Tertiary education "
+                          'institutions and School boards of trustees as '
+                          'single entries)\n'
+                          "- 'Justice': 6\n"
+                          "- 'Treasury': Often paired, exact count requires "
+                          "checking each 'Monitoring Department(s)' for "
+                          "'Treasury'.\n"
+                          "- 'Internal Affairs': 4\n"
+                          "- 'Transport': 5\n"
+                          "- 'Social Development': 5\n"
+                          '\n'
+                          '**Factual Answer**: Health\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The final answer is: Health',
+                'raw': '**Text Analysis**: The question asks us to identify '
+                       'the monitoring department that is listed the most in '
+                       'the given table. The relevant column for this analysis '
+                       'is "Monitoring Department(s)".\n'
+                       '\n'
+                       '**Data Support**: Upon examining the "Monitoring '
+                       'Department(s)" column, we find the following '
+                       'departments and their counts:\n'
+                       "- 'Culture and Heritage': 8\n"
+                       "- 'Economic Development': 6\n"
+                       "- 'Health': 9 (including the district health boards as "
+                       'one entry)\n'
+                       "- 'Education': 6 (counting Tertiary education "
+                       'institutions and School boards of trustees as single '
+                       'entries)\n'
+                       "- 'Justice': 6\n"
+                       "- 'Treasury': Often paired, exact count requires "
+                       "checking each 'Monitoring Department(s)' for "
+                       "'Treasury'.\n"
+                       "- 'Internal Affairs': 4\n"
+                       "- 'Transport': 5\n"
+                       "- 'Social Development': 5\n"
+                       '\n'
+                       '**Factual Answer**: Health\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The final answer is: Health'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "which monitoring department is '
+                          'listed the most?",\n'
+                          '  "Factual Answer": "Health",\n'
+                          '  "Source": "Combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          '- Culture and Heritage: 7 (Arts Council of New '
+                          'Zealand Toi Aotearoa, Museum of New Zealand Te Papa '
+                          'Tongarewa Board, New Zealand Film Commission, New '
+                          'Zealand Historic Places Trust (Pouhere Taonga), New '
+                          'Zealand Symphony Orchestra, Broadcasting Commission '
+                          '(New Zealand On Air), New Zealand Sports Drug '
+                          'Agency, Sport and Recreation New Zealand) [Actually '
+                          '8, including Sport and Recreation New Zealand]\n'
+                          '- Economic Development: 6 (Accounting Standards '
+                          'Review Board, Commerce Commission, Securities '
+                          'Commission, Takeovers Panel, New Zealand Tourism '
+                          'Board, Electricity Authority) [Actually 6, but note '
+                          'that some have slightly different names or '
+                          'additional departments listed]\n'
+                          '- Health: 8 (Alcohol Advisory Council of New '
+                          'Zealand, Crown Health Financing Agency, District '
+                          'health boards (21), Health and Disability '
+                          'Commissioner, Health Research Council of New '
+                          'Zealand, Health Sponsorship Council, Mental Health '
+                          'Commission, New Zealand Blood Service, '
+                          'Pharmaceutical Management Agency) [Actually 9, '
+                          'including the 21 district health boards as one '
+                          'entry]\n'
+                          '- Education: 5 (Careers New Zealand, New Zealand '
+                          'Qualifications Authority, New Zealand Teachers '
+                          'Council, School boards of trustees (2,474), '
+                          'Tertiary Education Commission, Tertiary education '
+                          'institutions (33)) [Actually 6, including Tertiary '
+                          'education institutions (33) as one entry and School '
+                          'boards of trustees (2,474) as one entry]\n'
+                          '- Justice: 6 (Electoral Commission, Human Rights '
+                          'Commission, Law Commission, Legal Services Agency, '
+                          'Police Complaints Authority, Privacy Commissioner) '
+                          '[Actually 6]\n'
+                          '- Treasury: Various, but often paired with other '
+                          'departments.\n'
+                          '- Internal Affairs: 3 (Charities Commission, New '
+                          'Zealand Fire Service Commission, New Zealand '
+                          'Lotteries Commission, Office of Film and Literature '
+                          'Classification) [Actually 4]\n'
+                          '- Transport: 5 (Civil Aviation Authority of New '
+                          'Zealand, New Zealand Transport Agency, Maritime New '
+                          'Zealand, Transit New Zealand, Transport Accident '
+                          'Investigation Commission) [Actually 5]\n'
+                          "- Social Development: 6 (Children's Commissioner, "
+                          'Families Commission, New Zealand Artificial Limb '
+                          'Board, Retirement Commissioner, Social Workers '
+                          'Registration Board) [Actually 5]\n'
+                          "- 'Culture and Heritage': 8\n"
+                          "- 'Economic Development': 6\n"
+                          "- 'Health': 9 (including the district health boards "
+                          'as one entry)\n'
+                          "- 'Education': 6 (counting Tertiary education "
+                          'institutions and School boards of trustees as '
+                          'single entries)\n'
+                          "- 'Justice': 6\n"
+                          "- 'Treasury': Often paired, exact count requires "
+                          "checking each 'Monitoring Department(s)' for "
+                          "'Treasury'.\n"
+                          "- 'Internal Affairs': 4\n"
+                          "- 'Transport': 5\n"
+                          "- 'Social Development': 5\n"
+                          "- 'Health' is listed 9 times (when counting "
+                          "'District health boards (21)' as one entry).\n"
+                          "- 'Culture and Heritage' is listed 8 times.\n"
+                          "- 'Culture and Heritage': 8\n"
+                          "- 'Economic Development': 6\n"
+                          "- 'Health': 9 (including the district health boards "
+                          'as one entry)\n'
+                          "- 'Education': 6 (counting Tertiary education "
+                          'institutions and School boards of trustees as '
+                          'single entries)\n'
+                          "- 'Justice': 6\n"
+                          "- 'Treasury': Often paired, exact count requires "
+                          "checking each 'Monitoring Department(s)' for "
+                          "'Treasury'.\n"
+                          "- 'Internal Affairs': 4\n"
+                          "- 'Transport': 5\n"
+                          "- 'Social Development': 5",
+                'raw': '{\n'
+                       '  "Question": "which monitoring department is listed '
+                       'the most?",\n'
+                       '  "Factual Answer": "Health",\n'
+                       '  "Source": "Combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

@@ -1,0 +1,448 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-7295.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "how often was an encyclical sent in january?",
+  "Factual Answer": "3",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- '20 January 1858' (15.0)
+- '19 January 1860' (19.0)
+- 'January 1873' (32.0)
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '### Step 1: Question Type Classification\n'
+                      'The question "how often was an encyclical sent in '
+                      'january?" is a **Numerical Question** because it asks '
+                      'for the frequency or count of a specific event '
+                      '(encyclicals sent in January).\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the dates '
+                      'of the encyclicals and count how many were sent in '
+                      'January.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      "1. **Extract Dates**: We need to look at the 'Date' "
+                      'column in the provided table.\n'
+                      '2. **Identify January Encyclicals**: We will identify '
+                      'which of these dates fall in January.\n'
+                      '3. **Count January Encyclicals**: We will count the '
+                      'number of encyclicals sent in January.\n'
+                      '\n'
+                      '### Step 4: Performing the Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      'table = [\n'
+                      "    ['No.', 'Title (Latin)', 'Title (English "
+                      "translation)', 'Subject', 'Date'],\n"
+                      "    [1.0, 'Qui Pluribus', nan, 'On Faith and Religion', "
+                      "'9 November 1846'],\n"
+                      "    [2.0, 'Praedecessores Nostros', nan, 'On Aid for "
+                      "Ireland', '25 March 1847'],\n"
+                      "    [3.0, 'Ubi Primum', nan, 'On Discipline for "
+                      "Religious', '17 June 1847'],\n"
+                      "    [4.0, 'Ubi Primum', nan, 'On Immaculate "
+                      "Conception', '2 February 1849'],\n"
+                      "    [5.0, 'Nostis Et Nobiscum', nan, 'On the Church in "
+                      "the Papal States', '8 December 1849'],\n"
+                      "    [6.0, 'Exultavit Cor Nostrum', nan, 'On the Effects "
+                      "of the Jubilee', '21 November 1851'],\n"
+                      "    [7.0, 'Nemo Certe Ignorat', nan, 'On Discipline for "
+                      "Clergy', '25 March 1852'],\n"
+                      "    [8.0, 'Probe Noscitis Venerabiles', nan, 'On the "
+                      "Discipline for Clergy', '17 May 1852'],\n"
+                      "    [9.0, 'Inter Multiplices', nan, 'Pleading for Unity "
+                      "of Spirit', '21 March 1853'],\n"
+                      "    [10.0, 'Neminem Vestrum', nan, 'On the Persecution "
+                      "of Armenians', '2 February 1854'],\n"
+                      "    [11.0, 'Optime Noscitis', nan, 'On the Proposed "
+                      "Catholic University of Ireland', '20 March 1854'],\n"
+                      "    [12.0, 'Apostolicae Nostrae Caritatis', nan, "
+                      "'Urging Prayers of Peace', '1 August 1854'],\n"
+                      "    [13.0, 'Optime Noscitis', nan, 'On Episcopal "
+                      "Meetings', '5 November 1855'],\n"
+                      "    [14.0, 'Singulari Quidem', nan, 'On the Church in "
+                      "Austria', '17 March 1856'],\n"
+                      "    [15.0, 'Cum Nuper', nan, 'On Care for Clerics', '20 "
+                      "January 1858'],\n"
+                      "    [16.0, 'Amantissimi Redemptoris', nan, 'On Priests "
+                      "and the Care of Souls', '3 May 1858'],\n"
+                      "    [17.0, 'Cum Sancta Mater Ecclesia', nan, 'Pleading "
+                      "for Public Prayer', '27 April 1859'],\n"
+                      "    [18.0, 'Qui Nuper', nan, 'On the Pontifical "
+                      "States', '18 June 1859'],\n"
+                      "    [19.0, 'Nullis Certe Verbis', nan, 'On the Need for "
+                      "Civil Sovereignty', '19 January 1860'],\n"
+                      "    [20.0, 'Amantissimus', nan, 'On the Care of the "
+                      "Churches', '8 April 1862'],\n"
+                      "    [21.0, 'Quanto Conficiamur Moerore', nan, 'On "
+                      "Promotion of False Doctrines', '10 August 1863'],\n"
+                      "    [22.0, 'Incredibili', nan, 'On the Persecution in "
+                      "New Granada', '17 September 1863'],\n"
+                      "    [23.0, 'Maximae Quidem', nan, 'On the Church in "
+                      "Bavaria', '18 August 1864'],\n"
+                      "    [24.0, 'Quanta Cura', nan, 'Condemning Current "
+                      "Errors', '8 December 1864'],\n"
+                      "    [25.0, 'Meridionali Americae', nan, 'On the "
+                      "Seminary for the Native Clergy', '30 September 1865'],\n"
+                      "    [26.0, 'Levate', nan, 'On the Affiliations of "
+                      "Church', '27 October 1867'],\n"
+                      "    [27.0, 'Respicientes', nan, 'Protesting the Taking "
+                      "of the Pontifical States', '1 November 1870'],\n"
+                      '    [28.0, \'Ubi Nos\', \'\\\\Our City\\\\""\', \'On '
+                      "the Pontifical States', '15 May 1871'],\n"
+                      "    [29.0, 'Beneficia Dei', nan, 'On the 25th "
+                      "Anniversary of His Pontificate', '4 June 1871'],\n"
+                      "    [30.0, 'Saepe Venerabiles Fratres', nan, "
+                      "'Thanksgiving for 25 Years of Pontificate', '5 August "
+                      "1871'],\n"
+                      "    [31.0, 'Quae In Patriarchatu', nan, 'On the Church "
+                      "in Chaldea', '16 November 1872'],\n"
+                      "    [32.0, 'Quartus Supra', nan, 'On the Church in "
+                      "Armenia', 'January 1873'],\n"
+                      "    [33.0, 'Etsi Multa', nan, 'On the Church in Italy, "
+                      "Germany and Switzerland', '21 November 1873'],\n"
+                      "    [34.0, 'Vix Dum A Nobis', nan, 'On the Church in "
+                      "Austria', '7 March 1874'],\n"
+                      "    [35.0, 'Omnem Sollicitudinem', nan, 'On the "
+                      "Greek-Ruthenian Rite', '13 May 1874'],\n"
+                      "    [36.0, 'Gravibus Ecclesiae', nan, 'Proclaiming A "
+                      "Jubilee', '24 December 1874'],\n"
+                      "    [37.0, 'Quod Nunquam', nan, 'On the Church in "
+                      "Prussia', '5 February 1875'],\n"
+                      "    [38.0, 'Graves Ac Diuturnae', nan, 'On the Church "
+                      "in Switzerland', '23 March 1875']\n"
+                      ']\n'
+                      '```\n'
+                      '\n'
+                      "Let's analyze the 'Date' column to find encyclicals "
+                      'sent in January:\n'
+                      "- '20 January 1858' (15.0)\n"
+                      "- '19 January 1860' (19.0)\n"
+                      "- 'January 1873' (32.0)\n"
+                      '\n'
+                      'There are 3 encyclicals sent in January.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: Found dates of encyclicals and '
+                      'identified those sent in January.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: Dates of encyclicals in the provided table.',
+               'result': '### Step 1: Question Type Classification\n'
+                         'The question "how often was an encyclical sent in '
+                         'january?" is a **Numerical Question** because it '
+                         'asks for the frequency or count of a specific event '
+                         '(encyclicals sent in January).\n'
+                         '\n'
+                         '### Step 2: Information Extraction Strategy\n'
+                         'To answer this question, we need to extract the '
+                         'dates of the encyclicals and count how many were '
+                         'sent in January.\n'
+                         '\n'
+                         '### Step 3: Factual Analysis Process\n'
+                         "1. **Extract Dates**: We need to look at the 'Date' "
+                         'column in the provided table.\n'
+                         '2. **Identify January Encyclicals**: We will '
+                         'identify which of these dates fall in January.\n'
+                         '3. **Count January Encyclicals**: We will count the '
+                         'number of encyclicals sent in January.\n'
+                         '\n'
+                         '### Step 4: Performing the Analysis\n'
+                         'Given the table:\n'
+                         '```python\n'
+                         'table = [\n'
+                         "    ['No.', 'Title (Latin)', 'Title (English "
+                         "translation)', 'Subject', 'Date'],\n"
+                         "    [1.0, 'Qui Pluribus', nan, 'On Faith and "
+                         "Religion', '9 November 1846'],\n"
+                         "    [2.0, 'Praedecessores Nostros', nan, 'On Aid for "
+                         "Ireland', '25 March 1847'],\n"
+                         "    [3.0, 'Ubi Primum', nan, 'On Discipline for "
+                         "Religious', '17 June 1847'],\n"
+                         "    [4.0, 'Ubi Primum', nan, 'On Immaculate "
+                         "Conception', '2 February 1849'],\n"
+                         "    [5.0, 'Nostis Et Nobiscum', nan, 'On the Church "
+                         "in the Papal States', '8 December 1849'],\n"
+                         "    [6.0, 'Exultavit Cor Nostrum', nan, 'On the "
+                         "Effects of the Jubilee', '21 November 1851'],\n"
+                         "    [7.0, 'Nemo Certe Ignorat', nan, 'On Discipline "
+                         "for Clergy', '25 March 1852'],\n"
+                         "    [8.0, 'Probe Noscitis Venerabiles', nan, 'On the "
+                         "Discipline for Clergy', '17 May 1852'],\n"
+                         "    [9.0, 'Inter Multiplices', nan, 'Pleading for "
+                         "Unity of Spirit', '21 March 1853'],\n"
+                         "    [10.0, 'Neminem Vestrum', nan, 'On the "
+                         "Persecution of Armenians', '2 February 1854'],\n"
+                         "    [11.0, 'Optime Noscitis', nan, 'On the Proposed "
+                         "Catholic University of Ireland', '20 March 1854'],\n"
+                         "    [12.0, 'Apostolicae Nostrae Caritatis', nan, "
+                         "'Urging Prayers of Peace', '1 August 1854'],\n"
+                         "    [13.0, 'Optime Noscitis', nan, 'On Episcopal "
+                         "Meetings', '5 November 1855'],\n"
+                         "    [14.0, 'Singulari Quidem', nan, 'On the Church "
+                         "in Austria', '17 March 1856'],\n"
+                         "    [15.0, 'Cum Nuper', nan, 'On Care for Clerics', "
+                         "'20 January 1858'],\n"
+                         "    [16.0, 'Amantissimi Redemptoris', nan, 'On "
+                         "Priests and the Care of Souls', '3 May 1858'],\n"
+                         "    [17.0, 'Cum Sancta Mater Ecclesia', nan, "
+                         "'Pleading for Public Prayer', '27 April 1859'],\n"
+                         "    [18.0, 'Qui Nuper', nan, 'On the Pontifical "
+                         "States', '18 June 1859'],\n"
+                         "    [19.0, 'Nullis Certe Verbis', nan, 'On the Need "
+                         "for Civil Sovereignty', '19 January 1860'],\n"
+                         "    [20.0, 'Amantissimus', nan, 'On the Care of the "
+                         "Churches', '8 April 1862'],\n"
+                         "    [21.0, 'Quanto Conficiamur Moerore', nan, 'On "
+                         "Promotion of False Doctrines', '10 August 1863'],\n"
+                         "    [22.0, 'Incredibili', nan, 'On the Persecution "
+                         "in New Granada', '17 September 1863'],\n"
+                         "    [23.0, 'Maximae Quidem', nan, 'On the Church in "
+                         "Bavaria', '18 August 1864'],\n"
+                         "    [24.0, 'Quanta Cura', nan, 'Condemning Current "
+                         "Errors', '8 December 1864'],\n"
+                         "    [25.0, 'Meridionali Americae', nan, 'On the "
+                         "Seminary for the Native Clergy', '30 September "
+                         "1865'],\n"
+                         "    [26.0, 'Levate', nan, 'On the Affiliations of "
+                         "Church', '27 October 1867'],\n"
+                         "    [27.0, 'Respicientes', nan, 'Protesting the "
+                         "Taking of the Pontifical States', '1 November "
+                         "1870'],\n"
+                         '    [28.0, \'Ubi Nos\', \'\\\\Our City\\\\""\', \'On '
+                         "the Pontifical States', '15 May 1871'],\n"
+                         "    [29.0, 'Beneficia Dei', nan, 'On the 25th "
+                         "Anniversary of His Pontificate', '4 June 1871'],\n"
+                         "    [30.0, 'Saepe Venerabiles Fratres', nan, "
+                         "'Thanksgiving for 25 Years of Pontificate', '5 "
+                         "August 1871'],\n"
+                         "    [31.0, 'Quae In Patriarchatu', nan, 'On the "
+                         "Church in Chaldea', '16 November 1872'],\n"
+                         "    [32.0, 'Quartus Supra', nan, 'On the Church in "
+                         "Armenia', 'January 1873'],\n"
+                         "    [33.0, 'Etsi Multa', nan, 'On the Church in "
+                         "Italy, Germany and Switzerland', '21 November "
+                         "1873'],\n"
+                         "    [34.0, 'Vix Dum A Nobis', nan, 'On the Church in "
+                         "Austria', '7 March 1874'],\n"
+                         "    [35.0, 'Omnem Sollicitudinem', nan, 'On the "
+                         "Greek-Ruthenian Rite', '13 May 1874'],\n"
+                         "    [36.0, 'Gravibus Ecclesiae', nan, 'Proclaiming A "
+                         "Jubilee', '24 December 1874'],\n"
+                         "    [37.0, 'Quod Nunquam', nan, 'On the Church in "
+                         "Prussia', '5 February 1875'],\n"
+                         "    [38.0, 'Graves Ac Diuturnae', nan, 'On the "
+                         "Church in Switzerland', '23 March 1875']\n"
+                         ']\n'
+                         '```\n'
+                         '\n'
+                         "Let's analyze the 'Date' column to find encyclicals "
+                         'sent in January:\n'
+                         "- '20 January 1858' (15.0)\n"
+                         "- '19 January 1860' (19.0)\n"
+                         "- 'January 1873' (32.0)\n"
+                         '\n'
+                         'There are 3 encyclicals sent in January.\n'
+                         '\n'
+                         '### Output\n'
+                         '**Data Analysis**: Found dates of encyclicals and '
+                         'identified those sent in January.\n'
+                         '**Factual Answer**: 3\n'
+                         '**Source**: Dates of encyclicals in the provided '
+                         'table.',
+               'raw': '### Step 1: Question Type Classification\n'
+                      'The question "how often was an encyclical sent in '
+                      'january?" is a **Numerical Question** because it asks '
+                      'for the frequency or count of a specific event '
+                      '(encyclicals sent in January).\n'
+                      '\n'
+                      '### Step 2: Information Extraction Strategy\n'
+                      'To answer this question, we need to extract the dates '
+                      'of the encyclicals and count how many were sent in '
+                      'January.\n'
+                      '\n'
+                      '### Step 3: Factual Analysis Process\n'
+                      "1. **Extract Dates**: We need to look at the 'Date' "
+                      'column in the provided table.\n'
+                      '2. **Identify January Encyclicals**: We will identify '
+                      'which of these dates fall in January.\n'
+                      '3. **Count January Encyclicals**: We will count the '
+                      'number of encyclicals sent in January.\n'
+                      '\n'
+                      '### Step 4: Performing the Analysis\n'
+                      'Given the table:\n'
+                      '```python\n'
+                      'table = [\n'
+                      "    ['No.', 'Title (Latin)', 'Title (English "
+                      "translation)', 'Subject', 'Date'],\n"
+                      "    [1.0, 'Qui Pluribus', nan, 'On Faith and Religion', "
+                      "'9 November 1846'],\n"
+                      "    [2.0, 'Praedecessores Nostros', nan, 'On Aid for "
+                      "Ireland', '25 March 1847'],\n"
+                      "    [3.0, 'Ubi Primum', nan, 'On Discipline for "
+                      "Religious', '17 June 1847'],\n"
+                      "    [4.0, 'Ubi Primum', nan, 'On Immaculate "
+                      "Conception', '2 February 1849'],\n"
+                      "    [5.0, 'Nostis Et Nobiscum', nan, 'On the Church in "
+                      "the Papal States', '8 December 1849'],\n"
+                      "    [6.0, 'Exultavit Cor Nostrum', nan, 'On the Effects "
+                      "of the Jubilee', '21 November 1851'],\n"
+                      "    [7.0, 'Nemo Certe Ignorat', nan, 'On Discipline for "
+                      "Clergy', '25 March 1852'],\n"
+                      "    [8.0, 'Probe Noscitis Venerabiles', nan, 'On the "
+                      "Discipline for Clergy', '17 May 1852'],\n"
+                      "    [9.0, 'Inter Multiplices', nan, 'Pleading for Unity "
+                      "of Spirit', '21 March 1853'],\n"
+                      "    [10.0, 'Neminem Vestrum', nan, 'On the Persecution "
+                      "of Armenians', '2 February 1854'],\n"
+                      "    [11.0, 'Optime Noscitis', nan, 'On the Proposed "
+                      "Catholic University of Ireland', '20 March 1854'],\n"
+                      "    [12.0, 'Apostolicae Nostrae Caritatis', nan, "
+                      "'Urging Prayers of Peace', '1 August 1854'],\n"
+                      "    [13.0, 'Optime Noscitis', nan, 'On Episcopal "
+                      "Meetings', '5 November 1855'],\n"
+                      "    [14.0, 'Singulari Quidem', nan, 'On the Church in "
+                      "Austria', '17 March 1856'],\n"
+                      "    [15.0, 'Cum Nuper', nan, 'On Care for Clerics', '20 "
+                      "January 1858'],\n"
+                      "    [16.0, 'Amantissimi Redemptoris', nan, 'On Priests "
+                      "and the Care of Souls', '3 May 1858'],\n"
+                      "    [17.0, 'Cum Sancta Mater Ecclesia', nan, 'Pleading "
+                      "for Public Prayer', '27 April 1859'],\n"
+                      "    [18.0, 'Qui Nuper', nan, 'On the Pontifical "
+                      "States', '18 June 1859'],\n"
+                      "    [19.0, 'Nullis Certe Verbis', nan, 'On the Need for "
+                      "Civil Sovereignty', '19 January 1860'],\n"
+                      "    [20.0, 'Amantissimus', nan, 'On the Care of the "
+                      "Churches', '8 April 1862'],\n"
+                      "    [21.0, 'Quanto Conficiamur Moerore', nan, 'On "
+                      "Promotion of False Doctrines', '10 August 1863'],\n"
+                      "    [22.0, 'Incredibili', nan, 'On the Persecution in "
+                      "New Granada', '17 September 1863'],\n"
+                      "    [23.0, 'Maximae Quidem', nan, 'On the Church in "
+                      "Bavaria', '18 August 1864'],\n"
+                      "    [24.0, 'Quanta Cura', nan, 'Condemning Current "
+                      "Errors', '8 December 1864'],\n"
+                      "    [25.0, 'Meridionali Americae', nan, 'On the "
+                      "Seminary for the Native Clergy', '30 September 1865'],\n"
+                      "    [26.0, 'Levate', nan, 'On the Affiliations of "
+                      "Church', '27 October 1867'],\n"
+                      "    [27.0, 'Respicientes', nan, 'Protesting the Taking "
+                      "of the Pontifical States', '1 November 1870'],\n"
+                      '    [28.0, \'Ubi Nos\', \'\\\\Our City\\\\""\', \'On '
+                      "the Pontifical States', '15 May 1871'],\n"
+                      "    [29.0, 'Beneficia Dei', nan, 'On the 25th "
+                      "Anniversary of His Pontificate', '4 June 1871'],\n"
+                      "    [30.0, 'Saepe Venerabiles Fratres', nan, "
+                      "'Thanksgiving for 25 Years of Pontificate', '5 August "
+                      "1871'],\n"
+                      "    [31.0, 'Quae In Patriarchatu', nan, 'On the Church "
+                      "in Chaldea', '16 November 1872'],\n"
+                      "    [32.0, 'Quartus Supra', nan, 'On the Church in "
+                      "Armenia', 'January 1873'],\n"
+                      "    [33.0, 'Etsi Multa', nan, 'On the Church in Italy, "
+                      "Germany and Switzerland', '21 November 1873'],\n"
+                      "    [34.0, 'Vix Dum A Nobis', nan, 'On the Church in "
+                      "Austria', '7 March 1874'],\n"
+                      "    [35.0, 'Omnem Sollicitudinem', nan, 'On the "
+                      "Greek-Ruthenian Rite', '13 May 1874'],\n"
+                      "    [36.0, 'Gravibus Ecclesiae', nan, 'Proclaiming A "
+                      "Jubilee', '24 December 1874'],\n"
+                      "    [37.0, 'Quod Nunquam', nan, 'On the Church in "
+                      "Prussia', '5 February 1875'],\n"
+                      "    [38.0, 'Graves Ac Diuturnae', nan, 'On the Church "
+                      "in Switzerland', '23 March 1875']\n"
+                      ']\n'
+                      '```\n'
+                      '\n'
+                      "Let's analyze the 'Date' column to find encyclicals "
+                      'sent in January:\n'
+                      "- '20 January 1858' (15.0)\n"
+                      "- '19 January 1860' (19.0)\n"
+                      "- 'January 1873' (32.0)\n"
+                      '\n'
+                      'There are 3 encyclicals sent in January.\n'
+                      '\n'
+                      '### Output\n'
+                      '**Data Analysis**: Found dates of encyclicals and '
+                      'identified those sent in January.\n'
+                      '**Factual Answer**: 3\n'
+                      '**Source**: Dates of encyclicals in the provided '
+                      'table.'},
+ 'Contextron': {'cot': '**Text Analysis**: The question "how often was an '
+                       'encyclical sent in january?" requires analyzing the '
+                       'frequency of encyclicals sent in January. The text '
+                       'context provides a table with dates of encyclicals.',
+                'result': '**Data Support**: The structured data analysis of '
+                          'the table shows that there are three encyclicals '
+                          "sent in January: '20 January 1858', '19 January "
+                          "1860', and 'January 1873'.\n"
+                          '\n'
+                          '**Factual Answer**: 3\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The analysis effectively combines the text context '
+                          'with the structured data to provide an accurate and '
+                          'complete factual answer. The count of encyclicals '
+                          "sent in January is derived directly from the 'Date' "
+                          'column in the provided table.',
+                'raw': '**Text Analysis**: The question "how often was an '
+                       'encyclical sent in january?" requires analyzing the '
+                       'frequency of encyclicals sent in January. The text '
+                       'context provides a table with dates of encyclicals.\n'
+                       '\n'
+                       '**Data Support**: The structured data analysis of the '
+                       'table shows that there are three encyclicals sent in '
+                       "January: '20 January 1858', '19 January 1860', and "
+                       "'January 1873'.\n"
+                       '\n'
+                       '**Factual Answer**: 3\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The analysis effectively combines the text context '
+                       'with the structured data to provide an accurate and '
+                       'complete factual answer. The count of encyclicals sent '
+                       "in January is derived directly from the 'Date' column "
+                       'in the provided table.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "how often was an encyclical sent in '
+                          'january?",\n'
+                          '  "Factual Answer": "3",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "- '20 January 1858' (15.0)\n"
+                          "- '19 January 1860' (19.0)\n"
+                          "- 'January 1873' (32.0)",
+                'raw': '{\n'
+                       '  "Question": "how often was an encyclical sent in '
+                       'january?",\n'
+                       '  "Factual Answer": "3",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}

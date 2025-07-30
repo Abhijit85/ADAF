@@ -1,0 +1,436 @@
+[RUN_AMAF] provider=lambda | model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TabuSynth with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Contextron with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent Visura with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent SummaCraft with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent TrendAnalyser with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Initializing agent MCP with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+Attempt 1/5 for examples/wikitq/nt-4845.json
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+DEBUG: _chat called with provider=lambda, model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: Using OpenAI client.chat.completions.create() with model=llama-4-maverick-17b-128e-instruct-fp8
+DEBUG: OpenAI API call successful, response type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+✅ Success on attempt 1
+
+=== FINAL SUMMARY ===
+
+{
+  "Question": "which film won the most awards?",
+  "Factual Answer": "Chander Pahar",
+  "Source": "combined",
+  "Confidence": "High"
+}
+
+Answer Echoes:
+- 'Challenge' appears with 'Won' in 2009 (2 times), 2010 (2 times). Total = 4
+- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 (1 time). Total = 1
+- 'Dujone' appears with 'Nominated' in 2010 (1 time). Total = 0
+- 'Le Chakka' appears with 'Won' in 2010 (1 time) and 'Nominated' in 2011 (1 time). Total = 1
+- 'Paglu' appears with 'Nominated' in 2011 (1 time), 'Won' in 2012 (3 times). Total = 3
+- 'Paglu 2' appears with 'Nominated' in 2012 (1 time). Total = 0
+- 'Khokababu' appears with 'Won' in 2012 (1 time), 'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' directly), but 'Khoka 420' is also related and appears with 'Nominated' in 2014 (1 time) and 'Won' in 2014 (1 time) as part of 'Khoka 420'.
+- 'Challenge 2' appears with 'Nominated' in 2013 (1 time). Total = 0
+- 'Rangbaaz' appears with 'Won' in 2014 (1 time). Total = 1 (for 'Rangbaaz'), and there's another entry for 'Rangbaaz' and 'Khoka 420' together.
+- 'Chander Pahar' appears with 'Won' in 2014 (5 times). Total = 5
+- 'Chander Pahar' has 5 awards.
+- 'Challenge' has 4 awards.
+- 'Challenge' appears with 'Won' in 2009 (2 times), 2010 (2 times). Total = 4
+- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 (1 time). Total = 1
+- 'Dujone' appears with 'Nominated' in 2010 (1 time). Total = 0
+- 'Le Chakka' appears with 'Won' in 2010 (1 time) and 'Nominated' in 2011 (1 time). Total = 1
+- 'Paglu' appears with 'Nominated' in 2011 (1 time), 'Won' in 2012 (3 times). Total = 3
+- 'Paglu 2' appears with 'Nominated' in 2012 (1 time). Total = 0
+- 'Khokababu' appears with 'Won' in 2012 (1 time), 'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' directly), but 'Khoka 420' is also related and appears with 'Nominated' in 2014 (1 time) and 'Won' in 2014 (1 time) as part of 'Khoka 420'.
+- 'Challenge 2' appears with 'Nominated' in 2013 (1 time). Total = 0
+- 'Rangbaaz' appears with 'Won' in 2014 (1 time). Total = 1 (for 'Rangbaaz'), and there's another entry for 'Rangbaaz' and 'Khoka 420' together.
+- 'Chander Pahar' appears with 'Won' in 2014 (5 times). Total = 5
+- 'Chander Pahar' has 5 awards.
+- 'Challenge' has 4 awards.
+
+=== LOGS (per-agent) ===
+{'TabuSynth': {'cot': '## Step 1: Understand the Question\n'
+                      'The question is asking which film won the most awards '
+                      'based on the provided table.\n'
+                      '\n'
+                      '## Step 2: Analyze the Data\n'
+                      'The table contains information about awards won by '
+                      "various films. The columns include 'Year', 'Award', "
+                      "'Category', 'Film', and 'Result'. To determine which "
+                      'film won the most awards, we need to count the number '
+                      "of 'Won' results for each film.\n"
+                      '\n'
+                      '## Step 3: Extract Relevant Data\n'
+                      'We will iterate through the table and count the number '
+                      "of times each film appears with a 'Result' of 'Won'.\n"
+                      '\n'
+                      '## Step 4: Count Awards for Each Film\n'
+                      "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                      '2010 (2 times). Total = 4\n'
+                      "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 (1 "
+                      'time). Total = 1\n'
+                      "- 'Dujone' appears with 'Nominated' in 2010 (1 time). "
+                      'Total = 0\n'
+                      "- 'Le Chakka' appears with 'Won' in 2010 (1 time) and "
+                      "'Nominated' in 2011 (1 time). Total = 1\n"
+                      "- 'Paglu' appears with 'Nominated' in 2011 (1 time), "
+                      "'Won' in 2012 (3 times). Total = 3\n"
+                      "- 'Paglu 2' appears with 'Nominated' in 2012 (1 time). "
+                      'Total = 0\n'
+                      "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                      "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                      "directly), but 'Khoka 420' is also related and appears "
+                      "with 'Nominated' in 2014 (1 time) and 'Won' in 2014 (1 "
+                      "time) as part of 'Khoka 420'. \n"
+                      "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                      'time). Total = 0\n'
+                      "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). Total "
+                      "= 1 (for 'Rangbaaz'), and there's another entry for "
+                      "'Rangbaaz' and 'Khoka 420' together.\n"
+                      "- 'Chander Pahar' appears with 'Won' in 2014 (5 times). "
+                      'Total = 5\n'
+                      '\n'
+                      '## Step 5: Identify the Film with the Most Awards\n'
+                      "After counting, 'Chander Pahar' has 5 'Won' awards, "
+                      "making it one of the top contenders. 'Challenge' has 4 "
+                      'awards.\n'
+                      '\n'
+                      '## Step 6: Verify if Any Other Film Has More Awards\n'
+                      'Upon reviewing the counts:\n'
+                      "- 'Chander Pahar' has 5 awards.\n"
+                      "- 'Challenge' has 4 awards.\n"
+                      'No other film has more than 5 awards.\n'
+                      '\n'
+                      '## Step 7: Provide the Answer\n'
+                      '**Data Analysis**: The table lists various awards and '
+                      "the films that won them. By counting the 'Won' results "
+                      'for each film, we can determine which film won the most '
+                      'awards.\n'
+                      '**Factual Answer**: Chander Pahar\n'
+                      "**Source**: The table provided, specifically the 'Film' "
+                      "and 'Result' columns.\n"
+                      '\n'
+                      'The best answer is Chander Pahar.',
+               'result': '## Step 1: Understand the Question\n'
+                         'The question is asking which film won the most '
+                         'awards based on the provided table.\n'
+                         '\n'
+                         '## Step 2: Analyze the Data\n'
+                         'The table contains information about awards won by '
+                         "various films. The columns include 'Year', 'Award', "
+                         "'Category', 'Film', and 'Result'. To determine which "
+                         'film won the most awards, we need to count the '
+                         "number of 'Won' results for each film.\n"
+                         '\n'
+                         '## Step 3: Extract Relevant Data\n'
+                         'We will iterate through the table and count the '
+                         "number of times each film appears with a 'Result' of "
+                         "'Won'.\n"
+                         '\n'
+                         '## Step 4: Count Awards for Each Film\n'
+                         "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                         '2010 (2 times). Total = 4\n'
+                         "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 "
+                         '(1 time). Total = 1\n'
+                         "- 'Dujone' appears with 'Nominated' in 2010 (1 "
+                         'time). Total = 0\n'
+                         "- 'Le Chakka' appears with 'Won' in 2010 (1 time) "
+                         "and 'Nominated' in 2011 (1 time). Total = 1\n"
+                         "- 'Paglu' appears with 'Nominated' in 2011 (1 time), "
+                         "'Won' in 2012 (3 times). Total = 3\n"
+                         "- 'Paglu 2' appears with 'Nominated' in 2012 (1 "
+                         'time). Total = 0\n'
+                         "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                         "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                         "directly), but 'Khoka 420' is also related and "
+                         "appears with 'Nominated' in 2014 (1 time) and 'Won' "
+                         "in 2014 (1 time) as part of 'Khoka 420'. \n"
+                         "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                         'time). Total = 0\n'
+                         "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). "
+                         "Total = 1 (for 'Rangbaaz'), and there's another "
+                         "entry for 'Rangbaaz' and 'Khoka 420' together.\n"
+                         "- 'Chander Pahar' appears with 'Won' in 2014 (5 "
+                         'times). Total = 5\n'
+                         '\n'
+                         '## Step 5: Identify the Film with the Most Awards\n'
+                         "After counting, 'Chander Pahar' has 5 'Won' awards, "
+                         "making it one of the top contenders. 'Challenge' has "
+                         '4 awards.\n'
+                         '\n'
+                         '## Step 6: Verify if Any Other Film Has More Awards\n'
+                         'Upon reviewing the counts:\n'
+                         "- 'Chander Pahar' has 5 awards.\n"
+                         "- 'Challenge' has 4 awards.\n"
+                         'No other film has more than 5 awards.\n'
+                         '\n'
+                         '## Step 7: Provide the Answer\n'
+                         '**Data Analysis**: The table lists various awards '
+                         "and the films that won them. By counting the 'Won' "
+                         'results for each film, we can determine which film '
+                         'won the most awards.\n'
+                         '**Factual Answer**: Chander Pahar\n'
+                         '**Source**: The table provided, specifically the '
+                         "'Film' and 'Result' columns.\n"
+                         '\n'
+                         'The best answer is Chander Pahar.',
+               'raw': '## Step 1: Understand the Question\n'
+                      'The question is asking which film won the most awards '
+                      'based on the provided table.\n'
+                      '\n'
+                      '## Step 2: Analyze the Data\n'
+                      'The table contains information about awards won by '
+                      "various films. The columns include 'Year', 'Award', "
+                      "'Category', 'Film', and 'Result'. To determine which "
+                      'film won the most awards, we need to count the number '
+                      "of 'Won' results for each film.\n"
+                      '\n'
+                      '## Step 3: Extract Relevant Data\n'
+                      'We will iterate through the table and count the number '
+                      "of times each film appears with a 'Result' of 'Won'.\n"
+                      '\n'
+                      '## Step 4: Count Awards for Each Film\n'
+                      "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                      '2010 (2 times). Total = 4\n'
+                      "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 (1 "
+                      'time). Total = 1\n'
+                      "- 'Dujone' appears with 'Nominated' in 2010 (1 time). "
+                      'Total = 0\n'
+                      "- 'Le Chakka' appears with 'Won' in 2010 (1 time) and "
+                      "'Nominated' in 2011 (1 time). Total = 1\n"
+                      "- 'Paglu' appears with 'Nominated' in 2011 (1 time), "
+                      "'Won' in 2012 (3 times). Total = 3\n"
+                      "- 'Paglu 2' appears with 'Nominated' in 2012 (1 time). "
+                      'Total = 0\n'
+                      "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                      "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                      "directly), but 'Khoka 420' is also related and appears "
+                      "with 'Nominated' in 2014 (1 time) and 'Won' in 2014 (1 "
+                      "time) as part of 'Khoka 420'. \n"
+                      "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                      'time). Total = 0\n'
+                      "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). Total "
+                      "= 1 (for 'Rangbaaz'), and there's another entry for "
+                      "'Rangbaaz' and 'Khoka 420' together.\n"
+                      "- 'Chander Pahar' appears with 'Won' in 2014 (5 times). "
+                      'Total = 5\n'
+                      '\n'
+                      '## Step 5: Identify the Film with the Most Awards\n'
+                      "After counting, 'Chander Pahar' has 5 'Won' awards, "
+                      "making it one of the top contenders. 'Challenge' has 4 "
+                      'awards.\n'
+                      '\n'
+                      '## Step 6: Verify if Any Other Film Has More Awards\n'
+                      'Upon reviewing the counts:\n'
+                      "- 'Chander Pahar' has 5 awards.\n"
+                      "- 'Challenge' has 4 awards.\n"
+                      'No other film has more than 5 awards.\n'
+                      '\n'
+                      '## Step 7: Provide the Answer\n'
+                      '**Data Analysis**: The table lists various awards and '
+                      "the films that won them. By counting the 'Won' results "
+                      'for each film, we can determine which film won the most '
+                      'awards.\n'
+                      '**Factual Answer**: Chander Pahar\n'
+                      "**Source**: The table provided, specifically the 'Film' "
+                      "and 'Result' columns.\n"
+                      '\n'
+                      'The best answer is Chander Pahar.'},
+ 'Contextron': {'cot': '## Step 1: Understand the Question\n'
+                       'The question is asking which film won the most awards '
+                       'based on the provided table.',
+                'result': '## Step 2: Analyze the Data\n'
+                          'The table contains information about awards won by '
+                          "various films. The columns include 'Year', 'Award', "
+                          "'Category', 'Film', and 'Result'. To determine "
+                          'which film won the most awards, we need to count '
+                          "the number of 'Won' results for each film.\n"
+                          '\n'
+                          '## Step 3: Extract Relevant Data\n'
+                          'We will iterate through the table and count the '
+                          "number of times each film appears with a 'Result' "
+                          "of 'Won'.\n"
+                          '\n'
+                          '## Step 4: Count Awards for Each Film\n'
+                          "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                          '2010 (2 times). Total = 4\n'
+                          "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 "
+                          '(1 time). Total = 1\n'
+                          "- 'Dujone' appears with 'Nominated' in 2010 (1 "
+                          'time). Total = 0\n'
+                          "- 'Le Chakka' appears with 'Won' in 2010 (1 time) "
+                          "and 'Nominated' in 2011 (1 time). Total = 1\n"
+                          "- 'Paglu' appears with 'Nominated' in 2011 (1 "
+                          "time), 'Won' in 2012 (3 times). Total = 3\n"
+                          "- 'Paglu 2' appears with 'Nominated' in 2012 (1 "
+                          'time). Total = 0\n'
+                          "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                          "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                          "directly), but 'Khoka 420' is also related and "
+                          "appears with 'Nominated' in 2014 (1 time) and 'Won' "
+                          "in 2014 (1 time) as part of 'Khoka 420'. \n"
+                          "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                          'time). Total = 0\n'
+                          "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). "
+                          "Total = 1 (for 'Rangbaaz'), and there's another "
+                          "entry for 'Rangbaaz' and 'Khoka 420' together.\n"
+                          "- 'Chander Pahar' appears with 'Won' in 2014 (5 "
+                          'times). Total = 5\n'
+                          '\n'
+                          '## Step 5: Identify the Film with the Most Awards\n'
+                          "After counting, 'Chander Pahar' has 5 'Won' awards, "
+                          "making it one of the top contenders. 'Challenge' "
+                          'has 4 awards.\n'
+                          '\n'
+                          '## Step 6: Verify if Any Other Film Has More '
+                          'Awards\n'
+                          'Upon reviewing the counts:\n'
+                          "- 'Chander Pahar' has 5 awards.\n"
+                          "- 'Challenge' has 4 awards.\n"
+                          'No other film has more than 5 awards.\n'
+                          '\n'
+                          '## Step 7: Provide the Answer\n'
+                          '**Text Analysis**: The table lists various awards '
+                          "and the films that won them. By counting the 'Won' "
+                          'results for each film, we can determine which film '
+                          'won the most awards.\n'
+                          "**Data Support**: The count of 'Won' awards for "
+                          'each film based on the structured data provided.\n'
+                          '**Factual Answer**: Chander Pahar\n'
+                          '**Confidence**: High\n'
+                          '\n'
+                          'The best answer is Chander Pahar.',
+                'raw': '## Step 1: Understand the Question\n'
+                       'The question is asking which film won the most awards '
+                       'based on the provided table.\n'
+                       '\n'
+                       '## Step 2: Analyze the Data\n'
+                       'The table contains information about awards won by '
+                       "various films. The columns include 'Year', 'Award', "
+                       "'Category', 'Film', and 'Result'. To determine which "
+                       'film won the most awards, we need to count the number '
+                       "of 'Won' results for each film.\n"
+                       '\n'
+                       '## Step 3: Extract Relevant Data\n'
+                       'We will iterate through the table and count the number '
+                       "of times each film appears with a 'Result' of 'Won'.\n"
+                       '\n'
+                       '## Step 4: Count Awards for Each Film\n'
+                       "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                       '2010 (2 times). Total = 4\n'
+                       "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 (1 "
+                       'time). Total = 1\n'
+                       "- 'Dujone' appears with 'Nominated' in 2010 (1 time). "
+                       'Total = 0\n'
+                       "- 'Le Chakka' appears with 'Won' in 2010 (1 time) and "
+                       "'Nominated' in 2011 (1 time). Total = 1\n"
+                       "- 'Paglu' appears with 'Nominated' in 2011 (1 time), "
+                       "'Won' in 2012 (3 times). Total = 3\n"
+                       "- 'Paglu 2' appears with 'Nominated' in 2012 (1 time). "
+                       'Total = 0\n'
+                       "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                       "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                       "directly), but 'Khoka 420' is also related and appears "
+                       "with 'Nominated' in 2014 (1 time) and 'Won' in 2014 (1 "
+                       "time) as part of 'Khoka 420'. \n"
+                       "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                       'time). Total = 0\n'
+                       "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). "
+                       "Total = 1 (for 'Rangbaaz'), and there's another entry "
+                       "for 'Rangbaaz' and 'Khoka 420' together.\n"
+                       "- 'Chander Pahar' appears with 'Won' in 2014 (5 "
+                       'times). Total = 5\n'
+                       '\n'
+                       '## Step 5: Identify the Film with the Most Awards\n'
+                       "After counting, 'Chander Pahar' has 5 'Won' awards, "
+                       "making it one of the top contenders. 'Challenge' has 4 "
+                       'awards.\n'
+                       '\n'
+                       '## Step 6: Verify if Any Other Film Has More Awards\n'
+                       'Upon reviewing the counts:\n'
+                       "- 'Chander Pahar' has 5 awards.\n"
+                       "- 'Challenge' has 4 awards.\n"
+                       'No other film has more than 5 awards.\n'
+                       '\n'
+                       '## Step 7: Provide the Answer\n'
+                       '**Text Analysis**: The table lists various awards and '
+                       "the films that won them. By counting the 'Won' results "
+                       'for each film, we can determine which film won the '
+                       'most awards.\n'
+                       "**Data Support**: The count of 'Won' awards for each "
+                       'film based on the structured data provided.\n'
+                       '**Factual Answer**: Chander Pahar\n'
+                       '**Confidence**: High\n'
+                       '\n'
+                       'The best answer is Chander Pahar.'},
+ 'SummaCraft': {'cot': '(omitted)',
+                'result': '{\n'
+                          '  "Question": "which film won the most awards?",\n'
+                          '  "Factual Answer": "Chander Pahar",\n'
+                          '  "Source": "combined",\n'
+                          '  "Confidence": "High"\n'
+                          '}\n'
+                          '\n'
+                          'Answer Echoes:\n'
+                          "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                          '2010 (2 times). Total = 4\n'
+                          "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 "
+                          '(1 time). Total = 1\n'
+                          "- 'Dujone' appears with 'Nominated' in 2010 (1 "
+                          'time). Total = 0\n'
+                          "- 'Le Chakka' appears with 'Won' in 2010 (1 time) "
+                          "and 'Nominated' in 2011 (1 time). Total = 1\n"
+                          "- 'Paglu' appears with 'Nominated' in 2011 (1 "
+                          "time), 'Won' in 2012 (3 times). Total = 3\n"
+                          "- 'Paglu 2' appears with 'Nominated' in 2012 (1 "
+                          'time). Total = 0\n'
+                          "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                          "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                          "directly), but 'Khoka 420' is also related and "
+                          "appears with 'Nominated' in 2014 (1 time) and 'Won' "
+                          "in 2014 (1 time) as part of 'Khoka 420'.\n"
+                          "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                          'time). Total = 0\n'
+                          "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). "
+                          "Total = 1 (for 'Rangbaaz'), and there's another "
+                          "entry for 'Rangbaaz' and 'Khoka 420' together.\n"
+                          "- 'Chander Pahar' appears with 'Won' in 2014 (5 "
+                          'times). Total = 5\n'
+                          "- 'Chander Pahar' has 5 awards.\n"
+                          "- 'Challenge' has 4 awards.\n"
+                          "- 'Challenge' appears with 'Won' in 2009 (2 times), "
+                          '2010 (2 times). Total = 4\n'
+                          "- 'Poran Jaye Jolia Re' appears with 'Won' in 2010 "
+                          '(1 time). Total = 1\n'
+                          "- 'Dujone' appears with 'Nominated' in 2010 (1 "
+                          'time). Total = 0\n'
+                          "- 'Le Chakka' appears with 'Won' in 2010 (1 time) "
+                          "and 'Nominated' in 2011 (1 time). Total = 1\n"
+                          "- 'Paglu' appears with 'Nominated' in 2011 (1 "
+                          "time), 'Won' in 2012 (3 times). Total = 3\n"
+                          "- 'Paglu 2' appears with 'Nominated' in 2012 (1 "
+                          'time). Total = 0\n'
+                          "- 'Khokababu' appears with 'Won' in 2012 (1 time), "
+                          "'Won' in 2013 (1 time). Total = 2 (for 'Khokababu' "
+                          "directly), but 'Khoka 420' is also related and "
+                          "appears with 'Nominated' in 2014 (1 time) and 'Won' "
+                          "in 2014 (1 time) as part of 'Khoka 420'.\n"
+                          "- 'Challenge 2' appears with 'Nominated' in 2013 (1 "
+                          'time). Total = 0\n'
+                          "- 'Rangbaaz' appears with 'Won' in 2014 (1 time). "
+                          "Total = 1 (for 'Rangbaaz'), and there's another "
+                          "entry for 'Rangbaaz' and 'Khoka 420' together.\n"
+                          "- 'Chander Pahar' appears with 'Won' in 2014 (5 "
+                          'times). Total = 5\n'
+                          "- 'Chander Pahar' has 5 awards.\n"
+                          "- 'Challenge' has 4 awards.",
+                'raw': '{\n'
+                       '  "Question": "which film won the most awards?",\n'
+                       '  "Factual Answer": "Chander Pahar",\n'
+                       '  "Source": "combined",\n'
+                       '  "Confidence": "High"\n'
+                       '}'}}
